@@ -4,9 +4,15 @@
     <tags>shellMaximized</tags>
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_Qd0LoOMVEeKJItlVKSINDA">
       <children xsi:type="advanced:Perspective" xmi:id="_Qd0LoeMVEeKJItlVKSINDA">
-        <children xsi:type="basic:PartSashContainer" xmi:id="_Qd0LouMVEeKJItlVKSINDA">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_Qd0LouMVEeKJItlVKSINDA" containerData="30000" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_Qd0Lo-MVEeKJItlVKSINDA">
-            <children xsi:type="basic:Part" xmi:id="_Qd0LpOMVEeKJItlVKSINDA" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.SamplePart" label="Sample Part"/>
+            <children xsi:type="basic:Part" xmi:id="_Qd0LpOMVEeKJItlVKSINDA" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.SamplePart" label="Mitarbeiter" tooltip="Liste der aktuellen Mitarbeiter"/>
+          </children>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_FtkXIOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partsashcontainer.0" containerData="70000">
+            <children xsi:type="basic:PartStack" xmi:id="_QGItcOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.details" containerData="7000">
+              <children xsi:type="basic:Part" xmi:id="_gGmgYOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.part.CSVDetailsPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.CSVDetailsPart" label="CSV Daten" tooltip="Sofern eine CSV Datei eingelesen wurde, wird hier der Inhalt dargestellt"/>
+            </children>
+            <children xsi:type="basic:PartStack" xmi:id="_Wap_gOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.messages" containerData="3000"/>
           </children>
         </children>
       </children>

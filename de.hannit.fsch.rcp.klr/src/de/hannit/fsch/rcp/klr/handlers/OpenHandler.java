@@ -10,22 +10,43 @@
  *******************************************************************************/
 package de.hannit.fsch.rcp.klr.handlers;
 
-import java.lang.reflect.InvocationTargetException;
-
+import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
-public class OpenHandler {
+import de.hannit.fsch.common.CSVDatei;
 
-	@Execute
-	public void execute(
-			@Named(IServiceConstants.ACTIVE_SHELL) Shell shell){
-		FileDialog dialog = new FileDialog(shell);
-		dialog.open();
+public class OpenHandler 
+{
+@Inject
+private Logger log;
+
+@Inject
+IEventBroker broker;
+	
+@Execute
+	public void execute (@Named(IServiceConstants.ACTIVE_SHELL) Shell shell)
+	{
+	FileDialog dialog = new FileDialog(shell);
+	dialog.setFilterExtensions(new String[] {"*.csv","*.txt", "*.*"});
+	String path = dialog.open();
+	
+		if (path != null) 
+		{
+		CSVDatei csv = new CSVDatei(path);
+		csv.hasHeader(true);
+		csv.setDelimiter("\\|");
+		csv.read();
+			
+		broker.send("CSV/Daten", csv);
+			
+		log.info("CSV-Datei: " + path + " wurden an den Event Broker gesendet");
+		}
 	}
 }

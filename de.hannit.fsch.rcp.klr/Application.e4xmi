@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_Qd0LgOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ide.application" bindingContexts="_Qd0LieMVEeKJItlVKSINDA">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_Qd0LgeMVEeKJItlVKSINDA" label="de.hannit.fsch.rcp.klr" width="500" height="400">
+    <children xsi:type="advanced:PerspectiveStack" xmi:id="_Qd0LoOMVEeKJItlVKSINDA">
+      <children xsi:type="advanced:Perspective" xmi:id="_Qd0LoeMVEeKJItlVKSINDA">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_Qd0LouMVEeKJItlVKSINDA">
+          <children xsi:type="basic:PartStack" xmi:id="_Qd0Lo-MVEeKJItlVKSINDA">
+            <children xsi:type="basic:Part" xmi:id="_Qd0LpOMVEeKJItlVKSINDA" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.SamplePart" label="Sample Part"/>
+          </children>
+        </children>
+      </children>
+    </children>
+    <mainMenu xmi:id="_Qd0LmeMVEeKJItlVKSINDA" elementId="menu:org.eclipse.ui.main.menu">
+      <children xsi:type="menu:Menu" xmi:id="_Qd0LmuMVEeKJItlVKSINDA" label="File">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0Lm-MVEeKJItlVKSINDA" label="Open" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/sample.gif" command="_Qd0LkOMVEeKJItlVKSINDA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LnOMVEeKJItlVKSINDA" label="Save" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/save_edit.gif" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LneMVEeKJItlVKSINDA" label="Quit" command="_Qd0LjOMVEeKJItlVKSINDA"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_Qd0LnuMVEeKJItlVKSINDA" label="Help">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0Ln-MVEeKJItlVKSINDA" label="About" command="_Qd0LluMVEeKJItlVKSINDA"/>
+      </children>
+    </mainMenu>
+    <trimBars xmi:id="_Qd0LpeMVEeKJItlVKSINDA">
+      <children xsi:type="menu:ToolBar" xmi:id="_Qd0LpuMVEeKJItlVKSINDA" elementId="toolbar:org.eclipse.ui.main.toolbar">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_Qd0Lp-MVEeKJItlVKSINDA" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/sample.gif" command="_Qd0LkOMVEeKJItlVKSINDA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_Qd0LqOMVEeKJItlVKSINDA" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/save_edit.gif" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
+      </children>
+    </trimBars>
+  </children>
+  <handlers xmi:id="_Qd0LjeMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.quitCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.QuitHandler" command="_Qd0LjOMVEeKJItlVKSINDA"/>
+  <handlers xmi:id="_Qd0LkeMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.openCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.OpenHandler" command="_Qd0LkOMVEeKJItlVKSINDA"/>
+  <handlers xmi:id="_Qd0LlOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.saveCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.SaveHandler" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
+  <handlers xmi:id="_Qd0Ll-MVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.aboutCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.AboutHandler" command="_Qd0LluMVEeKJItlVKSINDA"/>
+  <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
+    <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
+    <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
+    <bindings xmi:id="_Qd0LleMVEeKJItlVKSINDA" keySequence="M1+S" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
+    <bindings xmi:id="_Qd0LmOMVEeKJItlVKSINDA" keySequence="M1+A" command="_Qd0LluMVEeKJItlVKSINDA"/>
+  </bindingTables>
+  <rootContext xmi:id="_Qd0LieMVEeKJItlVKSINDA" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
+    <children xmi:id="_Qd0LiuMVEeKJItlVKSINDA" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
+    <children xmi:id="_Qd0Li-MVEeKJItlVKSINDA" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
+  </rootContext>
+  <commands xmi:id="_Qd0LjOMVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>
+  <commands xmi:id="_Qd0LkOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.open" commandName="openCommand"/>
+  <commands xmi:id="_Qd0Lk-MVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
+  <commands xmi:id="_Qd0LluMVEeKJItlVKSINDA" elementId="org.eclipse.ui.help.aboutAction" commandName="aboutCommand"/>
+  <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
+  <addons xmi:id="_Qd0LheMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_Qd0LhuMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+  <addons xmi:id="_Qd0Lh-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_Qd0LiOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
+</application:Application>

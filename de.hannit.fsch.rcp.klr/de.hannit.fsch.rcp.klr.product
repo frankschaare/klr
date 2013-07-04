@@ -14,8 +14,10 @@
    <windowImages/>
 
    <plugins>
-      <plugin id="de.hannit.fsch.rcp.klr"/>
       <plugin id="com.ibm.icu"/>
+      <plugin id="de.hannit.fsch.common.mitarbeiter"/>
+      <plugin id="de.hannit.fsch.klr.dataservice"/>
+      <plugin id="de.hannit.fsch.rcp.klr"/>
       <plugin id="javax.annotation"/>
       <plugin id="javax.inject"/>
       <plugin id="javax.xml"/>
@@ -43,6 +45,7 @@
       <plugin id="org.eclipse.core.jobs"/>
       <plugin id="org.eclipse.core.resources"/>
       <plugin id="org.eclipse.core.resources.win32.x86" fragment="true"/>
+      <plugin id="org.eclipse.core.resources.win32.x86_64" fragment="true"/>
       <plugin id="org.eclipse.core.runtime"/>
       <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
       <plugin id="org.eclipse.e4.core.commands"/>

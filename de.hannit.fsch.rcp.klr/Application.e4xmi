@@ -6,7 +6,7 @@
       <children xsi:type="advanced:Perspective" xmi:id="_Qd0LoeMVEeKJItlVKSINDA">
         <children xsi:type="basic:PartSashContainer" xmi:id="_Qd0LouMVEeKJItlVKSINDA" containerData="30000" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_Qd0Lo-MVEeKJItlVKSINDA">
-            <children xsi:type="basic:Part" xmi:id="_Qd0LpOMVEeKJItlVKSINDA" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.SamplePart" label="Mitarbeiter" tooltip="Liste der aktuellen Mitarbeiter"/>
+            <children xsi:type="basic:Part" xmi:id="_Qd0LpOMVEeKJItlVKSINDA" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.NavPart" label="Mitarbeiter" tooltip="Liste der aktuellen Mitarbeiter"/>
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_FtkXIOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partsashcontainer.0" containerData="70000">
             <children xsi:type="basic:PartStack" xmi:id="_QGItcOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.details" containerData="7000">

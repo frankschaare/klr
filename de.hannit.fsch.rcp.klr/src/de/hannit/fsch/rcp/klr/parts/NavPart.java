@@ -11,6 +11,8 @@
 package de.hannit.fsch.rcp.klr.parts;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -19,7 +21,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-public class SamplePart {
+import de.hannit.fsch.klr.dataservice.DataService;
+
+public class NavPart 
+{
+@Inject
+DataService dataService;
 
 	private Label label;
 	private TableViewer tableViewer;
@@ -41,7 +48,8 @@ public class SamplePart {
 	}
 
 	@Focus
-	public void setFocus() {
+	public void setFocus() 
+	{
 		tableViewer.getTable().setFocus();
 	}
 }

@@ -13,14 +13,13 @@ package de.hannit.fsch.rcp.klr.parts;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
-import org.eclipse.e4.core.services.statusreporter.StatusReporter;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -52,6 +51,8 @@ DataService dataService;
 	// TODO: org.osgi.service.event.Event sind noch nicht in den Product Dependencies	
 	// Den aktiven Part ausgeben:	
 	MPart activePart = (MPart) event.getProperty(UIEvents.EventTags.ELEMENT);
+	MWindow main = application.getChildren().get(0);
+	main.setLabel("HannIT KLR - " + dataService.getConnectionInfo());
 	// Den Eclipse Context ausgeben:
 	IEclipseContext context = application.getContext();
 		// Eine eigene Variable setzen:

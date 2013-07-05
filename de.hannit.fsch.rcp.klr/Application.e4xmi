@@ -6,7 +6,7 @@
       <children xsi:type="advanced:Perspective" xmi:id="_Qd0LoeMVEeKJItlVKSINDA">
         <children xsi:type="basic:PartSashContainer" xmi:id="_Qd0LouMVEeKJItlVKSINDA" containerData="30000" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_Qd0Lo-MVEeKJItlVKSINDA">
-            <children xsi:type="basic:Part" xmi:id="_Qd0LpOMVEeKJItlVKSINDA" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.NavPart" label="Mitarbeiter" tooltip="Liste der aktuellen Mitarbeiter"/>
+            <children xsi:type="basic:Part" xmi:id="_Qd0LpOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.parts.NavPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.NavPart" label="Mitarbeiter" tooltip="Liste der aktuellen Mitarbeiter"/>
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_FtkXIOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partsashcontainer.0" containerData="70000">
             <children xsi:type="basic:PartStack" xmi:id="_QGItcOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.details" containerData="7000">
@@ -21,6 +21,7 @@
       <children xsi:type="menu:Menu" xmi:id="_Qd0LmuMVEeKJItlVKSINDA" label="File">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0Lm-MVEeKJItlVKSINDA" label="Open" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/sample.gif" command="_Qd0LkOMVEeKJItlVKSINDA"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LnOMVEeKJItlVKSINDA" label="Save" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/save_edit.gif" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_xprJ4OV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.0" label="Mitarbeiter laden" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/insertDB.gif" tooltip="Öffnet einen CSV Export und sichert die Mitarbeiterdaten in der Datenbank" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LneMVEeKJItlVKSINDA" label="Quit" command="_Qd0LjOMVEeKJItlVKSINDA"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_Qd0LnuMVEeKJItlVKSINDA" label="Help">
@@ -30,6 +31,7 @@
     <trimBars xmi:id="_Qd0LpeMVEeKJItlVKSINDA">
       <children xsi:type="menu:ToolBar" xmi:id="_Qd0LpuMVEeKJItlVKSINDA" elementId="toolbar:org.eclipse.ui.main.toolbar">
         <children xsi:type="menu:HandledToolItem" xmi:id="_Qd0Lp-MVEeKJItlVKSINDA" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/sample.gif" command="_Qd0LkOMVEeKJItlVKSINDA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_IkxMoOV7EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.insertMitarbeiter" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/insertDB.gif" tooltip="Öffnet einen CSV Export und sichert die Mitarbeiterdaten in der Datenbank" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_Qd0LqOMVEeKJItlVKSINDA" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/save_edit.gif" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
       </children>
     </trimBars>
@@ -38,6 +40,7 @@
   <handlers xmi:id="_Qd0LkeMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.openCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.OpenHandler" command="_Qd0LkOMVEeKJItlVKSINDA"/>
   <handlers xmi:id="_Qd0LlOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.saveCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.SaveHandler" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
   <handlers xmi:id="_Qd0Ll-MVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.aboutCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.AboutHandler" command="_Qd0LluMVEeKJItlVKSINDA"/>
+  <handlers xmi:id="_aNtOsOV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handlers.InsertMitarbeiterHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.InsertMitarbeiterHandler" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -52,6 +55,7 @@
   <commands xmi:id="_Qd0LkOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.open" commandName="openCommand"/>
   <commands xmi:id="_Qd0Lk-MVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
   <commands xmi:id="_Qd0LluMVEeKJItlVKSINDA" elementId="org.eclipse.ui.help.aboutAction" commandName="aboutCommand"/>
+  <commands xmi:id="_hS3TgOV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.command.insertMitarbeiter" commandName="insertMitarbeiterCommand" description="Sichert Daten einer CSV Datei in die Mitarbeiter Tabelle"/>
   <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

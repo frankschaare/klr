@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.osgi.service.event.Event;
 
 import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.rcp.klr.provider.CSVLabelProvider;
@@ -46,7 +47,7 @@ private TableViewer tableViewer;
 	
 	@Inject
 	@Optional
-	public void handleEvent(@UIEventTopic("CSV/Daten") CSVDatei csv)
+	public void handleEvent(@UIEventTopic("CSV/*") CSVDatei csv)
 	{
 	label.setText(csv.getPath());
 	

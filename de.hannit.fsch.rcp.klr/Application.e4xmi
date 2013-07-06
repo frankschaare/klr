@@ -12,7 +12,9 @@
             <children xsi:type="basic:PartStack" xmi:id="_QGItcOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.details" containerData="7000">
               <children xsi:type="basic:Part" xmi:id="_gGmgYOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.part.CSVDetailsPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.CSVDetailsPart" label="CSV Daten" tooltip="Sofern eine CSV Datei eingelesen wurde, wird hier der Inhalt dargestellt"/>
             </children>
-            <children xsi:type="basic:PartStack" xmi:id="_Wap_gOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.messages" containerData="3000"/>
+            <children xsi:type="basic:PartStack" xmi:id="_Wap_gOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.messages" containerData="3000">
+              <children xsi:type="basic:Part" xmi:id="_BOVrAOYSEeKAwpnzjMnRVg" elementId=".hannit.fsch.rcp.klr.parts.ConsolePart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.ConsolePart" label="Console"/>
+            </children>
           </children>
         </children>
       </children>

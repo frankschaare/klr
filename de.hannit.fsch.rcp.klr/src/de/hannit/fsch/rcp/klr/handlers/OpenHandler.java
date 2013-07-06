@@ -15,18 +15,15 @@ import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.services.events.IEventBroker;
-import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
 import de.hannit.fsch.common.CSVDatei;
+import de.hannit.fsch.rcp.klr.constants.Topics;
 
 public class OpenHandler 
 {
-@Inject
-private Logger log;
-
 @Inject
 IEventBroker broker;
 	
@@ -46,7 +43,7 @@ IEventBroker broker;
 			
 		broker.send("CSV/Daten", csv);
 			
-		log.info("CSV-Datei: " + path + " wurden an den Event Broker gesendet");
+		broker.send(Topics.LOGGING, "CSV-Datei: " + path + " wurden an den Event Broker gesendet");
 		}
 	}
 }

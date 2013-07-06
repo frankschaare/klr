@@ -13,6 +13,7 @@ package de.hannit.fsch.rcp.klr.handlers;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.services.IServiceConstants;
@@ -20,6 +21,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
 import de.hannit.fsch.common.CSVDatei;
+import de.hannit.fsch.common.LogMessage;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 
 public class OpenHandler 
@@ -43,7 +45,7 @@ IEventBroker broker;
 			
 		broker.send("CSV/Daten", csv);
 			
-		broker.send(Topics.LOGGING, "CSV-Datei: " + path + " wurden an den Event Broker gesendet");
+		broker.send(Topics.LOGGING, new LogMessage(IStatus.INFO, this.getClass().getName(), "CSV-Datei: " + path + " wurden an den Event Broker gesendet"));
 		}
 	}
 }

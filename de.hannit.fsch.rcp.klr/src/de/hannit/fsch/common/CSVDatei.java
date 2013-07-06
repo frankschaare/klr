@@ -121,8 +121,16 @@ private int lineCount = -1;
 		this.delimiter = delimiter;
 	}
 
-	public int getLineCount() {
-		return lineCount;
+	public int getLineCount() 
+	{
+		if (hasHeader) 
+		{
+		return (lineCount - 2);	
+		} 
+		else 
+		{
+		return (lineCount - 1);
+		}
 	}
 
 	public void setLineCount(int lineCount) {

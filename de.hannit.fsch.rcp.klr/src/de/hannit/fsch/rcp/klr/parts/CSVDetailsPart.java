@@ -1,19 +1,15 @@
  
 package de.hannit.fsch.rcp.klr.parts;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
-import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -22,17 +18,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.osgi.service.event.Event;
 
 import de.hannit.fsch.common.CSVDatei;
+import de.hannit.fsch.common.LogMessage;
+import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.provider.CSVLabelProvider;
 
 public class CSVDetailsPart 
 {
-@Inject
-private Logger log;
-
 @Inject
 IEventBroker broker;
 
@@ -49,6 +42,7 @@ private TableViewer tableViewer;
 	@Optional
 	public void handleEvent(@UIEventTopic("CSV/*") CSVDatei csv)
 	{
+	broker.send(Topics.LOGGING, new LogMessage(IStatus.INFO, this.getClass().getName(), "Verarbeite " + csv.getLineCount() + " Zeilen aus CSV Import."));	
 	label.setText(csv.getPath());
 	
 	createColumns(tableViewer, csv);

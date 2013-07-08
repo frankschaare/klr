@@ -10,11 +10,15 @@
  *******************************************************************************/
 package de.hannit.fsch.rcp.klr.parts;
 
+import java.util.ArrayList;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -22,22 +26,32 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Tree;
 import org.osgi.service.event.Event;
 
+import de.hannit.fsch.common.LogMessage;
+import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
 import de.hannit.fsch.klr.dataservice.DataService;
+import de.hannit.fsch.rcp.klr.constants.Topics;
+import de.hannit.fsch.rcp.klr.provider.NavTreeContentProvider;
 
 public class NavPart 
 {
+@Inject
+IEventBroker broker;
+
 @Inject
 DataService dataService;
 
 	private Label label;
 	private TableViewer tableViewer;
+	private ArrayList<Mitarbeiter> mitarbeiter;	
 
 	/*
 	 * Beispiel für Registrierung an Eclipse Framework Events
@@ -67,23 +81,25 @@ DataService dataService;
 	@PostConstruct
 	public void createComposite(Composite parent) 
 	{
-		parent.setLayout(new GridLayout());
+	parent.setLayout(new GridLayout(3, true));
+	
+	TreeViewer treeViewer = new TreeViewer(parent, SWT.BORDER);
+	NavTreeContentProvider cp = new NavTreeContentProvider();
+	treeViewer.setContentProvider(cp);
+	treeViewer.setLabelProvider(cp);
+		
+	Tree tree = treeViewer.getTree();
+	tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
-		label = new Label(parent, SWT.NONE);
-		label.setText("Sample table");
-
-		tableViewer = new TableViewer(parent);
-		tableViewer.add("Sample item 1");
-		tableViewer.add("Sample item 2");
-		tableViewer.add("Sample item 3");
-		tableViewer.add("Sample item 4");
-		tableViewer.add("Sample item 5");
-		tableViewer.getTable().setLayoutData(new GridData(GridData.FILL_BOTH));
+	broker.send(Topics.LOGGING, new LogMessage(IStatus.INFO, this.getClass().getName(), "Fordere Mitarbeiterliste vom DataService an."));
+	mitarbeiter = dataService.getMitarbeiter();
+	broker.send(Topics.LOGGING, new LogMessage(IStatus.INFO, this.getClass().getName(), "Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter"));
+	treeViewer.setInput(mitarbeiter);
 	}
 
 	@Focus
 	public void setFocus() 
 	{
-		tableViewer.getTable().setFocus();
+		// tableViewer.getTable().setFocus();
 	}
 }

@@ -37,7 +37,7 @@ private String timeStamp;
 
 	private void setTimeStamp() 
 	{
-	DateFormat fmt = new SimpleDateFormat( "dd.MM.yy hh:mm:ss" );	
+	DateFormat fmt = new SimpleDateFormat( "dd.MM.yy HH:mm:ss" );	
 	this.timeStamp = fmt.format(new Date());
 	}
 

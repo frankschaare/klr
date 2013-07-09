@@ -13,7 +13,7 @@
               <children xsi:type="basic:Part" xmi:id="_gGmgYOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.part.CSVDetailsPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.CSVDetailsPart" label="CSV Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/CSV16x16.png" tooltip="Sofern eine CSV Datei eingelesen wurde, wird hier der Inhalt dargestellt"/>
             </children>
             <children xsi:type="basic:PartStack" xmi:id="_Wap_gOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.messages" containerData="3000">
-              <children xsi:type="basic:Part" xmi:id="_BOVrAOYSEeKAwpnzjMnRVg" elementId=".hannit.fsch.rcp.klr.parts.ConsolePart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.ConsolePart" label="Meldungen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Gibt alle Meldungen der Applikation aus"/>
+              <children xsi:type="basic:Part" xmi:id="_BOVrAOYSEeKAwpnzjMnRVg" elementId="de.hannit.fsch.rcp.klr.parts.ConsolePart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.ConsolePart" label="Meldungen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Gibt alle Meldungen der Applikation aus"/>
             </children>
           </children>
         </children>

@@ -43,6 +43,7 @@
   <handlers xmi:id="_Qd0LlOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.saveCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.SaveHandler" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
   <handlers xmi:id="_Qd0Ll-MVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.aboutCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.AboutHandler" command="_Qd0LluMVEeKJItlVKSINDA"/>
   <handlers xmi:id="_aNtOsOV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handlers.InsertMitarbeiterHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.InsertMitarbeiterHandler" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
+  <handlers xmi:id="_kWLWQOhpEeK_zf9di-xkGQ" elementId="de.hannit.fsch.rcp.klr.handlers.LogHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.LogHandler"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>

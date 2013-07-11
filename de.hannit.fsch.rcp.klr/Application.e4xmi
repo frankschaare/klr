@@ -46,7 +46,7 @@
   <handlers xmi:id="_Qd0Ll-MVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.aboutCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.AboutHandler" command="_Qd0LluMVEeKJItlVKSINDA"/>
   <handlers xmi:id="_aNtOsOV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handlers.InsertMitarbeiterHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.InsertMitarbeiterHandler" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
   <handlers xmi:id="_kWLWQOhpEeK_zf9di-xkGQ" elementId="de.hannit.fsch.rcp.klr.handlers.LogHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.LogHandler"/>
-  <handlers xmi:id="_S80vwOoUEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handler.importLOGAHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.ImportLOGAHandler" command="_FE8Z8OoUEeK7nN3EOf8xtA"/>
+  <handlers xmi:id="_S80vwOoUEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handler.importLOGAHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.ImportLOGAHandler" command="_FE8Z8OoUEeK7nN3EOf8xtA"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -57,7 +57,7 @@
     <children xmi:id="_Qd0LiuMVEeKJItlVKSINDA" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
     <children xmi:id="_Qd0Li-MVEeKJItlVKSINDA" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
   </rootContext>
-  <descriptors xmi:id="_d2xJQOoeEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.partdescriptor.loga" label="Loga Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/CSV16x16.png" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="de.hannit.fsch.rcp.klr.descriptors.LogaPart">
+  <descriptors xmi:id="_d2xJQOoeEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.partdescriptor.loga" label="Loga Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Money16px.png" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.LoGaPart">
     <toolbar xmi:id="_Q6ttEOofEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.toolbar.0"/>
   </descriptors>
   <commands xmi:id="_Qd0LjOMVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>

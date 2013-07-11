@@ -30,7 +30,8 @@ public class CSVDetailsPart
 IEventBroker broker;
 
 private Label label;
-private TableViewer tableViewer;	
+private TableViewer tableViewer;
+private boolean columnsCreated = false;
 
 	@Inject
 	public CSVDetailsPart() 
@@ -45,7 +46,11 @@ private TableViewer tableViewer;
 	broker.send(Topics.LOGGING, new LogMessage(IStatus.INFO, this.getClass().getName(), "Verarbeite " + csv.getLineCount() + " Zeilen aus CSV Import."));	
 	label.setText(csv.getPath());
 	
+	if (!columnsCreated)
+	{
 	createColumns(tableViewer, csv);
+	}
+		
 	tableViewer.setContentProvider(new ArrayContentProvider());
 	tableViewer.setLabelProvider(new CSVLabelProvider());
 	tableViewer.setInput(csv.getFields());
@@ -69,7 +74,7 @@ private TableViewer tableViewer;
 			}
 
 		}
-		
+	columnsCreated = true;	
 	}
 
 	@PostConstruct

@@ -11,12 +11,14 @@
 package de.hannit.fsch.rcp.klr.parts;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.contexts.RunAndTrack;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
@@ -25,6 +27,7 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -35,7 +38,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
 import org.osgi.service.event.Event;
 
+import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.LogMessage;
+import de.hannit.fsch.common.RunAndTrackExample;
 import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
 import de.hannit.fsch.klr.dataservice.DataService;
 import de.hannit.fsch.rcp.klr.constants.Topics;
@@ -49,9 +54,15 @@ IEventBroker broker;
 @Inject
 DataService dataService;
 
+@Inject
+private EPartService partService;
+
 	private Label label;
 	private TableViewer tableViewer;
 	private ArrayList<Mitarbeiter> mitarbeiter;	
+	@Inject @Optional private MApplication application;
+	private IEclipseContext context;
+	private TreeMap<Integer, LogMessage> logStack = new TreeMap<Integer, LogMessage>();	
 
 	/*
 	 * Beispiel für Registrierung an Eclipse Framework Events
@@ -60,7 +71,7 @@ DataService dataService;
 	 */
 	@Inject
 	@Optional
-	public void partActivation(@UIEventTopic(UIEvents.UILifeCycle.ACTIVATE) Event event, MApplication application) 
+	public void partActivation(@UIEventTopic(UIEvents.UILifeCycle.ACTIVATE) Event event) 
 	{
 	// TODO: org.osgi.service.event.Event sind noch nicht in den Product Dependencies	
 	// Den aktiven Part ausgeben:	
@@ -68,7 +79,7 @@ DataService dataService;
 	MWindow main = application.getChildren().get(0);
 	main.setLabel("HannIT KLR - " + dataService.getConnectionInfo());
 	// Den Eclipse Context ausgeben:
-	IEclipseContext context = application.getContext();
+	context = application.getContext();
 		// Eine eigene Variable setzen:
 		if (activePart != null) 
 		{
@@ -91,10 +102,17 @@ DataService dataService;
 	Tree tree = treeViewer.getTree();
 	tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
-	broker.send(Topics.LOGGING, new LogMessage(IStatus.INFO, this.getClass().getName(), "Fordere Mitarbeiterliste vom DataService an."));
+	logStack.put(logStack.size(), new LogMessage(IStatus.INFO, this.getClass().getName(), "Fordere Mitarbeiterliste vom DataService an."));
 	mitarbeiter = dataService.getMitarbeiter();
-	broker.send(Topics.LOGGING, new LogMessage(IStatus.INFO, this.getClass().getName(), "Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter"));
+	logStack.put(logStack.size(), new LogMessage(IStatus.INFO, this.getClass().getName(), "Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter"));
 	treeViewer.setInput(mitarbeiter);
+	
+	// application.getContext().declareModifiable(AppConstants.LOG_STACK);
+	application.getContext().runAndTrack(new RunAndTrackExample(application.getContext(), logStack));
+	
+	application.getContext().modify(AppConstants.LOG_STACK, logStack);
+	MPart mpart = partService.findPart("de.hannit.fsch.rcp.klr.parts.ConsolePart");
+	mpart.setVisible(true);
 	}
 
 	@Focus

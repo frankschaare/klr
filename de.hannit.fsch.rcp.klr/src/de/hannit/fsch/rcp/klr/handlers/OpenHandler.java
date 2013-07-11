@@ -44,7 +44,6 @@ IEventBroker broker;
 		csv.read();
 			
 		broker.send("CSV/Daten", csv);
-			
 		broker.send(Topics.LOGGING, new LogMessage(IStatus.INFO, this.getClass().getName(), "CSV-Datei: " + path + " wurden an den Event Broker gesendet"));
 		}
 	}

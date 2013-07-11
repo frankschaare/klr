@@ -18,6 +18,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 
 import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.common.LogMessage;
@@ -50,13 +51,28 @@ private boolean columnsCreated = false;
 	{
 	createColumns(tableViewer, csv);
 	}
+	else 
+	{
+	removeColumns(tableViewer);	
+	createColumns(tableViewer, csv);
+	}
 		
 	tableViewer.setContentProvider(new ArrayContentProvider());
 	tableViewer.setLabelProvider(new CSVLabelProvider());
 	tableViewer.setInput(csv.getFields());
 
 	}
-	
+
+	private void removeColumns(TableViewer tv) 
+	{
+	TableColumn[] columns = tv.getTable().getColumns();
+		for (int i = 0; i < columns.length; i++)
+		{
+		tv.getTable().getColumn(i).dispose();	
+		}
+	columnsCreated = false;	
+	}
+
 	private void createColumns(TableViewer tv, CSVDatei csv) 
 	{
 	TableViewerColumn column = null;

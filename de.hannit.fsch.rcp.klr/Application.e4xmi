@@ -20,10 +20,11 @@
       </children>
     </children>
     <mainMenu xmi:id="_Qd0LmeMVEeKJItlVKSINDA" elementId="menu:org.eclipse.ui.main.menu">
-      <children xsi:type="menu:Menu" xmi:id="_Qd0LmuMVEeKJItlVKSINDA" label="File">
+      <children xsi:type="menu:Menu" xmi:id="_Qd0LmuMVEeKJItlVKSINDA" label="Datei">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0Lm-MVEeKJItlVKSINDA" label="Open" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/sample.gif" command="_Qd0LkOMVEeKJItlVKSINDA"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LnOMVEeKJItlVKSINDA" label="Save" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/save_edit.gif" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_xprJ4OV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.0" label="Mitarbeiter laden" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/insertDB.gif" tooltip="Öffnet einen CSV Export und sichert die Mitarbeiterdaten in der Datenbank" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_ZFIf4OoWEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.imPortLoga" label="Loga Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/MoneyAdd16px.png" tooltip="Öffnet eine Loga CSV-Datei und importiert die Daten in die Datenbank" command="_FE8Z8OoUEeK7nN3EOf8xtA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_xprJ4OV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.0" label="Mitarbeiter laden" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Öffnet einen CSV Export und sichert die Mitarbeiterdaten in der Datenbank" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LneMVEeKJItlVKSINDA" label="Quit" command="_Qd0LjOMVEeKJItlVKSINDA"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_Qd0LnuMVEeKJItlVKSINDA" label="Help">
@@ -33,7 +34,8 @@
     <trimBars xmi:id="_Qd0LpeMVEeKJItlVKSINDA">
       <children xsi:type="menu:ToolBar" xmi:id="_Qd0LpuMVEeKJItlVKSINDA" elementId="toolbar:org.eclipse.ui.main.toolbar">
         <children xsi:type="menu:HandledToolItem" xmi:id="_Qd0Lp-MVEeKJItlVKSINDA" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/sample.gif" command="_Qd0LkOMVEeKJItlVKSINDA"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_IkxMoOV7EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.insertMitarbeiter" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/insertDB.gif" tooltip="Öffnet einen CSV Export und sichert die Mitarbeiterdaten in der Datenbank" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_oxpuAOoUEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.importLOGA" label="LoGa" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/MoneyAdd16px.png" tooltip="Importiert Daten einer LoGa CSV-Datei in die Datenbank" command="_FE8Z8OoUEeK7nN3EOf8xtA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_IkxMoOV7EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.insertMitarbeiter" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Öffnet einen CSV Export und sichert die Mitarbeiterdaten in der Datenbank" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_Qd0LqOMVEeKJItlVKSINDA" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/save_edit.gif" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
       </children>
     </trimBars>
@@ -44,6 +46,7 @@
   <handlers xmi:id="_Qd0Ll-MVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.aboutCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.AboutHandler" command="_Qd0LluMVEeKJItlVKSINDA"/>
   <handlers xmi:id="_aNtOsOV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handlers.InsertMitarbeiterHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.InsertMitarbeiterHandler" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
   <handlers xmi:id="_kWLWQOhpEeK_zf9di-xkGQ" elementId="de.hannit.fsch.rcp.klr.handlers.LogHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.LogHandler"/>
+  <handlers xmi:id="_S80vwOoUEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handler.importLOGAHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.ImportLOGAHandler" command="_FE8Z8OoUEeK7nN3EOf8xtA"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -54,11 +57,15 @@
     <children xmi:id="_Qd0LiuMVEeKJItlVKSINDA" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
     <children xmi:id="_Qd0Li-MVEeKJItlVKSINDA" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
   </rootContext>
+  <descriptors xmi:id="_d2xJQOoeEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.partdescriptor.loga" label="Loga Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/CSV16x16.png" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="de.hannit.fsch.rcp.klr.descriptors.LogaPart">
+    <toolbar xmi:id="_Q6ttEOofEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.toolbar.0"/>
+  </descriptors>
   <commands xmi:id="_Qd0LjOMVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>
   <commands xmi:id="_Qd0LkOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.open" commandName="openCommand"/>
   <commands xmi:id="_Qd0Lk-MVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
   <commands xmi:id="_Qd0LluMVEeKJItlVKSINDA" elementId="org.eclipse.ui.help.aboutAction" commandName="aboutCommand"/>
   <commands xmi:id="_hS3TgOV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.command.insertMitarbeiter" commandName="insertMitarbeiterCommand" description="Sichert Daten einer CSV Datei in die Mitarbeiter Tabelle"/>
+  <commands xmi:id="_FE8Z8OoUEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.command.importLOGACommand" commandName="importLOGACommand" description="Importiert eine LoGa CSV-Datei in die Datenbank"/>
   <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

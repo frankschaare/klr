@@ -19,8 +19,8 @@
                name="appName"
                value="de.hannit.fsch.rcp.klr">
          </property>
-		<property
-				name="lifeCycleURI"
+		<property 
+				name="lifeCycleURI" 
 				value="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.common.LifeCycleManager">
 		</property>         
       </product>

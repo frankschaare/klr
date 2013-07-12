@@ -3,11 +3,21 @@
  */
 package de.hannit.fsch.rcp.klr.provider;
 
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
-
-import de.hannit.fsch.common.LogMessage;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventConstants;
 
 /**
  * @author fsch
@@ -15,7 +25,11 @@ import de.hannit.fsch.common.LogMessage;
  */
 public class LogTableLabelProvider implements ITableLabelProvider 
 {
-private String label = null;	
+private Event event = null;	
+private String label = null;
+private DateFormat dfmt = new SimpleDateFormat( "dd.MM.yyyy HH:mm:ss" );
+private URL url = null;
+
 
 	/**
 	 * 
@@ -64,9 +78,35 @@ private String label = null;
 	 * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang.Object, int)
 	 */
 	@Override
-	public Image getColumnImage(Object element, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+	public Image getColumnImage(Object element, int columnIndex) 
+	{
+		switch (columnIndex)
+		{
+		case 0:
+			Bundle bundle = FrameworkUtil.getBundle(this.getClass());
+			if (element instanceof Event) 
+			{
+				event = (Event) element;	
+			}
+			
+			switch ((int) event.getProperty(EventConstants.EVENT_FILTER))
+			{
+			case IStatus.ERROR:
+				url = FileLocator.find(bundle, new Path("icons/error_tsk.gif"), null);	
+				break;
+			case IStatus.WARNING:
+				url = FileLocator.find(bundle, new Path("icons/warn_tsk.gif"), null);	
+				break;	
+			default:
+				url = FileLocator.find(bundle, new Path("icons/info_tsk.gif"), null);	
+				break;
+			}
+		ImageDescriptor image = ImageDescriptor.createFromURL(url);	
+		return image.createImage();
+
+		default:
+		return null;	
+		}
 	}
 
 	/* (non-Javadoc)
@@ -75,22 +115,20 @@ private String label = null;
 	@Override
 	public String getColumnText(Object element, int columnIndex) 
 	{
-	LogMessage msg = null;
-	
-		if (element instanceof LogMessage) 
+		if (element instanceof Event) 
 		{
-		msg = (LogMessage) element;	
+		event = (Event) element;	
 		}
 		switch (columnIndex) 
 		{
 		case 0:
-		label = msg.getMessage();
+		label = (String) event.getProperty(EventConstants.MESSAGE);
 		break;
 		case 1:
-		label = msg.getPlugin();
+		label = (String) event.getProperty(EventConstants.SERVICE_ID);
 		break;		
 		case 2:
-		label = msg.getTimeStamp();
+		label = dfmt.format(event.getProperty(EventConstants.TIMESTAMP));
 		break;
 		default:
 		label = "";

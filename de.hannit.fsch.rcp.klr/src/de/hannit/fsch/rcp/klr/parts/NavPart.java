@@ -11,6 +11,9 @@
 package de.hannit.fsch.rcp.klr.parts;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
@@ -40,6 +43,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Tree;
 import org.osgi.service.event.Event;
+import org.osgi.service.event.EventConstants;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.AuswertungsMonat;
@@ -47,6 +51,7 @@ import de.hannit.fsch.common.LogMessage;
 import de.hannit.fsch.common.RunAndTrackExample;
 import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
 import de.hannit.fsch.klr.dataservice.DataService;
+import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.provider.NavTreeContentProvider;
 
 public class NavPart 
@@ -62,12 +67,11 @@ DataService dataService;
 @Inject
 private EPartService partService;
 
-	private Label label;
-	private TableViewer tableViewer;
-	private ArrayList<Mitarbeiter> mitarbeiter;	
-	@Inject @Optional private MApplication application;
-	private IEclipseContext context;
-	private TreeMap<Integer, LogMessage> logStack = new TreeMap<Integer, LogMessage>();	
+private ArrayList<Mitarbeiter> mitarbeiter;	
+@Inject @Optional private MApplication application;
+private IEclipseContext context;
+private TreeMap<Integer, Event> logStack = new TreeMap<Integer, Event>();
+private Dictionary<String, Object> props;
 
 	/*
 	 * Beispiel für Registrierung an Eclipse Framework Events
@@ -156,17 +160,33 @@ private EPartService partService;
 		tbtmAktuell.setControl(tree);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 	
-		logStack.put(logStack.size(), new LogMessage(IStatus.INFO, this.getClass().getName(), "Fordere Mitarbeiterliste vom DataService an."));
+		context = application.getContext();
+		logStack = (TreeMap<Integer, Event>) context.get(AppConstants.LOG_STACK);
+	
+		props = new Hashtable<String, Object>();
+		props.put(EventConstants.TIMESTAMP, new Date());
+		props.put(EventConstants.SERVICE_ID, this.getClass().getName());
+		props.put(EventConstants.EVENT_FILTER, IStatus.INFO);
+		props.put(EventConstants.MESSAGE, "Fordere Mitarbeiterliste vom DataService an.");
+		logStack.put(logStack.size(), new Event(Topics.LOGGING, props));
 		mitarbeiter = dataService.getMitarbeiter();
-		logStack.put(logStack.size(), new LogMessage(IStatus.INFO, this.getClass().getName(), "Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter"));
+		
+
+		props = new Hashtable<String, Object>();
+		props.put(EventConstants.TIMESTAMP, new Date());
+		props.put(EventConstants.SERVICE_ID, this.getClass().getName());
+		props.put(EventConstants.EVENT_FILTER, IStatus.INFO);
+		props.put(EventConstants.MESSAGE, "Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter");
+		logStack.put(logStack.size(), new Event(Topics.LOGGING, props));
+
 		treeViewer.setInput(mitarbeiter);
 	
 		// application.getContext().declareModifiable(AppConstants.LOG_STACK);
-		application.getContext().runAndTrack(new RunAndTrackExample(application.getContext(), logStack));
+		//application.getContext().runAndTrack(new RunAndTrackExample(application.getContext(), logStack));
 		
 		application.getContext().modify(AppConstants.LOG_STACK, logStack);
 		MPart mpart = partService.findPart("de.hannit.fsch.rcp.klr.parts.ConsolePart");
-		mpart.setVisible(true);
+		partService.activate(mpart);
 	}
 
 	@Focus

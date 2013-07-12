@@ -36,7 +36,7 @@ TableViewerColumn column = null;
 
 	Label label = new Label(parent, SWT.NONE);
 	label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-	label.setText(logaDatei.getPath() + " [" + (logaDatei.getFields().size() + 1) + " Datensätze]");
+	label.setText(logaDatei.getPath() + " [" + (logaDatei.getFields().size()) + " Datensätze]");
 
 	TableViewer	tableViewer = new TableViewer(parent);
 	// Make lines and make header visible

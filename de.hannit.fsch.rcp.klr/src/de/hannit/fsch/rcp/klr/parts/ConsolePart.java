@@ -3,45 +3,39 @@ package de.hannit.fsch.rcp.klr.parts;
 
 import java.util.TreeMap;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.annotation.PostConstruct;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
+import org.osgi.service.event.Event;
 
 import de.hannit.fsch.common.AppConstants;
-import de.hannit.fsch.common.CSVDatei;
-import de.hannit.fsch.common.LogMessage;
 import de.hannit.fsch.rcp.klr.constants.Topics;
-import de.hannit.fsch.rcp.klr.provider.CSVLabelProvider;
 import de.hannit.fsch.rcp.klr.provider.LogTableLabelProvider;
-
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.jface.viewers.TableViewer;
 
 public class ConsolePart 
 {
-private TreeMap<Integer, LogMessage> logStack;
+private TreeMap<Integer, Event> logStack = new TreeMap<Integer, Event>();
 
 private Label message = null;
 private Table table;
 private TableViewerColumn column = null;
 private TableViewer tableViewer;
 @Inject @Optional private MApplication application;
-private IEclipseContext context;
-
+	
 	@Inject
 	public ConsolePart() 
 	{
@@ -53,7 +47,7 @@ private IEclipseContext context;
 	{
 		if (item != null) 
 		{
-		logStack = (TreeMap<Integer, LogMessage>) item;	
+		logStack = (TreeMap<Integer, Event>) item;	
 		System.out.println("Empfange LogStack mit " + logStack.size() + " Meldungen.");	
 		}
 	}
@@ -61,16 +55,16 @@ private IEclipseContext context;
 	
 	@Inject
 	@Optional
-	public void handleEvent(@UIEventTopic(Topics.LOGGING) LogMessage msg)
+	public void handleEvent(@UIEventTopic(Topics.LOGGING) Event event)
 	{
-	logStack = (TreeMap<Integer, LogMessage>) application.getContext().get(AppConstants.LOG_STACK);	
-	logStack.put(logStack.size(), msg);	
-	application.getContext().modify(AppConstants.LOG_STACK, logStack);
+	logStack = (TreeMap<Integer, Event>) application.getContext().get(AppConstants.LOG_STACK);	
+	//logStack.put(logStack.size(), event);
+	//application.getContext().modify(AppConstants.LOG_STACK, logStack);
 		if (message != null) 
 		{
 		message.setText(logStack.size() + " Meldungen");	
 		}
-	tableViewer.setInput(logStack.values().toArray());	
+	tableViewer.setInput(logStack.descendingMap().values().toArray());	
 	}	
 	
 	@PostConstruct
@@ -87,13 +81,13 @@ private IEclipseContext context;
 
 		column = new TableViewerColumn(tableViewer, SWT.LEFT, 0);
 		column.getColumn().setText("Meldung");
-		column.getColumn().setWidth(1150);
+		column.getColumn().setWidth(1000);
 	    column.getColumn().setResizable(true);
 	    column.getColumn().setMoveable(true);
 	    
 		column = new TableViewerColumn(tableViewer, SWT.LEFT, 1);
 		column.getColumn().setText("Plug-in");
-		column.getColumn().setWidth(300);
+		column.getColumn().setWidth(450);
 	    column.getColumn().setResizable(true);
 	    column.getColumn().setMoveable(true);
 	    
@@ -110,7 +104,17 @@ private IEclipseContext context;
 	
 	
 	@Focus
-	public void onFocus() {
-		//TODO Your code here
+	public void onFocus() 
+	{
+	logStack = (TreeMap<Integer, Event>) application.getContext().get(AppConstants.LOG_STACK);	
+	
+			if (message != null) 
+			{
+			message.setText(logStack.size() + " Meldungen");	
+			}
+			if (tableViewer != null)
+			{
+			tableViewer.setInput(logStack.descendingMap().values().toArray());		
+			}
 	}
 }

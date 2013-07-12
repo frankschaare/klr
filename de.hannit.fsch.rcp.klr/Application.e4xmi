@@ -6,11 +6,18 @@
       <children xsi:type="advanced:Perspective" xmi:id="_Qd0LoeMVEeKJItlVKSINDA">
         <children xsi:type="basic:PartSashContainer" xmi:id="_Qd0LouMVEeKJItlVKSINDA" containerData="30000" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_Qd0Lo-MVEeKJItlVKSINDA">
-            <children xsi:type="basic:Part" xmi:id="_Qd0LpOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.parts.NavPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.NavPart" label="Mitarbeiter" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Users16x16.png" tooltip="Liste der aktuellen Mitarbeiter"/>
+            <children xsi:type="basic:Part" xmi:id="_Qd0LpOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.parts.NavPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.NavPart" label="Mitarbeiter" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Users16x16.png" tooltip="Liste der aktuellen Mitarbeiter">
+              <menus xsi:type="menu:PopupMenu" xmi:id="__W7agOpQEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.popupmenu.user" label="Benutzer">
+                <children xsi:type="menu:HandledMenuItem" xmi:id="_hgiSMOpTEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.popup.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Benutzer hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
+              </menus>
+              <toolbar xmi:id="_zGyXMOpTEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.parts.navpart.toolbar"/>
+            </children>
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_FtkXIOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partsashcontainer.0" containerData="70000">
             <children xsi:type="basic:PartStack" xmi:id="_QGItcOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.details" containerData="7000">
-              <children xsi:type="basic:Part" xmi:id="_gGmgYOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.part.CSVDetailsPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.CSVDetailsPart" label="CSV Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/CSV16x16.png" tooltip="Sofern eine CSV Datei eingelesen wurde, wird hier der Inhalt dargestellt"/>
+              <children xsi:type="basic:Part" xmi:id="_gGmgYOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.part.CSVDetailsPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.CSVDetailsPart" label="CSV Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/CSV16x16.png" tooltip="Sofern eine CSV Datei eingelesen wurde, wird hier der Inhalt dargestellt">
+                <toolbar xmi:id="_fxhWwOrDEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.toolbar.2"/>
+              </children>
             </children>
             <children xsi:type="basic:PartStack" xmi:id="_Wap_gOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.messages" containerData="3000">
               <children xsi:type="basic:Part" xmi:id="_BOVrAOYSEeKAwpnzjMnRVg" elementId="de.hannit.fsch.rcp.klr.parts.ConsolePart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.ConsolePart" label="Meldungen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Gibt alle Meldungen der Applikation aus"/>
@@ -20,14 +27,16 @@
       </children>
     </children>
     <mainMenu xmi:id="_Qd0LmeMVEeKJItlVKSINDA" elementId="menu:org.eclipse.ui.main.menu">
-      <children xsi:type="menu:Menu" xmi:id="_Qd0LmuMVEeKJItlVKSINDA" label="Datei">
+      <children xsi:type="menu:Menu" xmi:id="_Qd0LmuMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.menu.main.file" label="Datei">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0Lm-MVEeKJItlVKSINDA" label="Open" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/sample.gif" command="_Qd0LkOMVEeKJItlVKSINDA"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LnOMVEeKJItlVKSINDA" label="Save" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/save_edit.gif" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_ZFIf4OoWEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.imPortLoga" label="Loga Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/MoneyAdd16px.png" tooltip="Öffnet eine Loga CSV-Datei und importiert die Daten in die Datenbank" command="_FE8Z8OoUEeK7nN3EOf8xtA"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_xprJ4OV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.0" label="Mitarbeiter laden" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Öffnet einen CSV Export und sichert die Mitarbeiterdaten in der Datenbank" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LneMVEeKJItlVKSINDA" label="Quit" command="_Qd0LjOMVEeKJItlVKSINDA"/>
       </children>
-      <children xsi:type="menu:Menu" xmi:id="_Qd0LnuMVEeKJItlVKSINDA" label="Help">
+      <children xsi:type="menu:Menu" xmi:id="_z2tccOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menu.main.users" label="Benutzer" iconURI="" tooltip="Benutzerverwaltung"/>
+      <children xsi:type="menu:Menu" xmi:id="_fwNOsOrwEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.menu.main.database" label="Datenbank" tooltip="Datenbankspezifische Aktionen"/>
+      <children xsi:type="menu:Menu" xmi:id="_Qd0LnuMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.menu.main.help" label="Help">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0Ln-MVEeKJItlVKSINDA" label="About" command="_Qd0LluMVEeKJItlVKSINDA"/>
       </children>
     </mainMenu>
@@ -44,9 +53,18 @@
   <handlers xmi:id="_Qd0LkeMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.openCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.OpenHandler" command="_Qd0LkOMVEeKJItlVKSINDA"/>
   <handlers xmi:id="_Qd0LlOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.saveCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.SaveHandler" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
   <handlers xmi:id="_Qd0Ll-MVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.aboutCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.AboutHandler" command="_Qd0LluMVEeKJItlVKSINDA"/>
-  <handlers xmi:id="_aNtOsOV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handlers.InsertMitarbeiterHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.InsertMitarbeiterHandler" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
+  <handlers xmi:id="_aNtOsOV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handler.user.insert.bulk" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.InsertMitarbeiterHandler" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
   <handlers xmi:id="_kWLWQOhpEeK_zf9di-xkGQ" elementId="de.hannit.fsch.rcp.klr.handlers.LogHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.LogHandler"/>
   <handlers xmi:id="_S80vwOoUEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handler.importLOGAHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.ImportLOGAHandler" command="_FE8Z8OoUEeK7nN3EOf8xtA"/>
+  <handlers xmi:id="_di3fkOpPEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handler.user.edit" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.user.editHandler" command="_5HK0AOpNEeK7nN3EOf8xtA"/>
+  <handlers xmi:id="_uKwe4OpPEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handler.user.remove" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.user.RemoveHandler" command="_wh0SUOpOEeK7nN3EOf8xtA"/>
+  <handlers xmi:id="_Ll1c0OpQEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handler.user.add" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.user.AddHandler" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
+  <handlers xmi:id="_xVxMoOrvEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handler.database.search" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.SearchHandler" command="_dOQr0OrvEeKT3PrNpk3Wzw"/>
+  <handlers xmi:id="_u8_QAOryEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handler.database.loga.insert" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.LogaInsertHandler" command="_WsrGwOryEeKT3PrNpk3Wzw"/>
+  <handlers xmi:id="_NsXR8Or0EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handler.database.loga.commit" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.LogaCommitHandler" command="_C55N4Or0EeKT3PrNpk3Wzw"/>
+  <handlers xmi:id="_Vm5qIOr1EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handler.database.loga.rollback" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.LogaRollbackHandler" command="_JlbcUOr1EeKT3PrNpk3Wzw"/>
+  <handlers xmi:id="_ToQWsOr2EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handler.database.loga.delete" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.LogaDeleteHandler" command="_6YaDEOr1EeKT3PrNpk3Wzw"/>
+  <handlers xmi:id="_PPYnEOr4EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handler.table.loga.edit" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.table.LogaEditHandler" command="_CpwjUOr4EeKT3PrNpk3Wzw"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -58,14 +76,48 @@
     <children xmi:id="_Qd0Li-MVEeKJItlVKSINDA" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
   </rootContext>
   <descriptors xmi:id="_d2xJQOoeEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.partdescriptor.loga" label="Loga Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Money16px.png" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.LoGaPart">
-    <toolbar xmi:id="_Q6ttEOofEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.toolbar.0"/>
+    <toolbar xmi:id="_Q6ttEOofEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.partdescriptor.loga.toolbar">
+      <children xsi:type="menu:ToolBarSeparator" xmi:id="_HDy7IOr3EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.toolbarseparator.0"/>
+    </toolbar>
   </descriptors>
+  <menuContributions xmi:id="_a7GTcOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menucontribution.user" parentId="de.hannit.fsch.rcp.klr.menu.main.users">
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_YWd2sOpQEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_TPePEOpNEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.edit" label="ändern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserEdit16px.png" tooltip="Änderungen am aktuellen Mitarbeiter vornehmen" command="_5HK0AOpNEeK7nN3EOf8xtA"/>
+    <children xsi:type="menu:HandledMenuItem" xmi:id="__aR7YOpOEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.remove" label="entfernen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserRemove16px.png" tooltip="Den aktuellen Mitarbeiter löschen" command="_wh0SUOpOEeK7nN3EOf8xtA"/>
+  </menuContributions>
+  <menuContributions xmi:id="_Pm43MOrvEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.menucontribution.database" parentId="de.hannit.fsch.rcp.klr.menu.main.database">
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_KyQOEOrwEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.database.search" label="Suchen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseSearch16px.png" tooltip="Prüft, ob das aktuelle Element in der Datenbank vorhanden ist" command="_dOQr0OrvEeKT3PrNpk3Wzw"/>
+  </menuContributions>
+  <toolBarContributions xmi:id="__L6hEOrDEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.navpart.toolbarcontribution" parentId="de.hannit.fsch.rcp.klr.parts.navpart.toolbar">
+    <children xsi:type="menu:HandledToolItem" xmi:id="_NNLcYOrEEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
+    <children xsi:type="menu:HandledToolItem" xmi:id="_nCChkOrEEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.edit" label="ändern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserEdit16px.png" tooltip="Änderungen am aktuellen Mitarbeiter vornehmen" command="_5HK0AOpNEeK7nN3EOf8xtA"/>
+    <children xsi:type="menu:HandledToolItem" xmi:id="_1sN3AOrEEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.remove" label="entfernen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserRemove16px.png" tooltip="Den aktuellen Mitarbeiter löschen" command="_wh0SUOpOEeK7nN3EOf8xtA"/>
+  </toolBarContributions>
+  <toolBarContributions xmi:id="_VYORwOrxEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.logapart.toolbarcontribution.database" parentId="de.hannit.fsch.rcp.klr.partdescriptor.loga.toolbar">
+    <children xsi:type="menu:HandledToolItem" xmi:id="_br2L8OrxEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.database.loga.search" label="suchen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseSearch16px.png" tooltip="Prüft, ob für die einzufügenden Personalnummern alle Mitarbeiter gespeichert sind." command="_dOQr0OrvEeKT3PrNpk3Wzw"/>
+    <children xsi:type="menu:HandledToolItem" xmi:id="_F_gJYOrzEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.database.loga.insert" label="speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert die aktuellen Datensätze in der Datenbank" command="_WsrGwOryEeKT3PrNpk3Wzw"/>
+    <children xsi:type="menu:HandledToolItem" xmi:id="_bNCosOr0EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.database.loga.commit" label="commit" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseCommit16px.png" tooltip="Committet die aktuellen Datensätze in der Datenbank" command="_C55N4Or0EeKT3PrNpk3Wzw"/>
+    <children xsi:type="menu:HandledToolItem" xmi:id="_htkhAOr1EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.database.loga.rollback" label="rollback" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseRollback16px.png" tooltip="Macht die aktuellen Änderungen in der Datenbank rückgängig" command="_JlbcUOr1EeKT3PrNpk3Wzw"/>
+    <children xsi:type="menu:HandledToolItem" xmi:id="_hOSukOr2EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.database.loga.rollback" label="delete" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseDelete16px.png" tooltip="Löscht die aktuelle Auswahl aus der Datenbank" command="_6YaDEOr1EeKT3PrNpk3Wzw"/>
+  </toolBarContributions>
+  <toolBarContributions xmi:id="_Ac-YIOr3EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.logapart.toolbarcontribution.table" parentId="de.hannit.fsch.rcp.klr.partdescriptor.loga.toolbar" positionInParent="">
+    <children xsi:type="menu:HandledToolItem" xmi:id="_PYQrsOr3EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.table.loga.search" label="ändern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableEdit16px.png" tooltip="Ändert die Daten in der aktuellen Auswahl" command="_CpwjUOr4EeKT3PrNpk3Wzw"/>
+  </toolBarContributions>
   <commands xmi:id="_Qd0LjOMVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>
   <commands xmi:id="_Qd0LkOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.open" commandName="openCommand"/>
   <commands xmi:id="_Qd0Lk-MVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
   <commands xmi:id="_Qd0LluMVEeKJItlVKSINDA" elementId="org.eclipse.ui.help.aboutAction" commandName="aboutCommand"/>
-  <commands xmi:id="_hS3TgOV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.command.insertMitarbeiter" commandName="insertMitarbeiterCommand" description="Sichert Daten einer CSV Datei in die Mitarbeiter Tabelle"/>
+  <commands xmi:id="_hS3TgOV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.command.user.insert.bulk" commandName="userInsertBulkCommand" description="Sichert Daten einer CSV Datei in die Mitarbeiter Tabelle"/>
   <commands xmi:id="_FE8Z8OoUEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.command.importLOGACommand" commandName="importLOGACommand" description="Importiert eine LoGa CSV-Datei in die Datenbank"/>
+  <commands xmi:id="_5HK0AOpNEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.command.user.edit" commandName="userEditCommand" description="Änderungen am aktuellen Benutzer vornehmen"/>
+  <commands xmi:id="_wh0SUOpOEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.command.user.remove" commandName="userRemoveCommand" description="Aktuellen Benutzer entfernen"/>
+  <commands xmi:id="_DQoFYOpQEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.command.user.add" commandName="userAddCommand" description="Neuen Benutzer hinzufügen"/>
+  <commands xmi:id="_dOQr0OrvEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.command.database.search" commandName="dbSearchCommand" description="Prüft, ob das aktuelle Element in der Datenbank vorhanden ist"/>
+  <commands xmi:id="_WsrGwOryEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.command.database.loga.insert" commandName="dbLOGAInsert" description="Speichert die aktuellen Datensätze in der Datenbank"/>
+  <commands xmi:id="_C55N4Or0EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.command.database.loga.commit" commandName="dbLOGACommit" description="Committet die aktuellen Datensätze in der Datenbank"/>
+  <commands xmi:id="_JlbcUOr1EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.command.database.loga.rollback" commandName="dbLOGARollback" description="Macht die aktuellen Änderungen in der Datenbank rückgängig"/>
+  <commands xmi:id="_6YaDEOr1EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.command.database.loga.delete" commandName="dbLOGADelete" description="Löscht die aktuelle Auswahl aus der Datenbank"/>
+  <commands xmi:id="_CpwjUOr4EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.command.table.loga.edit" commandName="tableLOGAEdit" description="Änderungen in der aktuellen Tabelle vornehmen"/>
   <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

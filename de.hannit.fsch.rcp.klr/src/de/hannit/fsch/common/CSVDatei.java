@@ -11,6 +11,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
+
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.services.events.IEventBroker;
+import org.osgi.service.event.Event;
 
 /**
  * @author fsch
@@ -27,6 +32,9 @@ private boolean hasHeader = true;
 private String delimiter = ";";
 private int lineCount = -1;
 
+protected TreeMap<Integer, Event> logStack;
+protected IEclipseContext appContext = null;
+protected IEventBroker broker = null;
 	/**
 	 * @param arg0
 	 */

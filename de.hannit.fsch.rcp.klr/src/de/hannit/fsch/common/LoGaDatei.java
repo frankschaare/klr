@@ -5,10 +5,21 @@ package de.hannit.fsch.common;
 
 import java.io.File;
 import java.net.URI;
+import java.util.Date;
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.TreeMap;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventConstants;
+
+import de.hannit.fsch.rcp.klr.constants.Topics;
 
 /**
  * @author fsch
@@ -109,12 +120,22 @@ private int lineCount = 1;
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void setAppContext(IEclipseContext appContext)
+	{
+	super.appContext = appContext;
+	}
+
+	public void setBroker(IEventBroker broker)
+	{
+	super.broker = broker;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang.Object, int)
 	 */
 	@Override
-	public String getColumnText(Object element, int columnIndex)
+	public String getColumnText(Object element, int columnIndex) 
 	{
 	fields = (String[]) element;
 
@@ -153,6 +174,17 @@ private int lineCount = 1;
 			catch (ArrayIndexOutOfBoundsException e)
 			{
 			label = "ERROR";
+
+			Dictionary<String, Object> props = new Hashtable<String, Object>();
+			props.put(EventConstants.TIMESTAMP, new Date());
+			props.put(EventConstants.SERVICE_ID, this.getClass().getName() + ".ITableLabelProvider.getColumnText()");
+			props.put(EventConstants.EVENT_FILTER, IStatus.ERROR);
+			props.put(EventConstants.MESSAGE, "ArrayIndexOutOfBoundsException bei Personalnummer: " + fields[CSVConstants.Loga.PERSONALNUMMER_INDEX_CSV]);
+			
+			super.logStack = (TreeMap<Integer, Event>) appContext.get(AppConstants.LOG_STACK);
+			logStack.put(logStack.size(), new Event(Topics.LOGGING, props));
+			super.appContext.modify(AppConstants.LOG_STACK, logStack);
+			super.broker.send(Topics.LOGGING, new Event(Topics.LOGGING, props));
 			}
 		break;		
 		

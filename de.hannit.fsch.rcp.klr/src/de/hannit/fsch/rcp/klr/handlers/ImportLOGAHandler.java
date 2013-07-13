@@ -1,15 +1,11 @@
  
 package de.hannit.fsch.rcp.klr.handlers;
 
-import java.util.Date;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.TreeMap;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.services.events.IEventBroker;
@@ -22,17 +18,19 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.osgi.service.event.Event;
-import org.osgi.service.event.EventConstants;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
-import de.hannit.fsch.common.LoGaDatei;
-import de.hannit.fsch.rcp.klr.constants.Topics;
+import de.hannit.fsch.common.CSVDatei;
+import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
 
 public class ImportLOGAHandler 
 {
 @Inject EPartService partService;
 @Inject IEventBroker broker;
+@Inject @Named(AppConstants.LOGGER) private ContextLogger log;
+
 private MPart logaPart = null;
 
 	@Execute
@@ -44,22 +42,13 @@ private MPart logaPart = null;
 		
 		if (path != null) 
 		{
-		LoGaDatei logaDatei = new LoGaDatei(path);
+		CSVDatei logaDatei = new LoGaDatei(path);
 		logaDatei.hasHeader(true);
 		logaDatei.setDelimiter(";");
-		logaDatei.setAppContext(app.getContext());
-		logaDatei.setBroker(broker);
+		logaDatei.setLog(log);
 		logaDatei.read();
 		
-		Dictionary<String, Object> props = new Hashtable<String, Object>();
-		props.put(EventConstants.TIMESTAMP, new Date());
-		props.put(EventConstants.SERVICE_ID, this.getClass().getName());
-		props.put(EventConstants.EVENT_FILTER, IStatus.INFO);
-		props.put(EventConstants.MESSAGE, "LoGa-Datei: " + path + " wurde mit " + logaDatei.getLineCount() + " Zeilen eingelesen.");
-		
-		logStack.put(logStack.size(), new Event(Topics.LOGGING, props));
-		app.getContext().modify(AppConstants.LOG_STACK, logStack);
-		broker.send(Topics.LOGGING, new Event(Topics.LOGGING, props));
+		log.info("LoGa-Datei: " + path + " wurde mit " + logaDatei.getLineCount() + " Zeilen eingelesen.", this.getClass().getName());
 		
 		// Fenstertitel ermitteln
 		String title = "LoGa " + logaDatei.getFields().get(0)[CSVConstants.Loga.ABRECHNUNGSMONAT_INDEX_CSV];
@@ -73,7 +62,7 @@ private MPart logaPart = null;
 		
 	}
 	
-	private MPart createLOGAPart(String title, LoGaDatei logaDatei)
+	private MPart createLOGAPart(String title, CSVDatei logaDatei)
 	{
 	logaPart = partService.createPart("de.hannit.fsch.rcp.klr.partdescriptor.loga");
 	logaPart.setLabel(title);

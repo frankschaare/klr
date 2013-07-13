@@ -11,15 +11,11 @@
 package de.hannit.fsch.rcp.klr.parts;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Named;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
@@ -30,7 +26,6 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -43,35 +38,26 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Tree;
 import org.osgi.service.event.Event;
-import org.osgi.service.event.EventConstants;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.AuswertungsMonat;
-import de.hannit.fsch.common.LogMessage;
-import de.hannit.fsch.common.RunAndTrackExample;
+import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
 import de.hannit.fsch.klr.dataservice.DataService;
-import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.provider.NavTreeContentProvider;
 
 public class NavPart 
 {
 private AuswertungsMonat auswertungsMonat = new AuswertungsMonat();
 	
-@Inject
-IEventBroker broker;
-
-@Inject
-DataService dataService;
-
-@Inject
-private EPartService partService;
+@Inject IEventBroker broker;
+@Inject DataService dataService;
+@Inject private EPartService partService;
+@Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 
 private ArrayList<Mitarbeiter> mitarbeiter;	
 @Inject @Optional private MApplication application;
 private IEclipseContext context;
-private TreeMap<Integer, Event> logStack = new TreeMap<Integer, Event>();
-private Dictionary<String, Object> props;
 
 	/*
 	 * Beispiel für Registrierung an Eclipse Framework Events
@@ -101,6 +87,8 @@ private Dictionary<String, Object> props;
 	@PostConstruct
 	public void createComposite(Composite parent) 
 	{
+	String method = this.getClass().getName() + ".createComposite()";
+	
 		parent.setLayout(new GridLayout(1, false));
 		
 		Composite top = new Composite(parent, SWT.NONE);
@@ -160,31 +148,16 @@ private Dictionary<String, Object> props;
 		tbtmAktuell.setControl(tree);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 	
-		context = application.getContext();
-		logStack = (TreeMap<Integer, Event>) context.get(AppConstants.LOG_STACK);
-	
-		props = new Hashtable<String, Object>();
-		props.put(EventConstants.TIMESTAMP, new Date());
-		props.put(EventConstants.SERVICE_ID, this.getClass().getName());
-		props.put(EventConstants.EVENT_FILTER, IStatus.INFO);
-		props.put(EventConstants.MESSAGE, "Fordere Mitarbeiterliste vom DataService an.");
-		logStack.put(logStack.size(), new Event(Topics.LOGGING, props));
+		log.info("Fordere Mitarbeiterliste vom DataService an.", method);
 		mitarbeiter = dataService.getMitarbeiter();
 		
-
-		props = new Hashtable<String, Object>();
-		props.put(EventConstants.TIMESTAMP, new Date());
-		props.put(EventConstants.SERVICE_ID, this.getClass().getName());
-		props.put(EventConstants.EVENT_FILTER, IStatus.INFO);
-		props.put(EventConstants.MESSAGE, "Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter");
-		logStack.put(logStack.size(), new Event(Topics.LOGGING, props));
+		log.info("Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter", method);
 
 		treeViewer.setInput(mitarbeiter);
 	
 		// application.getContext().declareModifiable(AppConstants.LOG_STACK);
 		//application.getContext().runAndTrack(new RunAndTrackExample(application.getContext(), logStack));
 		
-		application.getContext().modify(AppConstants.LOG_STACK, logStack);
 		MPart mpart = partService.findPart("de.hannit.fsch.rcp.klr.parts.ConsolePart");
 		partService.activate(mpart);
 	}

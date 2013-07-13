@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Table;
 
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.CSVDatei;
-import de.hannit.fsch.common.LoGaDatei;
+import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
 import de.hannit.fsch.rcp.klr.provider.CSVLabelProvider;
 
 /**
@@ -38,7 +38,7 @@ TableViewerColumn column = null;
 	label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 	label.setText(logaDatei.getPath() + " [" + (logaDatei.getFields().size()) + " Datensätze]");
 
-	TableViewer	tableViewer = new TableViewer(parent);
+	TableViewer	tableViewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 	// Make lines and make header visible
 	final Table table = tableViewer.getTable();
 		
@@ -92,7 +92,8 @@ TableViewerColumn column = null;
 	tableViewer.setLabelProvider(logaDatei);
 		if (logaDatei != null)
 		{
-		tableViewer.setInput(logaDatei.getFields());	
+		logaDatei.resetLineCount();	
+		tableViewer.setInput(logaDatei.getDaten().values().toArray());	
 		}
 	}
 }

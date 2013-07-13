@@ -15,7 +15,7 @@
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_FtkXIOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partsashcontainer.0" containerData="70000">
             <children xsi:type="basic:PartStack" xmi:id="_QGItcOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.details" containerData="7000">
-              <children xsi:type="basic:Part" xmi:id="_gGmgYOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.part.CSVDetailsPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.CSVDetailsPart" label="CSV Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/CSV16x16.png" tooltip="Sofern eine CSV Datei eingelesen wurde, wird hier der Inhalt dargestellt">
+              <children xsi:type="basic:Part" xmi:id="_gGmgYOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.part.CSVDetailsPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.CSVDetailsPart" label="CSV Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Sofern eine CSV Datei eingelesen wurde, wird hier der Inhalt dargestellt">
                 <toolbar xmi:id="_fxhWwOrDEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.toolbar.2"/>
               </children>
             </children>

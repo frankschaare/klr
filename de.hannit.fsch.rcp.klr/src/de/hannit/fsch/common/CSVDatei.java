@@ -11,11 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
-
-import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.e4.core.services.events.IEventBroker;
-import org.osgi.service.event.Event;
 
 /**
  * @author fsch
@@ -24,17 +19,20 @@ import org.osgi.service.event.Event;
  */
 public class CSVDatei extends File 
 {
+/**
+ * 
+ */
+private static final long serialVersionUID = 7390814932872973058L;
+
 private Charset charset = Charset.forName("ISO-8859-1");
 private List<String> lines;
 private ArrayList<String[]> fields = new ArrayList<String[]>();	
 
-private boolean hasHeader = true;
-private String delimiter = ";";
-private int lineCount = -1;
+protected boolean hasHeader = true;
+protected String delimiter = ";";
+protected int lineCount = -1;
+protected ContextLogger log;
 
-protected TreeMap<Integer, Event> logStack;
-protected IEclipseContext appContext = null;
-protected IEventBroker broker = null;
 	/**
 	 * @param arg0
 	 */
@@ -101,7 +99,18 @@ protected IEventBroker broker = null;
 		
 	}
 	
+	public void resetLineCount(){this.lineCount = 1;}
 	
+	public ContextLogger getLog()
+	{
+	return log;
+	}
+
+	public void setLog(ContextLogger log)
+	{
+	this.log = log;
+	}
+
 	public List<String> getLines() 
 	{
 	return lines;
@@ -144,7 +153,4 @@ protected IEventBroker broker = null;
 	public void setLineCount(int lineCount) {
 		this.lineCount = lineCount;
 	}
-	
-	
-
 }

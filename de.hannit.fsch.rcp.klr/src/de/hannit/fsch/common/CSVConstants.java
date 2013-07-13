@@ -51,6 +51,9 @@ public class CSVConstants
 	public static final int ABRECHNUNGSMONAT_INDEX_TABLE = 3;
 	public static final String ABRECHNUNGSMONAT_LABEL_TABLE = "Monat";
 	public static final int ABRECHNUNGSMONAT_INDEX_CSV = 6;
+	public static final String ABRECHNUNGSMONAT_DATUMSFORMAT_CSV = "dd.MM.yyyy";
+	
+	
 	
 	/**
 	 * Tarifgruppe

@@ -17,9 +17,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 
 import de.hannit.fsch.common.CSVConstants;
-import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
-import de.hannit.fsch.rcp.klr.provider.CSVLabelProvider;
 
 /**
  * @author fsch

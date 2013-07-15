@@ -16,6 +16,7 @@ import org.eclipse.swt.graphics.Image;
 
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.CSVDatei;
+import de.hannit.fsch.common.loga.LoGaDatensatz;
 
 /**
  * @author fsch

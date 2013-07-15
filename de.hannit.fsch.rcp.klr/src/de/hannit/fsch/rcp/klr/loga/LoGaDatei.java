@@ -186,7 +186,7 @@ private SimpleDateFormat format = new SimpleDateFormat(CSVConstants.Loga.ABRECHN
 		}
 		catch (ArrayIndexOutOfBoundsException e)
 		{
-		e.printStackTrace();
+		// e.printStackTrace();
 		getLog().error("ArrayIndexOutOfBoundsException beim parsen der Zeile: " + datenSatz.getSource(), this.getClass().getName() + ".split()", e);
 		datenSatz.setStellenAnteil(999999);
 		}

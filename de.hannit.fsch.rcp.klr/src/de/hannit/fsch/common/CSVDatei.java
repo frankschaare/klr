@@ -29,6 +29,8 @@ private List<String> lines;
 private ArrayList<String[]> fields = new ArrayList<String[]>();	
 
 protected boolean hasHeader = true;
+protected boolean errors = false;
+protected boolean checked = false;
 protected String delimiter = ";";
 protected int lineCount = -1;
 protected ContextLogger log;
@@ -99,6 +101,12 @@ protected ContextLogger log;
 		
 	}
 	
+	public boolean isChecked(){return checked;}
+	public void setChecked(boolean checked){this.checked = checked;}
+	
+	public boolean hasErrors(){return errors;}
+	public void setErrors(boolean errors){this.errors = errors;}
+
 	public void resetLineCount(){this.lineCount = 1;}
 	
 	public ContextLogger getLog()

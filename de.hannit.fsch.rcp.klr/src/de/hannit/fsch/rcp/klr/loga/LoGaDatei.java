@@ -5,14 +5,23 @@ package de.hannit.fsch.rcp.klr.loga;
 
 import java.io.File;
 import java.net.URI;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TreeMap;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventConstants;
 
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.CSVDatei;
@@ -32,6 +41,7 @@ private String label = null;
 private TreeMap<Integer, LoGaDatensatz> daten;
 private LoGaDatensatz datenSatz = null;
 private SimpleDateFormat format = new SimpleDateFormat(CSVConstants.Loga.ABRECHNUNGSMONAT_DATUMSFORMAT_CSV);
+private URL url = null;
 
 	/**
 	 * @param arg0
@@ -245,8 +255,37 @@ private SimpleDateFormat format = new SimpleDateFormat(CSVConstants.Loga.ABRECHN
 	@Override
 	public Image getColumnImage(Object element, int columnIndex)
 	{
-		// TODO Auto-generated method stub
+	
+		switch (columnIndex)
+		{
+		case 1:
+			Bundle bundle = FrameworkUtil.getBundle(this.getClass());
+			if (element instanceof LoGaDatensatz) 
+			{
+			datenSatz =  (LoGaDatensatz) element;	
+			
+				if (datenSatz.mitarbeiterChecked())
+				{
+					if (datenSatz.existsMitarbeiter())
+					{
+						url = FileLocator.find(bundle, new Path("icons/checked.gif"), null);
+					}
+					else
+					{
+						url = FileLocator.find(bundle, new Path("icons/error_tsk.gif"), null);						
+					}					
+				ImageDescriptor image = ImageDescriptor.createFromURL(url);	
+				return image.createImage();
+				}
+				else
+				{
+				return null;
+				}
+			}
+
+		default:
 		return null;
+		}
 	}
 	
 	/* (non-Javadoc)

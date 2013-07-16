@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -23,6 +24,7 @@ import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
 
 public class ImportLOGAHandler 
@@ -32,6 +34,7 @@ public class ImportLOGAHandler
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 
 private MPart logaPart = null;
+private IEclipseContext partContext = null;
 
 	@Execute
 	public void execute(@Named(AppConstants.LOG_STACK) TreeMap<Integer, Event> logStack, @Named(IServiceConstants.ACTIVE_SHELL) Shell shell, MApplication app, EModelService modelService) 
@@ -42,7 +45,7 @@ private MPart logaPart = null;
 		
 		if (path != null) 
 		{
-		CSVDatei logaDatei = new LoGaDatei(path);
+		LoGaDatei logaDatei = new LoGaDatei(path);
 		logaDatei.hasHeader(true);
 		logaDatei.setDelimiter(";");
 		logaDatei.setLog(log);
@@ -58,6 +61,8 @@ private MPart logaPart = null;
 		logaPart = createLOGAPart(title, logaDatei);
 		details.getChildren().add(logaPart);
 		partService.activate(logaPart);
+		
+		broker.send(Topics.LOGA_DATEN, logaDatei);
 		}		
 		
 	}
@@ -66,7 +71,8 @@ private MPart logaPart = null;
 	{
 	logaPart = partService.createPart("de.hannit.fsch.rcp.klr.partdescriptor.loga");
 	logaPart.setLabel(title);
-	logaPart.setContext(EclipseContextFactory.create());
+	partContext = EclipseContextFactory.create();
+	logaPart.setContext(partContext);
 	logaPart.getContext().set(CSVConstants.Loga.CONTEXT_DATEN, logaDatei);
 	
 	return logaPart;

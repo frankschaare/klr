@@ -6,6 +6,8 @@ package de.hannit.fsch.rcp.klr.parts;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -17,6 +19,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 
 import de.hannit.fsch.common.CSVConstants;
+import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
 
 /**
@@ -24,8 +27,16 @@ import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
  *
  */
 public class LoGaPart
-{
-TableViewerColumn column = null;
+{	
+private TableViewerColumn column = null;
+private TableViewer	tableViewer = null;
+
+	@Inject @Optional
+	public void handleEvent(@UIEventTopic(Topics.LOGA_DATEN) LoGaDatei logaDatei)
+	{
+	logaDatei.resetLineCount();	
+	tableViewer.setInput(logaDatei.getDaten().values().toArray());	
+	}	
 
 	@Inject	
 	public LoGaPart(Composite parent, @Named(CSVConstants.Loga.CONTEXT_DATEN) LoGaDatei logaDatei)
@@ -36,7 +47,7 @@ TableViewerColumn column = null;
 	label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 	label.setText(logaDatei.getPath() + " [" + (logaDatei.getFields().size()) + " Datensätze]");
 
-	TableViewer	tableViewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+	tableViewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 	// Make lines and make header visible
 	final Table table = tableViewer.getTable();
 		

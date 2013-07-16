@@ -36,18 +36,32 @@ private LoGaDatei logaDatei = null;
 	public void execute() 
 	{
 	SQLException e = null;
+	int insertCount = 0;
+	int errorCount = 0;
+	String plugin = this.getClass().getName() + ".execute()";
 	
 		for (LoGaDatensatz ds : logaDatei.getDaten().values())
 		{
 		e = dataService.setLoGaDaten(ds);	
 			if (e == null)
 			{
-			log.confirm("Loga Daten für Personalnummer: " + ds.getPersonalNummer() + " erfolgreich in der Datenbank gespeichert", this.getClass().getName() + ".execute()");	
+			// log.confirm("Loga Daten für Personalnummer: " + ds.getPersonalNummer() + " erfolgreich in der Datenbank gespeichert", this.getClass().getName() + ".execute()");	
+			insertCount++;
 			}
 			else 
 			{
-				
+			log.error("SQLException beim Loga-Import von Datensatz: " + ds.getSource(),	plugin, e);	
+			errorCount++;
 			}
+		}
+		
+		if (errorCount == 0)
+		{
+		log.confirm(insertCount + " Loga-Datensätze erfolgreich in die Datenbank eingefügt.", plugin);	
+		}
+		else
+		{
+		log.warn("Beim Import der Loga-Daten in die Datenbank sind " + errorCount + " Fehler aufgetreten.", plugin);	
 		}
 	}
 	

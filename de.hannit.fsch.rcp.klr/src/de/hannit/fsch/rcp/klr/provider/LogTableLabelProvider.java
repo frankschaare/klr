@@ -97,6 +97,9 @@ private URL url = null;
 			case IStatus.WARNING:
 				url = FileLocator.find(bundle, new Path("icons/warn_tsk.gif"), null);	
 				break;	
+			case IStatus.OK:
+				url = FileLocator.find(bundle, new Path("icons/checked.gif"), null);	
+				break;	
 			default:
 				url = FileLocator.find(bundle, new Path("icons/info_tsk.gif"), null);	
 				break;

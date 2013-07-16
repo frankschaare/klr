@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.TreeMap;
 
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -20,8 +19,6 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.event.Event;
-import org.osgi.service.event.EventConstants;
 
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.CSVDatei;
@@ -35,7 +32,6 @@ public class LoGaDatei extends CSVDatei implements ITableLabelProvider
 {
 private static final long serialVersionUID = -4808470669223797111L;
 
-private String[] fields = null;
 private String label = null;	
 
 private TreeMap<Integer, LoGaDatensatz> daten;

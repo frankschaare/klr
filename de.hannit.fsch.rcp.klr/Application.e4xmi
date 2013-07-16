@@ -29,7 +29,7 @@
     <mainMenu xmi:id="_Qd0LmeMVEeKJItlVKSINDA" elementId="menu:org.eclipse.ui.main.menu">
       <children xsi:type="menu:Menu" xmi:id="_Qd0LmuMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.menu.main.file" label="Datei">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0Lm-MVEeKJItlVKSINDA" label="Open" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/sample.gif" command="_Qd0LkOMVEeKJItlVKSINDA"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LnOMVEeKJItlVKSINDA" label="Save" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/save_edit.gif" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LnOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.open.azv" label="AZV Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Öffnet eine CSV Datei mit Arbeitszeitanteilen" command="_Qd0LkOMVEeKJItlVKSINDA"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_ZFIf4OoWEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.imPortLoga" label="Loga Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/MoneyAdd16px.png" tooltip="Öffnet eine Loga CSV-Datei und importiert die Daten in die Datenbank" command="_FE8Z8OoUEeK7nN3EOf8xtA"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_xprJ4OV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.0" label="Mitarbeiter laden" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Öffnet einen CSV Export und sichert die Mitarbeiterdaten in der Datenbank" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LneMVEeKJItlVKSINDA" label="Quit" command="_Qd0LjOMVEeKJItlVKSINDA"/>
@@ -42,7 +42,7 @@
     </mainMenu>
     <trimBars xmi:id="_Qd0LpeMVEeKJItlVKSINDA">
       <children xsi:type="menu:ToolBar" xmi:id="_Qd0LpuMVEeKJItlVKSINDA" elementId="toolbar:org.eclipse.ui.main.toolbar">
-        <children xsi:type="menu:HandledToolItem" xmi:id="_Qd0Lp-MVEeKJItlVKSINDA" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/sample.gif" command="_Qd0LkOMVEeKJItlVKSINDA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_Qd0Lp-MVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.azv.open" label="AZV Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Öffnet eine CSV Datei mit Arbeitszeitanteilen" command="_Qd0LkOMVEeKJItlVKSINDA"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_oxpuAOoUEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.importLOGA" label="LoGa" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/MoneyAdd16px.png" tooltip="Importiert Daten einer LoGa CSV-Datei in die Datenbank" command="_FE8Z8OoUEeK7nN3EOf8xtA"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_IkxMoOV7EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.insertMitarbeiter" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Öffnet einen CSV Export und sichert die Mitarbeiterdaten in der Datenbank" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_Qd0LqOMVEeKJItlVKSINDA" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/save_edit.gif" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
@@ -50,7 +50,7 @@
     </trimBars>
   </children>
   <handlers xmi:id="_Qd0LjeMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.quitCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.QuitHandler" command="_Qd0LjOMVEeKJItlVKSINDA"/>
-  <handlers xmi:id="_Qd0LkeMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.openCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.OpenHandler" command="_Qd0LkOMVEeKJItlVKSINDA"/>
+  <handlers xmi:id="_Qd0LkeMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.openCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.azv.OpenAZVHandler" command="_Qd0LkOMVEeKJItlVKSINDA"/>
   <handlers xmi:id="_Qd0LlOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.saveCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.SaveHandler" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
   <handlers xmi:id="_Qd0Ll-MVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.aboutCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.AboutHandler" command="_Qd0LluMVEeKJItlVKSINDA"/>
   <handlers xmi:id="_aNtOsOV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handler.user.insert.bulk" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.InsertMitarbeiterHandler" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
@@ -80,6 +80,9 @@
       <children xsi:type="menu:ToolBarSeparator" xmi:id="_HDy7IOr3EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.toolbarseparator.0"/>
     </toolbar>
   </descriptors>
+  <descriptors xmi:id="_z4IoMO4PEeKCvZc-XLvArg" elementId="de.hannit.fsch.rcp.klr.partdescriptor.azv" label="AZV Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.AZVPart">
+    <toolbar xmi:id="_-_IKwO4PEeKCvZc-XLvArg" elementId="de.hannit.fsch.rcp.klr.toolbar.0"/>
+  </descriptors>
   <menuContributions xmi:id="_a7GTcOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menucontribution.user" parentId="de.hannit.fsch.rcp.klr.menu.main.users">
     <children xsi:type="menu:HandledMenuItem" xmi:id="_YWd2sOpQEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
     <children xsi:type="menu:HandledMenuItem" xmi:id="_TPePEOpNEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.edit" label="ändern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserEdit16px.png" tooltip="Änderungen am aktuellen Mitarbeiter vornehmen" command="_5HK0AOpNEeK7nN3EOf8xtA"/>
@@ -104,7 +107,7 @@
     <children xsi:type="menu:HandledToolItem" xmi:id="_PYQrsOr3EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.table.loga.search" label="ändern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableEdit16px.png" tooltip="Ändert die Daten in der aktuellen Auswahl" command="_CpwjUOr4EeKT3PrNpk3Wzw"/>
   </toolBarContributions>
   <commands xmi:id="_Qd0LjOMVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>
-  <commands xmi:id="_Qd0LkOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.open" commandName="openCommand"/>
+  <commands xmi:id="_Qd0LkOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.open.azv" commandName="openAZVCommand"/>
   <commands xmi:id="_Qd0Lk-MVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
   <commands xmi:id="_Qd0LluMVEeKJItlVKSINDA" elementId="org.eclipse.ui.help.aboutAction" commandName="aboutCommand"/>
   <commands xmi:id="_hS3TgOV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.command.user.insert.bulk" commandName="userInsertBulkCommand" description="Sichert Daten einer CSV Datei in die Mitarbeiter Tabelle"/>

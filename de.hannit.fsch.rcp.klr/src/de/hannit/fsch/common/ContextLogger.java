@@ -114,4 +114,18 @@ private Dictionary<String, Object> props = new Hashtable<String, Object>();
 	broker.post(Topics.LOGGING, null);	
 	}
 
+	public void confirm(String msg, String plugin)
+	{
+	logStack = getLogStack();
+	
+	props.put(EventConstants.TIMESTAMP, new Date());
+	props.put(EventConstants.SERVICE_ID, plugin);
+	props.put(EventConstants.EVENT_FILTER, IStatus.OK);
+	props.put(EventConstants.MESSAGE, msg);
+		
+	logStack.put(logStack.size(), new Event(Topics.LOGGING, props));
+	setLogStack(logStack);
+	broker.post(Topics.LOGGING, null);	
+	}
+
 }

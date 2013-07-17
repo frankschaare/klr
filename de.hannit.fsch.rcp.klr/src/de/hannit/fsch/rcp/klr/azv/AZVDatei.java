@@ -5,13 +5,17 @@ import java.net.URI;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeMap;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.CSVDatei;
@@ -28,6 +32,8 @@ private AZVDatensatz datenSatz = null;
 private SimpleDateFormat format = new SimpleDateFormat(CSVConstants.AZV.BERICHTSMONAT_DATUMSFORMAT_CSV);
 private URL url = null;	
 private String label = null;	
+private boolean checked = false;
+private java.sql.Date berichtsMonatSQL;
 
 	public AZVDatei(String arg0)
 	{
@@ -52,6 +58,9 @@ private String label = null;
 		super(arg0, arg1);
 		// TODO Auto-generated constructor stub
 	}
+
+	public boolean isChecked(){return checked;}
+	public void setChecked(boolean checked){this.checked = checked;}
 
 	@Override
 	public void read()
@@ -85,6 +94,17 @@ private String label = null;
 		}
 	}
 	
+	public java.sql.Date getBerichtsMonatSQL()
+	{
+		return berichtsMonatSQL;
+	}
+
+	//TODO: prüfen, ob alle Monate übereinstimmen
+	public void setBerichtsMonatSQL(java.sql.Date berichtsMonatSQL)
+	{
+	this.berichtsMonatSQL = berichtsMonatSQL;
+	}
+
 	/*
 	 * Die CSV-Daten werden so genau wie möglich geprüft
 	 */
@@ -106,12 +126,25 @@ private String label = null;
 		getLog().error("NumberFormatException beim parsen der Zeile: " + datenSatz.getSource(), this.getClass().getName() + ".split()", e);
 		datenSatz.setPersonalNummer(999999);
 		}
+
+		// Team
+		try
+		{
+		String strTeam = parts[CSVConstants.AZV.TEAM_INDEX_CSV];	
+		datenSatz.setTeam(strTeam);
+		}
+		catch (Exception e)
+		{
+		e.printStackTrace();
+		getLog().error("Exception beim parsen der Zeile: " + datenSatz.getSource(), this.getClass().getName() + ".split()", e);
+		}		
 		
 		// Berichtsmonat und Jahr
 		try
 		{
 		Date berichtsMonat = format.parse(parts[CSVConstants.AZV.BERICHTSMONAT_INDEX_CSV] + " " + parts[CSVConstants.AZV.BERICHTSJAHR_INDEX_CSV]);	
 		datenSatz.setBerichtsMonat(berichtsMonat);
+		setBerichtsMonatSQL(datenSatz.getBerichtsMonatSQL());
 		}
 		catch (ParseException e)
 		{
@@ -211,8 +244,37 @@ private String label = null;
 	@Override
 	public Image getColumnImage(Object element, int columnIndex)
 	{
-		// TODO Auto-generated method stub
+		
+		switch (columnIndex)
+		{
+		case CSVConstants.AZV.PERSONALNUMMER_INDEX_TABLE:
+			Bundle bundle = FrameworkUtil.getBundle(this.getClass());
+			if (element instanceof AZVDatensatz) 
+			{
+			datenSatz =  (AZVDatensatz) element;	
+			
+				if (datenSatz.isMitarbeiterChecked())
+				{
+					if (datenSatz.existsMitarbeiter())
+					{
+						url = FileLocator.find(bundle, new Path("icons/checked.gif"), null);
+					}
+					else
+					{
+						url = FileLocator.find(bundle, new Path("icons/error_tsk.gif"), null);						
+					}					
+				ImageDescriptor image = ImageDescriptor.createFromURL(url);	
+				return image.createImage();
+				}
+				else
+				{
+				return null;
+				}
+			}
+
+		default:
 		return null;
+		}
 	}
 
 	@Override
@@ -231,16 +293,20 @@ private String label = null;
 		label = String.valueOf(datenSatz.getPersonalNummer());
 		break;
 		
+		case CSVConstants.AZV.TEAM_INDEX_TABLE:
+		label = datenSatz.getTeam();
+		break;		
+		
 		case CSVConstants.AZV.BERICHTSMONAT_INDEX_TABLE:
 		label = format.format(datenSatz.getBerichtsMonat());
 		break;	
 		
 		case CSVConstants.AZV.KOSTENSTELLE_INDEX_TABLE:
-		label = datenSatz.getKostenstelle();
+		label = datenSatz.getKostenstelle() == null ? null : datenSatz.getKostenstelle() + " - " + datenSatz.getKostenstellenBeschreibung();
 		break;		
 		
 		case CSVConstants.AZV.KOSTENTRAEGER_INDEX_TABLE:
-		label = datenSatz.getKostentraeger();
+		label = datenSatz.getKostentraeger() == null ? null : datenSatz.getKostentraeger() + " - " + datenSatz.getKostenTraegerBeschreibung();
 		break;	
 		
 		case CSVConstants.AZV.PROZENTANTEIL_INDEX_TABLE:

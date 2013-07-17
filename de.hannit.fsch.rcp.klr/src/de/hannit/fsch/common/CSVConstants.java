@@ -84,18 +84,26 @@ public class CSVConstants
 	public static interface AZV 
 	{
 	public static final String CONTEXT_DATEN = "AZV";
+	public static final String AZV_IMPORT_DIR = "\\\\regionhannover.de\\daten\\DMS_System\\Zusatzkomponenten\\Workflow\\Azv\\Importe";
+
 	
 	/**
 	 * Personalnummer
 	 */
 	public static final int PERSONALNUMMER_INDEX_TABLE = 1;
 	public static final int PERSONALNUMMER_INDEX_CSV = 7;
+		
+	/**
+	 * Team
+	 */
+	public static final int TEAM_INDEX_TABLE = 2;
+	public static final int TEAM_INDEX_CSV = 4;
 	
 	/**
 	 * Abrechnungsjahr
 	 */
 	public static final int BERICHTSMONAT_INDEX_CSV = 9;
-	public static final int BERICHTSMONAT_INDEX_TABLE = 2;
+	public static final int BERICHTSMONAT_INDEX_TABLE = 3;
 	public static final String BERICHTSMONAT_LABEL_TABLE = "Berichtsmonat";	
 	public static final int BERICHTSJAHR_INDEX_CSV = 10;
 	public static final String BERICHTSMONAT_DATUMSFORMAT_CSV = "MMMM yyyy";
@@ -104,17 +112,17 @@ public class CSVConstants
 	 * Kostenstelle / Träger
 	 */
 	public static final int KOSTENSTELLE_INDEX_CSV = 12;
-	public static final int KOSTENSTELLE_INDEX_TABLE = 3;
+	public static final int KOSTENSTELLE_INDEX_TABLE = 4;
 	public static final String KOSTENSTELLE_LABEL_TABLE = "Kostenstelle";		
 	public static final int KOSTENTRAEGER_INDEX_CSV = 13;
-	public static final int KOSTENTRAEGER_INDEX_TABLE = 4;
+	public static final int KOSTENTRAEGER_INDEX_TABLE = 5;
 	public static final String KOSTENTRAEGER_LABEL_TABLE = "Kostenträger";	
 	
 	/**
 	 * Prozentanteil
 	 */
 	public static final int PROZENTANTEIL_INDEX_CSV = 14;
-	public static final int PROZENTANTEIL_INDEX_TABLE = 5;
+	public static final int PROZENTANTEIL_INDEX_TABLE = 6;
 	public static final String PROZENTANTEIL_LABEL_TABLE = "%";		
 	}	
 }

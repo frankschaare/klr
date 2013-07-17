@@ -2,6 +2,7 @@
 package de.hannit.fsch.rcp.klr.handler.azv;
 
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -41,6 +42,7 @@ private IEclipseContext partContext = null;
 	public void execute(@Named(AppConstants.LOG_STACK) TreeMap<Integer, Event> logStack, @Named(IServiceConstants.ACTIVE_SHELL) Shell shell, MApplication app, EModelService modelService) 
 	{
 	FileDialog dialog = new FileDialog(shell);
+	dialog.setFilterPath(CSVConstants.AZV.AZV_IMPORT_DIR);
 	dialog.setFilterExtensions(new String[] {"*.csv","*.txt", "*.*"});
 	String path = dialog.open();
 		

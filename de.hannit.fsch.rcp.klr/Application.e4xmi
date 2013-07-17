@@ -54,7 +54,7 @@
   <handlers xmi:id="_Qd0LlOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.saveCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.SaveHandler" command="_Qd0Lk-MVEeKJItlVKSINDA"/>
   <handlers xmi:id="_Qd0Ll-MVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handler.aboutCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.AboutHandler" command="_Qd0LluMVEeKJItlVKSINDA"/>
   <handlers xmi:id="_aNtOsOV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handler.user.insert.bulk" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.InsertMitarbeiterHandler" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
-  <handlers xmi:id="_kWLWQOhpEeK_zf9di-xkGQ" elementId="de.hannit.fsch.rcp.klr.handlers.LogHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.LogHandler"/>
+  <handlers xmi:id="_kWLWQOhpEeK_zf9di-xkGQ" elementId="de.hannit.fsch.rcp.klr.handler.azv.check.personalnummer" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.AZVCheckMitarbeiterHandler" command="_c9vroO61EeKDYoreOKB1Ig"/>
   <handlers xmi:id="_S80vwOoUEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handler.importLOGAHandler" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handlers.ImportLOGAHandler" command="_FE8Z8OoUEeK7nN3EOf8xtA"/>
   <handlers xmi:id="_di3fkOpPEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handler.user.edit" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.user.editHandler" command="_5HK0AOpNEeK7nN3EOf8xtA"/>
   <handlers xmi:id="_uKwe4OpPEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handler.user.remove" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.user.RemoveHandler" command="_wh0SUOpOEeK7nN3EOf8xtA"/>
@@ -65,6 +65,7 @@
   <handlers xmi:id="_Vm5qIOr1EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handler.database.loga.rollback" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.LogaRollbackHandler" command="_JlbcUOr1EeKT3PrNpk3Wzw"/>
   <handlers xmi:id="_ToQWsOr2EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handler.database.loga.delete" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.LogaDeleteHandler" command="_6YaDEOr1EeKT3PrNpk3Wzw"/>
   <handlers xmi:id="_PPYnEOr4EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handler.table.loga.edit" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.table.LogaEditHandler" command="_CpwjUOr4EeKT3PrNpk3Wzw"/>
+  <handlers xmi:id="_0NWB8O65EeKDYoreOKB1Ig" elementId="de.hannit.fsch.rcp.klr.handler.database.azv.insert" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.AZVInsertHandler" command="_n-ffcO65EeKDYoreOKB1Ig"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -81,7 +82,7 @@
     </toolbar>
   </descriptors>
   <descriptors xmi:id="_z4IoMO4PEeKCvZc-XLvArg" elementId="de.hannit.fsch.rcp.klr.partdescriptor.azv" label="AZV Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.AZVPart">
-    <toolbar xmi:id="_-_IKwO4PEeKCvZc-XLvArg" elementId="de.hannit.fsch.rcp.klr.toolbar.0"/>
+    <toolbar xmi:id="_-_IKwO4PEeKCvZc-XLvArg" elementId="de.hannit.fsch.rcp.klr.partdescriptor.azv.toolbar"/>
   </descriptors>
   <menuContributions xmi:id="_a7GTcOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menucontribution.user" parentId="de.hannit.fsch.rcp.klr.menu.main.users">
     <children xsi:type="menu:HandledMenuItem" xmi:id="_YWd2sOpQEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
@@ -106,6 +107,10 @@
   <toolBarContributions xmi:id="_Ac-YIOr3EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.logapart.toolbarcontribution.table" parentId="de.hannit.fsch.rcp.klr.partdescriptor.loga.toolbar" positionInParent="">
     <children xsi:type="menu:HandledToolItem" xmi:id="_PYQrsOr3EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.table.loga.search" label="ändern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableEdit16px.png" tooltip="Ändert die Daten in der aktuellen Auswahl" command="_CpwjUOr4EeKT3PrNpk3Wzw"/>
   </toolBarContributions>
+  <toolBarContributions xmi:id="_EIrPgO61EeKDYoreOKB1Ig" elementId="de.hannit.fsch.rcp.klr.azvpart.toolbarcontribution.database" parentId="de.hannit.fsch.rcp.klr.partdescriptor.azv.toolbar">
+    <children xsi:type="menu:HandledToolItem" xmi:id="_LDgeMO62EeKDYoreOKB1Ig" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.database.azv.check.pnr" label="Personalnummern prüfen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseSearch16px.png" tooltip="Prüft, ob für die einzufügenden Personalnummern alle Mitarbeiter gespeichert sind." command="_c9vroO61EeKDYoreOKB1Ig"/>
+    <children xsi:type="menu:HandledToolItem" xmi:id="_CK464O66EeKDYoreOKB1Ig" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.database.azv.insert" label="speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert die aktuellen AZV-Daten in der Datenbank" command="_n-ffcO65EeKDYoreOKB1Ig"/>
+  </toolBarContributions>
   <commands xmi:id="_Qd0LjOMVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>
   <commands xmi:id="_Qd0LkOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.open.azv" commandName="openAZVCommand"/>
   <commands xmi:id="_Qd0Lk-MVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
@@ -121,6 +126,8 @@
   <commands xmi:id="_6YaDEOr1EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.command.database.loga.delete" commandName="dbLOGADelete" description="Löscht die aktuelle Auswahl aus der Datenbank"/>
   <commands xmi:id="_CpwjUOr4EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.command.table.loga.edit" commandName="tableLOGAEdit" description="Änderungen in der aktuellen Tabelle vornehmen"/>
   <commands xmi:id="_L8bGgO0yEeKhPoDsRHBDHQ" elementId="de.hannit.fsch.rcp.klr.command.user.select.personalnummer" commandName="userSelectPersonalNR" description="Sucht einen Mitarbeiter in der Datenbank anhand der Personalnummer"/>
+  <commands xmi:id="_c9vroO61EeKDYoreOKB1Ig" elementId="de.hannit.fsch.rcp.klr.command.azv.check.personalnummer" commandName="azvCheckPersonalNR"/>
+  <commands xmi:id="_n-ffcO65EeKDYoreOKB1Ig" elementId="de.hannit.fsch.rcp.klr.command.database.azv.insert" commandName="dbAZVInsert" description="Speichert die aktuellen Datensätze in der Datenbank"/>
   <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

@@ -73,6 +73,12 @@ private Label infoLabel = null;
 	column.getColumn().setResizable(true);
 	column.getColumn().setMoveable(true);
 	
+	column = new TableViewerColumn(tableViewer, SWT.LEFT, CSVConstants.AZV.TEAM_INDEX_TABLE);
+	column.getColumn().setText("Team");
+	column.getColumn().setWidth(200);
+	column.getColumn().setResizable(true);
+	column.getColumn().setMoveable(true);
+	
 	column = new TableViewerColumn(tableViewer, SWT.LEFT, CSVConstants.AZV.BERICHTSMONAT_INDEX_TABLE);
 	column.getColumn().setText(CSVConstants.AZV.BERICHTSMONAT_LABEL_TABLE);
 	column.getColumn().setWidth(200);
@@ -87,7 +93,7 @@ private Label infoLabel = null;
 	
 	column = new TableViewerColumn(tableViewer, SWT.LEFT, CSVConstants.AZV.KOSTENTRAEGER_INDEX_TABLE);
 	column.getColumn().setText(CSVConstants.AZV.KOSTENTRAEGER_LABEL_TABLE);
-	column.getColumn().setWidth(200);
+	column.getColumn().setWidth(600);
 	column.getColumn().setResizable(true);
 	column.getColumn().setMoveable(true);	
 	

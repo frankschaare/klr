@@ -3,7 +3,6 @@
 
 <product name="de.hannit.fsch.rcp.klr" id="de.hannit.fsch.rcp.klr.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.1.0.qualifier" useFeatures="false" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
@@ -14,7 +13,6 @@
 
    <windowImages/>
 
-
    <launcher>
       <solaris/>
       <win useIco="false">
@@ -22,14 +20,13 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
       <plugin id="com.ibm.icu"/>
       <plugin id="de.hannit.fsch.common.mitarbeiter"/>
+      <plugin id="de.hannit.fsch.common.organisation"/>
       <plugin id="de.hannit.fsch.klr.dataservice"/>
       <plugin id="de.hannit.fsch.rcp.klr"/>
       <plugin id="javax.annotation"/>

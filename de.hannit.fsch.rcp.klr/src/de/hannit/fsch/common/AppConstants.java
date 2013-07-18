@@ -11,4 +11,9 @@ public class AppConstants
 {
 public static final String LOGGER = "LOGGER";
 public static final String LOG_STACK = "LOGSTACK";
+
+public static interface ActiveSelections
+{
+public static final String AUSWERTUNGSMONAT = "AUSWERTUNGSZEITRAUM/MONAT";	
+}
 }

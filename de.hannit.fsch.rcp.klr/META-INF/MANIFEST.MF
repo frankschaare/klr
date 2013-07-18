@@ -19,7 +19,8 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  org.eclipse.osgi.services,
  javax.annotation,
  de.hannit.fsch.common.csv.loga;bundle-version="1.0.0",
- de.hannit.fsch.common.csv.azv
+ de.hannit.fsch.common.csv.azv,
+ de.hannit.fsch.common.organisation.hannit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: de.hannit.fsch.common.mitarbeiter,
  javax.annotation;version="1.0.0"

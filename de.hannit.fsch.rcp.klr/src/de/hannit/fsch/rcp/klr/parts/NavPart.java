@@ -10,7 +10,11 @@
  *******************************************************************************/
 package de.hannit.fsch.rcp.klr.parts;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -28,6 +32,8 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -41,8 +47,10 @@ import org.osgi.service.event.Event;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.AuswertungsMonat;
+import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
+import de.hannit.fsch.common.organisation.hannit.Organisation;
 import de.hannit.fsch.klr.dataservice.DataService;
 import de.hannit.fsch.rcp.klr.provider.NavTreeContentProvider;
 
@@ -52,12 +60,20 @@ private AuswertungsMonat auswertungsMonat = new AuswertungsMonat();
 	
 @Inject IEventBroker broker;
 @Inject DataService dataService;
+@Inject @Optional Organisation hannit;
 @Inject private EPartService partService;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 
-private ArrayList<Mitarbeiter> mitarbeiter;	
+private TreeMap<Integer, Mitarbeiter> mitarbeiter;	
 @Inject @Optional private MApplication application;
 private IEclipseContext context;
+
+private TreeViewer treeViewer = null;
+private Combo comboMonth = null;
+private Combo comboYear = null; 
+private Date selectedMonth = null;
+private	SimpleDateFormat fMonat = new SimpleDateFormat("MMMM");
+private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM.yyyy");
 
 	/*
 	 * Beispiel für Registrierung an Eclipse Framework Events
@@ -84,10 +100,23 @@ private IEclipseContext context;
 	System.out.println(activePart.getElementId());
 	} 	
 	
+	@Inject
+	@Optional
+	public void handleEvent(@UIEventTopic(AppConstants.ActiveSelections.AUSWERTUNGSMONAT) Date selectedMonth)
+	{
+	String plugin = this.getClass().getName() + ".handleEvent()";	
+	String[] parts = (fMonatJahr.format(selectedMonth).split("\\."));	
+	log.info("Fordere Mitarbeiterliste und AZV-Daten für den Monat " + parts[0] + " " + parts[1] + " vom DataService an.", plugin);	
+	mitarbeiter = dataService.getAZVMonat(selectedMonth);
+	log.confirm("Für den Monat " + parts[0] + " " + parts[1] + " liegen "+ mitarbeiter.size() + " AZV-Meldungen vor.", plugin);
+	treeViewer.setInput(mitarbeiter);
+	}		
+
 	@PostConstruct
 	public void createComposite(Composite parent) 
 	{
 	String method = this.getClass().getName() + ".createComposite()";
+	hannit = dataService.getOrganisation();
 	
 		parent.setLayout(new GridLayout(1, false));
 		
@@ -105,21 +134,43 @@ private IEclipseContext context;
 		btnBack.setText("<<");
 		new Label(top, SWT.NONE);
 		
-		Label lblMonat = new Label(top, SWT.CENTER);
-		lblMonat.setToolTipText("Mitarbeiterdaten f\u00FCr diesen Abrechnungsmonat darstellen");
-		lblMonat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblMonat.setText(auswertungsMonat.getActualMonth());
+		comboMonth = new Combo(top, SWT.READ_ONLY);
+		comboMonth.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+			for (Date date : hannit.getMonatsBerichte().keySet())
+			{
+			comboMonth.add(fMonat.format(date));
+			comboMonth.setText(comboMonth.getItem(comboMonth.getItemCount()-1));
+			}
+		comboMonth.addSelectionListener(new SelectionAdapter()
+		{
+			@Override
+			public void widgetSelected(SelectionEvent e)
+			{
+				try
+				{
+				selectedMonth = fMonatJahr.parse(comboMonth.getItem(comboMonth.getSelectionIndex())  +  "." + comboYear.getItem(comboYear.getSelectionIndex()));
+				}
+				catch (ParseException ex)
+				{
+				ex.printStackTrace();
+				log.error("ParseException beim Auslesen von NavPart.comboMonth !", this.getClass().getName() + ".widgetSelected(SelectionEvent e)", ex);
+				}	
+			broker.send(AppConstants.ActiveSelections.AUSWERTUNGSMONAT, selectedMonth);
+			}	
+		});	
+			
 		new Label(top, SWT.NONE);
 		
 		Button btnForward = new Button(top, SWT.FLAT | SWT.ARROW | SWT.RIGHT);
 		btnForward.setToolTipText("Zum n\u00E4chsten Monat wechseln. (Nicht verf\u00FCgbar, wenn der aktuelle Monat gleich dem letzten Monat ist)");
 		btnForward.setEnabled(auswertungsMonat.lastMonth());;
 		
-		Combo comboYear = new Combo(top, SWT.READ_ONLY);
+		comboYear = new Combo(top, SWT.READ_ONLY);
 		comboYear.setToolTipText("Liste der Verf\u00FCgbaren Berichtsjahre");
 		comboYear.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		comboYear.add(auswertungsMonat.getActualYear());
 		comboYear.setText(auswertungsMonat.getActualYear());
+		comboYear.setEnabled(false);
 		
 		Composite bottom = new Composite(parent, SWT.NONE);
 		GridLayout gl_bottom = new GridLayout(1, false);
@@ -139,7 +190,7 @@ private IEclipseContext context;
 		TabItem tabItem_1 = new TabItem(tabs, SWT.NONE);
 		tabItem_1.setText("New Item");
 		
-		TreeViewer treeViewer = new TreeViewer(tabs, SWT.BORDER);
+		treeViewer = new TreeViewer(tabs, SWT.BORDER);
 		NavTreeContentProvider cp = new NavTreeContentProvider();
 		treeViewer.setContentProvider(cp);
 		treeViewer.setLabelProvider(cp);
@@ -148,10 +199,19 @@ private IEclipseContext context;
 		tbtmAktuell.setControl(tree);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 	
-		log.info("Fordere Mitarbeiterliste vom DataService an.", method);
-		mitarbeiter = dataService.getMitarbeiter();
+			try
+			{
+			selectedMonth = fMonatJahr.parse(comboMonth.getItem(comboMonth.getSelectionIndex())  +  "." + comboYear.getItem(comboYear.getSelectionIndex()));
+			log.info("Fordere Mitarbeiterliste und AZV-Daten für den Monat " + comboMonth.getItem(comboMonth.getSelectionIndex()) + " " + comboYear.getItem(comboYear.getSelectionIndex()) + " vom DataService an.", method);
+			}
+			catch (ParseException ex)
+			{
+			ex.printStackTrace();
+			log.error("ParseException beim Auslesen von NavPart.comboMonth !", this.getClass().getName() + ".widgetSelected(SelectionEvent e)", ex);
+			}
+		mitarbeiter = dataService.getAZVMonat(selectedMonth);
 		
-		log.info("Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter", method);
+		log.confirm("Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter", method);
 
 		treeViewer.setInput(mitarbeiter);
 	

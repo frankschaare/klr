@@ -74,8 +74,7 @@ private SimpleDateFormat dateFormat = new SimpleDateFormat();
 	 */
 	public AuswertungsMonat(TimeZone zone)
 	{
-		super(zone);
-		// TODO Auto-generated constructor stub
+	super(zone);
 	}
 
 	/**
@@ -83,8 +82,7 @@ private SimpleDateFormat dateFormat = new SimpleDateFormat();
 	 */
 	public AuswertungsMonat(Locale aLocale)
 	{
-		super(aLocale);
-		// TODO Auto-generated constructor stub
+	super(aLocale);
 	}
 
 	/**
@@ -93,8 +91,7 @@ private SimpleDateFormat dateFormat = new SimpleDateFormat();
 	 */
 	public AuswertungsMonat(TimeZone zone, Locale aLocale)
 	{
-		super(zone, aLocale);
-		// TODO Auto-generated constructor stub
+	super(zone, aLocale);
 	}
 
 	/**
@@ -104,8 +101,7 @@ private SimpleDateFormat dateFormat = new SimpleDateFormat();
 	 */
 	public AuswertungsMonat(int year, int month, int dayOfMonth)
 	{
-		super(year, month, dayOfMonth);
-		// TODO Auto-generated constructor stub
+	super(year, month, dayOfMonth);
 	}
 
 	/**
@@ -118,8 +114,7 @@ private SimpleDateFormat dateFormat = new SimpleDateFormat();
 	public AuswertungsMonat(int year, int month, int dayOfMonth, int hourOfDay,
 			int minute)
 	{
-		super(year, month, dayOfMonth, hourOfDay, minute);
-		// TODO Auto-generated constructor stub
+	super(year, month, dayOfMonth, hourOfDay, minute);
 	}
 
 	/**
@@ -133,8 +128,7 @@ private SimpleDateFormat dateFormat = new SimpleDateFormat();
 	public AuswertungsMonat(int year, int month, int dayOfMonth, int hourOfDay,
 			int minute, int second)
 	{
-		super(year, month, dayOfMonth, hourOfDay, minute, second);
-		// TODO Auto-generated constructor stub
+	super(year, month, dayOfMonth, hourOfDay, minute, second);
 	}
 
 }

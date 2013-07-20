@@ -37,26 +37,22 @@ private java.sql.Date berichtsMonatSQL;
 
 	public AZVDatei(String arg0)
 	{
-		super(arg0);
-		// TODO Auto-generated constructor stub
+	super(arg0);
 	}
 
 	public AZVDatei(URI arg0)
 	{
-		super(arg0);
-		// TODO Auto-generated constructor stub
+	super(arg0);
 	}
 
 	public AZVDatei(String arg0, String arg1)
 	{
-		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
+	super(arg0, arg1);
 	}
 
 	public AZVDatei(File arg0, String arg1)
 	{
-		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
+	super(arg0, arg1);
 	}
 
 	public boolean isChecked(){return checked;}

@@ -46,28 +46,19 @@ protected ContextLogger log;
 	/**
 	 * @param arg0
 	 */
-	public CSVDatei(URI arg0) {
-		super(arg0);
-		// TODO Auto-generated constructor stub
-	}
+	public CSVDatei(URI arg0) {super(arg0);}
 
 	/**
 	 * @param arg0
 	 * @param arg1
 	 */
-	public CSVDatei(String arg0, String arg1) {
-		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
-	}
+	public CSVDatei(String arg0, String arg1) {super(arg0, arg1);}
 
 	/**
 	 * @param arg0
 	 * @param arg1
 	 */
-	public CSVDatei(File arg0, String arg1) {
-		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
-	}
+	public CSVDatei(File arg0, String arg1) {super(arg0, arg1);}
 	
 	public void read() 
 	{

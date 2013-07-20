@@ -45,7 +45,14 @@ URL url = null;
 		Mitarbeiter m = (Mitarbeiter)element;	
 			if (m.getAzvMonat() != null && m.getAzvMonat().size() > 0)
 			{
-			url = FileLocator.find(bundle, new Path("icons/User16px.png"), null);		
+				if (m.isAzvAktuell())
+				{
+				url = FileLocator.find(bundle, new Path("icons/User16px.png"), null);		
+				}
+				else
+				{
+				url = FileLocator.find(bundle, new Path("icons/UserYellow16px.png"), null);
+				}
 			}
 			else
 			{

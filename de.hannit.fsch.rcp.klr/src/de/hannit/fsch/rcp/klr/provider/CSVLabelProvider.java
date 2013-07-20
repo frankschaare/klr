@@ -10,39 +10,22 @@ private String[] fields = null;
 private String label = null;
 private int lineCount = 1;
 
-	public CSVLabelProvider() {
-		// TODO Auto-generated constructor stub
-	}
+	public CSVLabelProvider() {	}
 
 	@Override
-	public void addListener(ILabelProviderListener listener) {
-		// TODO Auto-generated method stub
-
-	}
+	public void addListener(ILabelProviderListener listener) {}
 
 	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-
-	}
+	public void dispose() {	}
 
 	@Override
-	public boolean isLabelProperty(Object element, String property) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public boolean isLabelProperty(Object element, String property) {return false;}
 
 	@Override
-	public void removeListener(ILabelProviderListener listener) {
-		// TODO Auto-generated method stub
-
-	}
+	public void removeListener(ILabelProviderListener listener) {}
 
 	@Override
-	public Image getColumnImage(Object element, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Image getColumnImage(Object element, int columnIndex) {return null;}
 
 	@Override
 	public String getColumnText(Object element, int columnIndex) 

@@ -14,6 +14,7 @@ public static final String LOG_STACK = "LOGSTACK";
 
 public static interface ActiveSelections
 {
-public static final String AUSWERTUNGSMONAT = "AUSWERTUNGSZEITRAUM/MONAT";	
+public static final String AUSWERTUNGSMONAT = "AUSWERTUNGSZEITRAUM/MONAT";
+public static final String MONATSBERICHT = "MONATSBERICHT";
 }
 }

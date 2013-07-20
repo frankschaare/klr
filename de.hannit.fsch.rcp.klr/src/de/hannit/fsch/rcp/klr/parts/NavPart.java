@@ -51,6 +51,7 @@ import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
 import de.hannit.fsch.common.organisation.hannit.Organisation;
+import de.hannit.fsch.common.organisation.reporting.Monatsbericht;
 import de.hannit.fsch.klr.dataservice.DataService;
 import de.hannit.fsch.rcp.klr.provider.NavTreeContentProvider;
 
@@ -156,6 +157,8 @@ private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM.yyyy");
 				log.error("ParseException beim Auslesen von NavPart.comboMonth !", this.getClass().getName() + ".widgetSelected(SelectionEvent e)", ex);
 				}	
 			broker.send(AppConstants.ActiveSelections.AUSWERTUNGSMONAT, selectedMonth);
+			Monatsbericht selectedReport = hannit.getMonatsBerichte().get(selectedMonth);
+			broker.send(AppConstants.ActiveSelections.MONATSBERICHT, selectedReport);
 			}	
 		});	
 			

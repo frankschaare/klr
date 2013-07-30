@@ -12,7 +12,6 @@ package de.hannit.fsch.rcp.klr.parts;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeMap;
 
@@ -47,12 +46,13 @@ import org.osgi.service.event.Event;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.AuswertungsMonat;
-import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
+import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppen;
 import de.hannit.fsch.common.organisation.hannit.Organisation;
 import de.hannit.fsch.common.organisation.reporting.Monatsbericht;
 import de.hannit.fsch.klr.dataservice.DataService;
+import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.provider.NavTreeContentProvider;
 
 public class NavPart 
@@ -66,15 +66,16 @@ private AuswertungsMonat auswertungsMonat = new AuswertungsMonat();
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 
 private TreeMap<Integer, Mitarbeiter> mitarbeiter;	
+private Tarifgruppen tarifgruppen = null;
 @Inject @Optional private MApplication application;
 private IEclipseContext context;
 
 private TreeViewer treeViewer = null;
 private Combo comboMonth = null;
 private Combo comboYear = null; 
-private Date selectedMonth = null;
 private	SimpleDateFormat fMonat = new SimpleDateFormat("MMMM");
 private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM.yyyy");
+private	SimpleDateFormat fLog = new SimpleDateFormat("MMMM yyyy");
 
 	/*
 	 * Beispiel für Registrierung an Eclipse Framework Events
@@ -100,19 +101,56 @@ private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM.yyyy");
 		
 	System.out.println(activePart.getElementId());
 	} 	
-	
-	@Inject
-	@Optional
-	public void handleEvent(@UIEventTopic(AppConstants.ActiveSelections.AUSWERTUNGSMONAT) Date selectedMonth)
+
+	/*
+	 * Lädt Daten aus der DB zur Weiterverwendung im CSVDetailspart.
+	 * Wird initial einmalif und bei jeder Änderung der MonatsCombo aufgerufen.
+	 */
+	public void loadData(Date selectedMonth)
 	{
-	String plugin = this.getClass().getName() + ".handleEvent()";	
-	String[] parts = (fMonatJahr.format(selectedMonth).split("\\."));	
-	log.info("Fordere Mitarbeiterliste und AZV-Daten für den Monat " + parts[0] + " " + parts[1] + " vom DataService an.", plugin);	
+	String plugin = this.getClass().getName() + ".loadData()";
+	
+	log.info("Fordere Mitarbeiterliste und AZV-Daten für den Monat " + fLog.format(selectedMonth) + " vom DataService an.", plugin);
 	mitarbeiter = dataService.getAZVMonat(selectedMonth);
-	log.confirm("Für den Monat " + parts[0] + " " + parts[1] + " liegen "+ mitarbeiter.size() + " AZV-Meldungen vor.", plugin);
+	log.confirm("Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter", plugin);
+
+	log.info("Fordere Tarifgruppen für den Monat " + fLog.format(selectedMonth) + " vom DataService an.", plugin);	
+	tarifgruppen = dataService.getTarifgruppen(selectedMonth);
+	tarifgruppen.setAnzahlMitarbeiter(mitarbeiter.size());
+	tarifgruppen.setBerichtsMonat(selectedMonth);
+	log.confirm("Es wurden "+ tarifgruppen.getTarifGruppen().size() + " Tarifgruppen geladen.", plugin);
+	
+	// Speichert die Tarifgruppen zur initialen Verwendung im Applikationscontext ab:
+		if (application != null)
+		{
+		context = application.getContext();
+		context.set(AppConstants.CONTEXT_TARIFGRUPPEN, tarifgruppen);
+		log.info("Tarifgruppen für den Monat " + fLog.format(selectedMonth) + ", wurden im Applikationskontext gespeichert.", plugin);
+		}
+	
+	log.info("Eventbroker versendet Tarifgruppen für den Monat " + fLog.format(selectedMonth) + ", Topic: Topics.TARIFGRUPPEN", plugin);
+	broker.send(Topics.TARIFGRUPPEN, tarifgruppen);
+	
 	treeViewer.setInput(mitarbeiter);
 	}		
 
+	private Date parseCombos(String strMonth, String strYear)
+	{
+	Date selectedMonth = null;	
+	
+		try
+		{
+		selectedMonth = fMonatJahr.parse(strMonth  +  "." + strYear);
+		}
+		catch (ParseException ex)
+		{
+		ex.printStackTrace();
+		log.error("ParseException beim Auslesen von NavPart.comboMonth !", this.getClass().getName() + ".parseCombos()", ex);
+		}	
+		
+	return selectedMonth;
+	}
+	
 	@PostConstruct
 	public void createComposite(Composite parent) 
 	{
@@ -147,17 +185,12 @@ private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM.yyyy");
 			@Override
 			public void widgetSelected(SelectionEvent e)
 			{
-				try
-				{
-				selectedMonth = fMonatJahr.parse(comboMonth.getItem(comboMonth.getSelectionIndex())  +  "." + comboYear.getItem(comboYear.getSelectionIndex()));
-				}
-				catch (ParseException ex)
-				{
-				ex.printStackTrace();
-				log.error("ParseException beim Auslesen von NavPart.comboMonth !", this.getClass().getName() + ".widgetSelected(SelectionEvent e)", ex);
-				}	
-			broker.send(AppConstants.ActiveSelections.AUSWERTUNGSMONAT, selectedMonth);
-			Monatsbericht selectedReport = hannit.getMonatsBerichte().get(selectedMonth);
+			Date selected = parseCombos(comboMonth.getItem(comboMonth.getSelectionIndex()), comboYear.getItem(comboYear.getSelectionIndex()));	
+	
+			loadData(selected);
+			// TODO Monatsbericht ist überflüssig !
+			broker.send(AppConstants.ActiveSelections.AUSWERTUNGSMONAT, selected);
+			Monatsbericht selectedReport = hannit.getMonatsBerichte().get(selected);
 			broker.send(AppConstants.ActiveSelections.MONATSBERICHT, selectedReport);
 			}	
 		});	
@@ -202,19 +235,7 @@ private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM.yyyy");
 		tbtmAktuell.setControl(tree);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 	
-			try
-			{
-			selectedMonth = fMonatJahr.parse(comboMonth.getItem(comboMonth.getSelectionIndex())  +  "." + comboYear.getItem(comboYear.getSelectionIndex()));
-			log.info("Fordere Mitarbeiterliste und AZV-Daten für den Monat " + comboMonth.getItem(comboMonth.getSelectionIndex()) + " " + comboYear.getItem(comboYear.getSelectionIndex()) + " vom DataService an.", method);
-			}
-			catch (ParseException ex)
-			{
-			ex.printStackTrace();
-			log.error("ParseException beim Auslesen von NavPart.comboMonth !", this.getClass().getName() + ".widgetSelected(SelectionEvent e)", ex);
-			}
-		mitarbeiter = dataService.getAZVMonat(selectedMonth);
-		
-		log.confirm("Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter", method);
+		loadData(parseCombos(comboMonth.getItem(comboMonth.getSelectionIndex()), comboYear.getItem(comboYear.getSelectionIndex())));
 
 		treeViewer.setInput(mitarbeiter);
 	

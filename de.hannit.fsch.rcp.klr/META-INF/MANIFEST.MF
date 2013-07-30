@@ -20,7 +20,16 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  javax.annotation,
  de.hannit.fsch.common.csv.loga;bundle-version="1.0.0",
  de.hannit.fsch.common.csv.azv,
- de.hannit.fsch.common.organisation.hannit
+ de.hannit.fsch.common.organisation.hannit,
+ de.hannit.fsch.common.mitarbeiter,
+ org.eclipse.core.databinding,
+ org.eclipse.core.databinding.beans,
+ org.eclipse.core.databinding.observable,
+ org.eclipse.core.databinding.property,
+ org.eclipse.jface.databinding,
+ com.ibm.icu,
+ org.eclipse.e4.core.commands,
+ org.eclipse.core.commands
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: de.hannit.fsch.common.mitarbeiter,
  javax.annotation;version="1.0.0"

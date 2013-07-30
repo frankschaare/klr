@@ -1,12 +1,13 @@
  
 package de.hannit.fsch.rcp.klr.parts;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Named;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
@@ -18,32 +19,34 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-
-import de.hannit.fsch.common.AppConstants;
-import de.hannit.fsch.common.CSVDatei;
-import de.hannit.fsch.common.LogMessage;
-import de.hannit.fsch.common.organisation.reporting.Monatsbericht;
-import de.hannit.fsch.rcp.klr.constants.Topics;
-import de.hannit.fsch.rcp.klr.provider.CSVLabelProvider;
-
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Table;
+
+import de.hannit.fsch.common.AppConstants;
+import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppen;
+import de.hannit.fsch.common.organisation.reporting.Monatsbericht;
+import de.hannit.fsch.rcp.klr.constants.Topics;
 
 public class CSVDetailsPart 
 {
 @Inject IEventBroker broker;
+@Inject @Named(AppConstants.LOGGER) private ContextLogger log;
+@Inject @Named(AppConstants.CONTEXT_TARIFGRUPPEN) private Tarifgruppen tarifGruppen;
+
 private Monatsbericht report;
 private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM yyyy");
 private Group grpBerichtsmonat = null;
 private Label lblSummeBrutto = null;
+private Label lblSummeStellen = null;
 private Label lblAnzahlMitarbeiter = null;
-private Table table;
+private Label lblVollzeitquivalent = null;
+private TableViewerColumn column = null;
+private TableViewer vzae = null;
+private Table vzaeTable;
 private Table table_1;
 private Table table_2;
 
@@ -55,12 +58,17 @@ private Table table_2;
 	}
 	
 	@Inject @Optional
-	public void handleEvent(@UIEventTopic(AppConstants.ActiveSelections.MONATSBERICHT) Monatsbericht report)
+	public void handleEvent(@UIEventTopic(Topics.TARIFGRUPPEN) Tarifgruppen tgs)
 	{
-	this.report = report;	
-	grpBerichtsmonat.setText(fMonatJahr.format(report.getBerichtsMonat()));
-	lblSummeBrutto.setText("Summe Brutto: " + String.valueOf(report.getSummeBrutto()) + " €" );
-	lblAnzahlMitarbeiter.setText("Anzahl Mitarbeiter: " + String.valueOf(report.getMitarbeiterGesamt()));
+	log.info("Es wurden "+ tgs.getTarifGruppen().size() + " Tarifgruppen geladen.", this.getClass().getName());
+	tarifGruppen = tgs;
+	vzae.setLabelProvider(tgs);	
+	vzae.setInput(tarifGruppen.getTarifGruppen().values().toArray());
+	
+	grpBerichtsmonat.setText(fMonatJahr.format(tarifGruppen.getBerichtsMonat()));
+	lblSummeBrutto.setText("Summe Brutto: " + NumberFormat.getCurrencyInstance().format(tarifGruppen.getSummeTarifgruppen()));
+	lblSummeStellen.setText("Summe Stellen: " + String.valueOf(tarifGruppen.getSummeStellen()));
+	lblAnzahlMitarbeiter.setText(String.valueOf(tarifGruppen.getAnzahlMitarbeiter()) + " Mitarbeiter");
 	}
 
 	@PostConstruct
@@ -77,7 +85,7 @@ private Table table_2;
 		lblSummeBrutto.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		lblSummeBrutto.setText("Summe Brutto");
 		
-		Label lblSummeStellen = new Label(grpBerichtsmonat, SWT.NONE);
+		lblSummeStellen = new Label(grpBerichtsmonat, SWT.NONE);
 		lblSummeStellen.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		lblSummeStellen.setText("Summe Stellen");
 		new Label(grpBerichtsmonat, SWT.NONE);
@@ -108,12 +116,49 @@ private Table table_2;
 		table_2 = tableViewer_2.getTable();
 		tabItem_1.setControl(table_2);
 		
-		Label lblVollzeitquivalent = new Label(grpAzvDaten, SWT.NONE);
+		lblVollzeitquivalent = new Label(grpAzvDaten, SWT.NONE);
+		lblVollzeitquivalent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		lblVollzeitquivalent.setText("Vollzeit\u00E4quivalent");
 		
-		TableViewer tableViewer = new TableViewer(grpAzvDaten, SWT.BORDER | SWT.FULL_SELECTION);
-		table = tableViewer.getTable();
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		vzae = new TableViewer(grpAzvDaten, SWT.BORDER | SWT.FULL_SELECTION);
+		vzaeTable = vzae.getTable();
+		vzaeTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		vzaeTable.setHeaderVisible(true);
+		
+		column = new TableViewerColumn(vzae, SWT.RIGHT, 0);
+		column.getColumn().setText("Tarifgruppe");
+		column.getColumn().setWidth(100);
+		column.getColumn().setResizable(true);
+		column.getColumn().setMoveable(true);
+		
+		column = new TableViewerColumn(vzae, SWT.RIGHT, 1);
+		column.getColumn().setText("Summe Tarifgruppe");
+		column.getColumn().setWidth(150);
+		column.getColumn().setResizable(true);
+		column.getColumn().setMoveable(true);
+		
+		column = new TableViewerColumn(vzae, SWT.RIGHT, 2);
+		column.getColumn().setText("Summe Stellen");
+		column.getColumn().setWidth(100);
+		column.getColumn().setResizable(true);
+		column.getColumn().setMoveable(true);
+		
+		column = new TableViewerColumn(vzae, SWT.RIGHT, 3);
+		column.getColumn().setText("Vollzeitäquivalent");
+		column.getColumn().setWidth(150);
+		column.getColumn().setResizable(true);
+		column.getColumn().setMoveable(true);
+		
+		vzae.setContentProvider(new ArrayContentProvider());
+			if (tarifGruppen != null)
+			{
+			vzae.setLabelProvider(tarifGruppen);		
+			vzae.setInput(tarifGruppen.getTarifGruppen().values().toArray());	
+			grpBerichtsmonat.setText(fMonatJahr.format(tarifGruppen.getBerichtsMonat()));
+			lblSummeBrutto.setText("Summe Brutto: " + NumberFormat.getCurrencyInstance().format(tarifGruppen.getSummeTarifgruppen()));
+			lblSummeStellen.setText("Summe Stellen: " + String.valueOf(tarifGruppen.getSummeStellen()));
+			lblAnzahlMitarbeiter.setText(String.valueOf(tarifGruppen.getAnzahlMitarbeiter()) + " Mitarbeiter");
+			}
 	}	
 	@Focus
 	public void onFocus() 

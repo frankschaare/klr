@@ -66,6 +66,7 @@
   <handlers xmi:id="_ToQWsOr2EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handler.database.loga.delete" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.LogaDeleteHandler" command="_6YaDEOr1EeKT3PrNpk3Wzw"/>
   <handlers xmi:id="_PPYnEOr4EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handler.table.loga.edit" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.table.LogaEditHandler" command="_CpwjUOr4EeKT3PrNpk3Wzw"/>
   <handlers xmi:id="_0NWB8O65EeKDYoreOKB1Ig" elementId="de.hannit.fsch.rcp.klr.handler.database.azv.insert" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.AZVInsertHandler" command="_n-ffcO65EeKDYoreOKB1Ig"/>
+  <handlers xmi:id="_QffyEPkEEeK6aqW3DPHcyA" elementId="de.hannit.fsch.rcp.klr.handler.user.insert" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.user.InsertHandler" command="_d3P2UPkEEeK6aqW3DPHcyA"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -83,6 +84,9 @@
   </descriptors>
   <descriptors xmi:id="_z4IoMO4PEeKCvZc-XLvArg" elementId="de.hannit.fsch.rcp.klr.partdescriptor.azv" label="AZV Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.AZVPart">
     <toolbar xmi:id="_-_IKwO4PEeKCvZc-XLvArg" elementId="de.hannit.fsch.rcp.klr.partdescriptor.azv.toolbar"/>
+  </descriptors>
+  <descriptors xmi:id="_eS4w4Pg9EeK97I_3NoMIKQ" elementId="de.hannit.fsch.rcp.klr.partdescriptor.user.add" label="Mitarbeiter hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Speichert einen neuen Mitarbeiter in der Datenbanktabelle 'Mitarbeiter'" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.AddMitarbeiterPart">
+    <toolbar xmi:id="_86Gx0Pg9EeK97I_3NoMIKQ" elementId="de.hannit.fsch.rcp.klr.toolbar.0"/>
   </descriptors>
   <menuContributions xmi:id="_a7GTcOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menucontribution.user" parentId="de.hannit.fsch.rcp.klr.menu.main.users">
     <children xsi:type="menu:HandledMenuItem" xmi:id="_YWd2sOpQEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
@@ -128,6 +132,7 @@
   <commands xmi:id="_L8bGgO0yEeKhPoDsRHBDHQ" elementId="de.hannit.fsch.rcp.klr.command.user.select.personalnummer" commandName="userSelectPersonalNR" description="Sucht einen Mitarbeiter in der Datenbank anhand der Personalnummer"/>
   <commands xmi:id="_c9vroO61EeKDYoreOKB1Ig" elementId="de.hannit.fsch.rcp.klr.command.azv.check.personalnummer" commandName="azvCheckPersonalNR"/>
   <commands xmi:id="_n-ffcO65EeKDYoreOKB1Ig" elementId="de.hannit.fsch.rcp.klr.command.database.azv.insert" commandName="dbAZVInsert" description="Speichert die aktuellen Datensätze in der Datenbank"/>
+  <commands xmi:id="_d3P2UPkEEeK6aqW3DPHcyA" elementId="de.hannit.fsch.rcp.klr.command.user.insert" commandName="userInsertCommand" description="Sichert einen Mitarbeiter in der Datenbank Tabelle"/>
   <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

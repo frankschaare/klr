@@ -61,7 +61,7 @@ private SimpleDateFormat dateFormat = new SimpleDateFormat();
 	public String getActualYear()
 	{
 	dateFormat.applyPattern("yyyy");	
-	return dateFormat.format(getTime());
+	return "2013";
 	}	
 
 	public boolean lastMonth()

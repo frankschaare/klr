@@ -104,7 +104,7 @@ private	SimpleDateFormat fLog = new SimpleDateFormat("MMMM yyyy");
 
 	/*
 	 * Lädt Daten aus der DB zur Weiterverwendung im CSVDetailspart.
-	 * Wird initial einmalif und bei jeder Änderung der MonatsCombo aufgerufen.
+	 * Wird initial einmal und bei jeder Änderung der MonatsCombo aufgerufen.
 	 */
 	public void loadData(Date selectedMonth)
 	{

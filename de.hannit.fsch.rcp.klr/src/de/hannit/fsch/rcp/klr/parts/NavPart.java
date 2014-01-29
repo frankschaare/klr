@@ -168,9 +168,10 @@ private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM.yyyy");
 		comboYear = new Combo(top, SWT.READ_ONLY);
 		comboYear.setToolTipText("Liste der Verf\u00FCgbaren Berichtsjahre");
 		comboYear.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		comboYear.add(auswertungsMonat.getActualYear());
-		comboYear.setText(auswertungsMonat.getActualYear());
-		comboYear.setEnabled(false);
+		comboYear.add("2013");
+		comboYear.setText("2013");
+		// comboYear.add(auswertungsMonat.getActualYear());
+		// comboYear.setText(auswertungsMonat.getActualYear());
 		
 		Composite bottom = new Composite(parent, SWT.NONE);
 		GridLayout gl_bottom = new GridLayout(1, false);

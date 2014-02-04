@@ -10,8 +10,10 @@
  *******************************************************************************/
 package de.hannit.fsch.rcp.klr.parts;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeMap;
 
@@ -47,7 +49,9 @@ import org.osgi.service.event.Event;
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.AuswertungsMonat;
 import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.common.csv.azv.Arbeitszeitanteil;
 import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
+import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppe;
 import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppen;
 import de.hannit.fsch.common.organisation.hannit.Organisation;
 import de.hannit.fsch.common.organisation.reporting.Monatsbericht;
@@ -67,6 +71,9 @@ private AuswertungsMonat auswertungsMonat = new AuswertungsMonat();
 
 private TreeMap<Integer, Mitarbeiter> mitarbeiter;	
 private Tarifgruppen tarifgruppen = null;
+private TreeMap<String, Double> monatsSummen = null;
+private TreeMap<String, Arbeitszeitanteil> azvMonat = null;
+
 @Inject @Optional private MApplication application;
 private IEclipseContext context;
 
@@ -113,6 +120,17 @@ private	SimpleDateFormat fLog = new SimpleDateFormat("MMMM yyyy");
 	log.info("Fordere Mitarbeiterliste und AZV-Daten für den Monat " + fLog.format(selectedMonth) + " vom DataService an.", plugin);
 	mitarbeiter = dataService.getAZVMonat(selectedMonth);
 	log.confirm("Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter", plugin);
+	
+	/*
+	 * Prüfung, ob alle AZV-Anteile des Mitarbeiters zusammengezählt 100% ergeben 
+	 */
+		for (Mitarbeiter m : mitarbeiter.values())
+		{
+			if (m.getAzvProzentSumme() != 100)
+			{
+			log.error("AZV-Meldungen für Mitarbeiter: " + m.getNachname() + ", " + m.getVorname() + " sind ungleich 100% !", plugin, null);	
+			}
+		}
 
 	log.info("Fordere Tarifgruppen für den Monat " + fLog.format(selectedMonth) + " vom DataService an.", plugin);	
 	tarifgruppen = dataService.getTarifgruppen(selectedMonth);
@@ -130,6 +148,72 @@ private	SimpleDateFormat fLog = new SimpleDateFormat("MMMM yyyy");
 	
 	log.info("Eventbroker versendet Tarifgruppen für den Monat " + fLog.format(selectedMonth) + ", Topic: Topics.TARIFGRUPPEN", plugin);
 	broker.send(Topics.TARIFGRUPPEN, tarifgruppen);
+	
+	/*
+	 * Nachdem die Tarifgruppen geladen wurden, wird für jeden Mitarbeiter
+	 * das passende Vollzeitäquivalent gespeichert:
+	 */
+	double vzaeVerteilt = 0;
+		Tarifgruppe t = null;
+		for (Mitarbeiter m : mitarbeiter.values())
+		{
+		t = tarifgruppen.getTarifGruppen().get(m.getTarifGruppe());	
+		vzaeVerteilt += m.setVollzeitAequivalent(t.getVollzeitAequivalent());
+		}
+	log.info("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeVerteilt) + " Vollzeitäquivalente auf " + mitarbeiter.size() + " Mitarbeiter verteilt.", plugin);	
+		
+	/*
+	 * Im Log wird nun zu Prüfzwecken ausgegeben, wie hoch das Vollzeitäquivalent Insgesamt beträgt:	
+	 */
+	double vzaeTotal = 0;	
+		for (Mitarbeiter m : mitarbeiter.values())
+		{
+			for (String a : m.getAzvMonat().keySet())
+			{
+			vzaeTotal += m.getAzvMonat().get(a).getBruttoAufwand();	
+			}
+		}
+	log.info("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeTotal) + " Vollzeitäquivalente entsprechend der Arbeitszeitanteile verteilt.", plugin);	
+		
+	/*
+	 * Nun steht das Vollzeitäquivalent für jeden Mitarbeiter fest.
+	 * Die Mitarbeiter werden erneut durchlaufen und es werden die Monatssummen für alle
+	 * gemeldeten Kostenstellen / Kostenträger gebildet	
+	 */
+	monatsSummen = new TreeMap<String, Double>();	
+		for (Mitarbeiter m : mitarbeiter.values())
+		{
+		azvMonat = m.getAzvMonat();
+			for (String strKSTKTR : azvMonat.keySet())
+			{
+				/*
+				 * Ist die Kostenstelle / Kostenträger bereits in den Monatssummen gespeichert ?
+				 * Wenn Ja, wird der Bruttoaufwand addiert,
+				 * Wenn Nein, wird die Kostenstelle / Kostenträger neu eingefügt:
+				 */
+				try
+				{
+				double monatssumme = monatsSummen.get(strKSTKTR);
+				// System.out.println("Addiere: " + strKSTKTR + ": " + azvMonat.get(strKSTKTR).getBruttoAufwand());
+				monatsSummen.put(strKSTKTR, (monatssumme + azvMonat.get(strKSTKTR).getBruttoAufwand()));
+				}
+				catch (NullPointerException e)
+				{
+				monatsSummen.put(strKSTKTR, azvMonat.get(strKSTKTR).getBruttoAufwand());	
+				// System.out.println("Neu: " + strKSTKTR + ": " + azvMonat.get(strKSTKTR).getBruttoAufwand());	
+				}	
+			}
+		}	
+		/*
+		 * Nachdem alle Kostenstellen / Kostenträger verteilt sind, wird die Gesamtsumme gebildet und im Log ausgegeben.
+		 * Diese MUSS gleich dem Gesamtbruttoaufwand sein !
+		 */
+		double monatssummenTotal = 0;
+		for (String s : monatsSummen.keySet())
+		{
+		monatssummenTotal += monatsSummen.get(s);	
+		}
+		log.info("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin);
 	
 	treeViewer.setInput(mitarbeiter);
 	}		

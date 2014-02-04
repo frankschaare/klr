@@ -4,6 +4,7 @@
 package de.hannit.fsch.rcp.klr.provider;
 
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -45,13 +46,20 @@ URL url = null;
 		Mitarbeiter m = (Mitarbeiter)element;	
 			if (m.getAzvMonat() != null && m.getAzvMonat().size() > 0)
 			{
-				if (m.isAzvAktuell())
+				if (m.getAzvProzentSumme() == 100)
 				{
-				url = FileLocator.find(bundle, new Path("icons/User16px.png"), null);		
+					if (m.isAzvAktuell())
+					{
+					url = FileLocator.find(bundle, new Path("icons/User16px.png"), null);		
+					}
+					else
+					{
+					url = FileLocator.find(bundle, new Path("icons/UserYellow16px.png"), null);
+					}
 				}
 				else
 				{
-				url = FileLocator.find(bundle, new Path("icons/UserYellow16px.png"), null);
+				url = FileLocator.find(bundle, new Path("icons/UserRemove16px.png"), null);
 				}
 			}
 			else
@@ -81,7 +89,7 @@ URL url = null;
 		else if (element instanceof Arbeitszeitanteil) 
 		{
 		Arbeitszeitanteil anteil = (Arbeitszeitanteil) element;	
-		text = anteil.getKostenstelleOderKostentraegerLang() + " (" + anteil.getProzentanteil() + " %)";
+		text = anteil.getKostenstelleOderKostentraegerLang() + " (" + anteil.getProzentanteil() + " % = " + NumberFormat.getCurrencyInstance().format(anteil.getBruttoAufwand()) + ")";
 		}
 	
 	return text;

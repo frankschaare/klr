@@ -11,7 +11,7 @@ package de.hannit.fsch.klr.kostenrechnung;
  * Aufgaben-, Tätigkeits- oder Funktionsbereichen zu: den Kostenstellen
  * 
  */
-public class KostenStelle extends KostenArt 
+public class KostenStelle extends Kostenrechnungsobjekt 
 {
 
 	/**
@@ -19,7 +19,7 @@ public class KostenStelle extends KostenArt
 	 */
 	public KostenStelle() 
 	{
-		// TODO Auto-generated constructor stub
+	
 	}
 
 }

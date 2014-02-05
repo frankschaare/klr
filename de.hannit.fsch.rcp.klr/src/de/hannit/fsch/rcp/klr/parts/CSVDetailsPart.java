@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Table;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.common.MonatsSummen;
 import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppen;
 import de.hannit.fsch.common.organisation.reporting.Monatsbericht;
 import de.hannit.fsch.rcp.klr.constants.Topics;
@@ -38,6 +39,7 @@ public class CSVDetailsPart
 @Inject @Named(AppConstants.CONTEXT_TARIFGRUPPEN) private Tarifgruppen tarifGruppen;
 
 private Monatsbericht report;
+private MonatsSummen mSummen;
 private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM yyyy");
 private Group grpBerichtsmonat = null;
 private Label lblSummeBrutto = null;
@@ -47,8 +49,11 @@ private Label lblVollzeitquivalent = null;
 private TableViewerColumn column = null;
 private TableViewer vzae = null;
 private Table vzaeTable;
-private Table table_1;
+private Group grpAzvDaten;
+private TableViewer tvGesamt = null;
+private Table gesamtTable;
 private Table table_2;
+private Table table_3;
 
 
 	@Inject
@@ -71,6 +76,17 @@ private Table table_2;
 	lblAnzahlMitarbeiter.setText(String.valueOf(tarifGruppen.getAnzahlMitarbeiter()) + " Mitarbeiter");
 	}
 
+	@Inject @Optional
+	public void handleEvent(@UIEventTopic(Topics.MONATSSUMMEN) MonatsSummen ms)
+	{
+	this.mSummen = ms;
+	
+	grpAzvDaten.setText("Summe KST / KTR = " + NumberFormat.getCurrencyInstance().format(mSummen.getKstktrMonatssumme()));
+	tvGesamt.setLabelProvider(mSummen);	
+	tvGesamt.setInput(mSummen.getGesamtKosten().values().toArray());
+	
+	}
+	
 	@PostConstruct
 	public void createComposite(Composite parent) 
 	{
@@ -94,7 +110,7 @@ private Table table_2;
 		lblAnzahlMitarbeiter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		lblAnzahlMitarbeiter.setText("Anzahl Mitarbeiter");
 		
-		Group grpAzvDaten = new Group(parent, SWT.NONE);
+		grpAzvDaten = new Group(parent, SWT.NONE);
 		grpAzvDaten.setLayout(new GridLayout(3, true));
 		grpAzvDaten.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpAzvDaten.setText("AZV Daten");
@@ -102,19 +118,40 @@ private Table table_2;
 		TabFolder tabFolder = new TabFolder(grpAzvDaten, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 2));
 		
-		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
-		tabItem.setText("New Item");
+		TabItem tbtmGesamt = new TabItem(tabFolder, SWT.NONE);
+		tbtmGesamt.setText("Gesamt");
 		
-		TableViewer tableViewer_1 = new TableViewer(tabFolder, SWT.BORDER | SWT.FULL_SELECTION);
-		table_1 = tableViewer_1.getTable();
-		tabItem.setControl(table_1);
+		tvGesamt = new TableViewer(tabFolder, SWT.BORDER | SWT.FULL_SELECTION);
+		gesamtTable = tvGesamt.getTable();
+		gesamtTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		gesamtTable.setHeaderVisible(true);
 		
-		TabItem tabItem_1 = new TabItem(tabFolder, SWT.NONE);
-		tabItem_1.setText("New Item");
+		column = new TableViewerColumn(tvGesamt, SWT.RIGHT, 0);
+		column.getColumn().setText("KST / KTR");
+		column.getColumn().setWidth(150);
+		column.getColumn().setResizable(true);
+		column.getColumn().setMoveable(true);
+		
+		column = new TableViewerColumn(tvGesamt, SWT.RIGHT, 1);
+		column.getColumn().setText("Summe");
+		column.getColumn().setWidth(150);
+		column.getColumn().setResizable(true);
+		column.getColumn().setMoveable(true);
+		tbtmGesamt.setControl(gesamtTable);
+		
+		TabItem tabKST = new TabItem(tabFolder, SWT.NONE);
+		tabKST.setText("Kostenstellen");
 		
 		TableViewer tableViewer_2 = new TableViewer(tabFolder, SWT.BORDER | SWT.FULL_SELECTION);
 		table_2 = tableViewer_2.getTable();
-		tabItem_1.setControl(table_2);
+		tabKST.setControl(table_2);
+		
+		TabItem tabKTR = new TabItem(tabFolder, SWT.NONE);
+		tabKTR.setText("Kostenträger");
+		
+		TableViewer tableViewer_3 = new TableViewer(tabFolder, SWT.BORDER | SWT.FULL_SELECTION);
+		table_3 = tableViewer_3.getTable();
+		tabKTR.setControl(table_3);		
 		
 		lblVollzeitquivalent = new Label(grpAzvDaten, SWT.NONE);
 		lblVollzeitquivalent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -158,6 +195,13 @@ private Table table_2;
 			lblSummeBrutto.setText("Summe Brutto: " + NumberFormat.getCurrencyInstance().format(tarifGruppen.getSummeTarifgruppen()));
 			lblSummeStellen.setText("Summe Stellen: " + String.valueOf(tarifGruppen.getSummeStellen()));
 			lblAnzahlMitarbeiter.setText(String.valueOf(tarifGruppen.getAnzahlMitarbeiter()) + " Mitarbeiter");
+			}
+			
+		tvGesamt.setContentProvider(new ArrayContentProvider());
+			if (mSummen != null)
+			{
+			tvGesamt.setLabelProvider(mSummen);
+			tvGesamt.setInput(mSummen.getGesamtKosten().values().toArray());
 			}
 	}	
 	@Focus

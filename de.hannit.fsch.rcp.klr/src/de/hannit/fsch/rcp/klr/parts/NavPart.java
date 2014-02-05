@@ -49,6 +49,7 @@ import org.osgi.service.event.Event;
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.AuswertungsMonat;
 import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.common.MonatsSummen;
 import de.hannit.fsch.common.csv.azv.Arbeitszeitanteil;
 import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
 import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppe;
@@ -72,6 +73,7 @@ private AuswertungsMonat auswertungsMonat = new AuswertungsMonat();
 private TreeMap<Integer, Mitarbeiter> mitarbeiter;	
 private Tarifgruppen tarifgruppen = null;
 private TreeMap<String, Double> monatsSummen = null;
+private MonatsSummen mSumme = null;
 private TreeMap<String, Arbeitszeitanteil> azvMonat = null;
 
 @Inject @Optional private MApplication application;
@@ -83,6 +85,15 @@ private Combo comboYear = null;
 private	SimpleDateFormat fMonat = new SimpleDateFormat("MMMM");
 private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM.yyyy");
 private	SimpleDateFormat fLog = new SimpleDateFormat("MMMM yyyy");
+
+/**
+ * Wieviel Vollzeitanteile wurden aus den Tarifgruppen verteilt ?
+ */
+private double vzaeVerteilt = 0;
+/**
+ * Wie hoch ist die Summe der in den Mitarbeiterdaten gespeicherten Bruttoaufwendungen ?
+ */
+private double vzaeTotal = 0;	
 
 	/*
 	 * Beispiel für Registrierung an Eclipse Framework Events
@@ -153,7 +164,7 @@ private	SimpleDateFormat fLog = new SimpleDateFormat("MMMM yyyy");
 	 * Nachdem die Tarifgruppen geladen wurden, wird für jeden Mitarbeiter
 	 * das passende Vollzeitäquivalent gespeichert:
 	 */
-	double vzaeVerteilt = 0;
+	vzaeVerteilt = 0;
 		Tarifgruppe t = null;
 		for (Mitarbeiter m : mitarbeiter.values())
 		{
@@ -165,7 +176,7 @@ private	SimpleDateFormat fLog = new SimpleDateFormat("MMMM yyyy");
 	/*
 	 * Im Log wird nun zu Prüfzwecken ausgegeben, wie hoch das Vollzeitäquivalent Insgesamt beträgt:	
 	 */
-	double vzaeTotal = 0;	
+	vzaeTotal = 0;	
 		for (Mitarbeiter m : mitarbeiter.values())
 		{
 			for (String a : m.getAzvMonat().keySet())
@@ -173,7 +184,14 @@ private	SimpleDateFormat fLog = new SimpleDateFormat("MMMM yyyy");
 			vzaeTotal += m.getAzvMonat().get(a).getBruttoAufwand();	
 			}
 		}
-	log.info("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeTotal) + " Vollzeitäquivalente entsprechend der Arbeitszeitanteile verteilt.", plugin);	
+		if (NumberFormat.getCurrencyInstance().format(vzaeTotal).equals(NumberFormat.getCurrencyInstance().format(vzaeVerteilt)))
+		{
+		log.confirm("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeTotal) + " Vollzeitäquivalente entsprechend der Arbeitszeitanteile verteilt.", plugin);	
+		}
+		else
+		{
+		log.error("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeTotal) + " Vollzeitäquivalente entsprechend der Arbeitszeitanteile verteilt.", plugin, null);
+		}	
 		
 	/*
 	 * Nun steht das Vollzeitäquivalent für jeden Mitarbeiter fest.
@@ -203,17 +221,35 @@ private	SimpleDateFormat fLog = new SimpleDateFormat("MMMM yyyy");
 				// System.out.println("Neu: " + strKSTKTR + ": " + azvMonat.get(strKSTKTR).getBruttoAufwand());	
 				}	
 			}
-		}	
+		}
+		mSumme = new MonatsSummen();
+		mSumme.setGesamtSummen(monatsSummen);
+		mSumme.setBerichtsMonat(selectedMonth);
+		
 		/*
 		 * Nachdem alle Kostenstellen / Kostenträger verteilt sind, wird die Gesamtsumme gebildet und im Log ausgegeben.
 		 * Diese MUSS gleich dem Gesamtbruttoaufwand sein !
 		 */
-		double monatssummenTotal = 0;
-		for (String s : monatsSummen.keySet())
+		double monatssummenTotal = mSumme.getKstktrMonatssumme();
+		
+		if (NumberFormat.getCurrencyInstance().format(monatssummenTotal).equals(NumberFormat.getCurrencyInstance().format(vzaeVerteilt)))
 		{
-		monatssummenTotal += monatsSummen.get(s);	
+		mSumme.setChecked(true);
+		mSumme.setSummeOK(true);
+		log.confirm("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin);	
 		}
-		log.info("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin);
+		else
+		{
+		mSumme.setChecked(true);
+		mSumme.setSummeOK(false);
+		log.error("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin, null);
+		}	
+		
+	/*
+	 * Nach Abschluss aller Prüfungen werden die Monatssummen versendet:	
+	 */
+	log.info("Eventbroker versendet Monatssummen für den Monat " + fLog.format(selectedMonth) + ", Topic: Topics.MONATSSUMMEN", plugin);
+	broker.send(Topics.MONATSSUMMEN, mSumme);	
 	
 	treeViewer.setInput(mitarbeiter);
 	}		

@@ -36,9 +36,7 @@
       </children>
       <children xsi:type="menu:Menu" xmi:id="_z2tccOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menu.main.users" label="Benutzer" iconURI="" tooltip="Benutzerverwaltung"/>
       <children xsi:type="menu:Menu" xmi:id="_fwNOsOrwEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.menu.main.database" label="Datenbank" tooltip="Datenbankspezifische Aktionen"/>
-      <children xsi:type="menu:Menu" xmi:id="_Qd0LnuMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.menu.main.help" label="Help">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0Ln-MVEeKJItlVKSINDA" label="About" command="_Qd0LluMVEeKJItlVKSINDA"/>
-      </children>
+      <children xsi:type="menu:Menu" xmi:id="_jCLfII5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.menu.main.csv" label="CSV"/>
     </mainMenu>
     <trimBars xmi:id="_Qd0LpeMVEeKJItlVKSINDA">
       <children xsi:type="menu:ToolBar" xmi:id="_Qd0LpuMVEeKJItlVKSINDA" elementId="toolbar:org.eclipse.ui.main.toolbar">
@@ -67,6 +65,9 @@
   <handlers xmi:id="_PPYnEOr4EeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handler.table.loga.edit" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.table.LogaEditHandler" command="_CpwjUOr4EeKT3PrNpk3Wzw"/>
   <handlers xmi:id="_0NWB8O65EeKDYoreOKB1Ig" elementId="de.hannit.fsch.rcp.klr.handler.database.azv.insert" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.AZVInsertHandler" command="_n-ffcO65EeKDYoreOKB1Ig"/>
   <handlers xmi:id="_QffyEPkEEeK6aqW3DPHcyA" elementId="de.hannit.fsch.rcp.klr.handler.user.insert" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.user.InsertHandler" command="_d3P2UPkEEeK6aqW3DPHcyA"/>
+  <handlers xmi:id="_xrQWQI5HEeO40vRa6McLXQ" elementId="de.hannit.fsch.rcp.klr.handler.database.azv.insertMonatssummen" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.AZVInsertMonatssummenHandler" command="_Si_dwI5HEeO40vRa6McLXQ"/>
+  <handlers xmi:id="_j9Rr4I5eEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.handler.database.azv.insertVZAE" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.VZAEInsertMonatssummenHandler" command="_cAnXUI5eEeO4TfksEninsA"/>
+  <handlers xmi:id="_3RyngI50EeORJJmPSsmVyQ" elementId="csv.create.01Entlastung0400" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.Create01Entlastung0400Handler" command="_QGwycI50EeORJJmPSsmVyQ"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -94,7 +95,12 @@
     <children xsi:type="menu:HandledMenuItem" xmi:id="__aR7YOpOEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.remove" label="entfernen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserRemove16px.png" tooltip="Den aktuellen Mitarbeiter löschen" command="_wh0SUOpOEeK7nN3EOf8xtA"/>
   </menuContributions>
   <menuContributions xmi:id="_Pm43MOrvEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.menucontribution.database" parentId="de.hannit.fsch.rcp.klr.menu.main.database">
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_OCLGgI5eEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.database.insertVZAE" label="Vollzeitäquivalet speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert die ermittelten Vollzeitäquivalente in der Datenbank" command="_cAnXUI5eEeO4TfksEninsA"/>
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_8g1_wI5HEeO40vRa6McLXQ" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.database.insertMonatssummen" label="Monatssummen speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert die Gesamtssumme der gemeldeten AZV-Anteile in der Datenbank" command="_Si_dwI5HEeO40vRa6McLXQ"/>
     <children xsi:type="menu:HandledMenuItem" xmi:id="_KyQOEOrwEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.database.search" label="Suchen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseSearch16px.png" tooltip="Prüft, ob das aktuelle Element in der Datenbank vorhanden ist" command="_L8bGgO0yEeKhPoDsRHBDHQ"/>
+  </menuContributions>
+  <menuContributions xmi:id="_tipNMI5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.menucontribution.csv" parentId="de.hannit.fsch.rcp.klr.menu.main.csv">
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_8OnSYI5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.entlastung0400" label="01 - Entlastung 0400 erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 01_Entlastung 0400 auf andere KST" command="_QGwycI50EeORJJmPSsmVyQ"/>
   </menuContributions>
   <toolBarContributions xmi:id="__L6hEOrDEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.navpart.toolbarcontribution" parentId="de.hannit.fsch.rcp.klr.parts.navpart.toolbar">
     <children xsi:type="menu:HandledToolItem" xmi:id="_NNLcYOrEEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
@@ -133,6 +139,9 @@
   <commands xmi:id="_c9vroO61EeKDYoreOKB1Ig" elementId="de.hannit.fsch.rcp.klr.command.azv.check.personalnummer" commandName="azvCheckPersonalNR"/>
   <commands xmi:id="_n-ffcO65EeKDYoreOKB1Ig" elementId="de.hannit.fsch.rcp.klr.command.database.azv.insert" commandName="dbAZVInsert" description="Speichert die aktuellen Datensätze in der Datenbank"/>
   <commands xmi:id="_d3P2UPkEEeK6aqW3DPHcyA" elementId="de.hannit.fsch.rcp.klr.command.user.insert" commandName="userInsertCommand" description="Sichert einen Mitarbeiter in der Datenbank Tabelle"/>
+  <commands xmi:id="_Si_dwI5HEeO40vRa6McLXQ" elementId="de.hannit.fsch.rcp.klr.command.database.azv.insertMonatssummen" commandName="dbInsertMonatssummen" description="Speichert die Gesamtssumme der gemeldeten AZV-Anteile in der Datenbank"/>
+  <commands xmi:id="_cAnXUI5eEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.command.database.azv.insertVZAE" commandName="dbInsertVZAE" description="Speichert die ermittelten Vollzeitäquivalente in der Datenbank"/>
+  <commands xmi:id="_QGwycI50EeORJJmPSsmVyQ" elementId="de.hannit.fsch.rcp.klr.command.csv.create.01Entlastung0400" commandName="createCSV01" description="Erstellt die Datei 01_Entlastung 0400 auf andere KST"/>
   <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

@@ -10,7 +10,7 @@ package de.hannit.fsch.klr.kostenrechnung;
  * Die Kostentr‰gerrechnung schlieﬂlich rechnet die Kosten den verschiedenen Services zu, 
  * die HannIT im Rahmen seines Serviceportfolios anbietet
  */
-public class KostenTraeger extends KostenArt 
+public class KostenTraeger extends Kostenrechnungsobjekt  
 {
 
 	/**
@@ -18,7 +18,6 @@ public class KostenTraeger extends KostenArt
 	 */
 	public KostenTraeger() 
 	{
-		// TODO Auto-generated constructor stub
 	}
 
 }

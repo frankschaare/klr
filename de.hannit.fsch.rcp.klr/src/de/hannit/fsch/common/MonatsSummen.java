@@ -66,6 +66,11 @@ private String label;
 	{
 	return datumsformat.format(berichtsMonat);
 	}
+	
+	public Date getBerichtsMonatAsDate()
+	{
+	return berichtsMonat;
+	}
 
 	public void setBerichtsMonat(Date berichtsMonat)
 	{

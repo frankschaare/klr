@@ -4,6 +4,7 @@
 package de.hannit.fsch.rcp.klr.handler.csv;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.Date;
 public class CSVHandler
 {
 protected Calendar cal = Calendar.getInstance();	
+protected DecimalFormat summenFormat = new DecimalFormat("0.00");
 
 	/**
 	 * Oberklasse für alle Handler, die CSV-Dateien exportieren.

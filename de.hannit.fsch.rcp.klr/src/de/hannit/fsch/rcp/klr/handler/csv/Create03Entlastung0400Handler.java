@@ -35,7 +35,16 @@ import de.hannit.fsch.klr.kostenrechnung.KostenTraeger;
 import de.hannit.fsch.klr.kostenrechnung.Kostenrechnungsobjekt;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 
-public class Create01Entlastung0400Handler extends CSVHandler
+/**
+ * Erstellt die CSV-Datei für die Entlastung der Kostenstelle 0400 auf andere Kostenträger
+ * Im Gegensatz zur Datei 01, in der die Kostenstellen umgelegt werden, wird hier pro Monat eine Datei erstellt.
+ * 
+ * Zudem sind die Bezeichnungen der Konstanten etwas anders und es wird in der ersten Zeile keine Gesamtentlastung gebucht.
+ * @author fsch
+ * @since 07.02.2014
+ *
+ */
+public class Create03Entlastung0400Handler extends CSVHandler
 {
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 @Inject DataService dataService;
@@ -47,25 +56,26 @@ private TreeMap<String, KostenTraeger> tmKostenträger = null;
 private double sumKST = 0;
 
 private static final String DELIMITER = ";";
-private static final String ZELLE2_NEHME = "0";
-private static final String ZELLE2_GEBE = "1";
-private static final String ZELLE4_NEHME = "1100100";
-private static final String ZELLE4_GEBE = "1110100";
-private static final String ENTLASTUNGSKONTO = "0400";
-private static final String PATH_PRÄFIX = "\\\\RegionHannover.de\\daten\\hannit\\Rechnungswesen AöR\\KLR\\KLR ab 01.01.2011\\Arbeitszeitverteilung\\Reports\\";
-private static final String PATH_SUFFIX = "\\CSV\\";
-private static final String DATEINAME_PRÄFIX = "01_CSV_Entlastung 0400 auf andere KST ";
-private static final String DATEINAME_SUFFIX = ".csv";
-
-/**
- * "UML-" + Monatsziffer (01,02,03)
- */
-private static final String ZELLE5_PRÄFIX = "UML-";
+// Zelle 1 = Monatsletzter
+private static final String ZELLE2_ENTLASTUNGSKOSTENSTELLE = "0400";
+private static final String ZELLE3 = "1200100";
+private static final String ZELLE4 = "AZV EUR";
+// Zelle 5 Variabel = Kostenträger
 /**
  * "AZV " + Monat lang (MMMM)
  */
 private static final String ZELLE6_PRÄFIX = "AZV ";
-
+// Zelle 7 Variabel = Kostenträger Summe
+private static final String ZELLE8 = "L-01";
+private static final String PATH_PRÄFIX = "\\\\RegionHannover.de\\daten\\hannit\\Rechnungswesen AöR\\KLR\\KLR ab 01.01.2011\\Arbeitszeitverteilung\\Reports\\";
+private static final String PATH_SUFFIX = "\\CSV\\";
+/**
+ * Dateiname wird nach dem Muster:
+ * 02_CSV_Endlastung 0400 auf KTR_MMMM.csv
+ * gebildet.
+ */
+private static final String DATEINAME_PRÄFIX = "03_CSV_Entlastung 0400 auf KTR_";
+private static final String DATEINAME_SUFFIX = ".csv";
 
 	
 	@Inject @Optional
@@ -84,7 +94,6 @@ private static final String ZELLE6_PRÄFIX = "AZV ";
 	/*
 	 * Erstellt alle Zeilen der Datei und schreibt diese
 	 */
-	@SuppressWarnings("unused")
 	private void createCSV()
 	{
 	String feld1 = null;
@@ -94,33 +103,30 @@ private static final String ZELLE6_PRÄFIX = "AZV ";
 	String feld5 = null;
 	String feld6 = null;
 	String feld7 = null;
+	String feld8 = null;
 	
 	ArrayList<String> lines = new ArrayList<String>();	
 	
 	feld1 = getLetzterTagdesMonats(mSummen.getBerichtsMonatAsDate()) + DELIMITER;
-	feld2 = ZELLE2_NEHME + DELIMITER;
-	feld3 = ENTLASTUNGSKONTO + DELIMITER;
-	feld4 = ZELLE4_NEHME + DELIMITER;
-	feld5 = ZELLE5_PRÄFIX + getMonatsnummer(mSummen.getBerichtsMonatAsDate()) + DELIMITER;
+	feld2 = ZELLE2_ENTLASTUNGSKOSTENSTELLE + DELIMITER;
+	feld3 = ZELLE3 + DELIMITER;
+	feld4 = ZELLE4 + DELIMITER;
 	feld6 = ZELLE6_PRÄFIX + getMonatLang(mSummen.getBerichtsMonatAsDate()) + DELIMITER;
+	feld8 = ZELLE8;
 	
-	DecimalFormat df = new DecimalFormat("0.00");
-	feld7 = "-" + df.format(sumKST);
-	
-	lines.add(feld1+feld2+feld3+feld4+feld5+feld6+feld7);
+
+
 	
 		/*
-		 * Abschliessend werden die Zeilen für alle Kostenstellen geschrieben
-		 * Die Zellen 1,6 und 6 bleiben dabei gleich
+		 * Abschliessend werden die Zeilen für alle Kostenträger geschrieben
+		 * Die Zellen 1,2,3,4,6 und 8 bleiben dabei gleich
 		 */
-	feld2 = ZELLE2_GEBE + DELIMITER;
-	feld4 = ZELLE4_GEBE + DELIMITER;
-		for (KostenStelle kst : tmKostenstellen.values())
+		for (KostenTraeger ktr : tmKostenträger.values())
 		{
-		feld3 = kst.getBezeichnung() + DELIMITER;
-		feld7 = df.format(kst.getSumme());
+		feld5 = ktr.getBezeichnung() + DELIMITER;
+		feld7 = summenFormat.format(ktr.getSumme())+DELIMITER;
 		
-		lines.add(feld1+feld2+feld3+feld4+feld5+feld6+feld7);
+		lines.add(feld1+feld2+feld3+feld4+feld5+feld6+feld7+feld8);
 		}
 	
 	/*
@@ -131,7 +137,7 @@ private static final String ZELLE6_PRÄFIX = "AZV ";
 	 * PATH_PRÄFIX + YYYY Quartal # + PATH_SUFFIX + DATEINAME_PRÄFIX + YYYYMM + DATEINAME_SUFFIX benötigt: 	
 	 */
 	String strPath = PATH_PRÄFIX + getJahr(mSummen.getBerichtsMonatAsDate()) + " Quartal " + getQuartalsnummer(mSummen.getBerichtsMonatAsDate()) + PATH_SUFFIX;
-	String dateiName =  DATEINAME_PRÄFIX + getJahr(mSummen.getBerichtsMonatAsDate()) + getAuswertungsmonat(mSummen.getBerichtsMonatAsDate()) + DATEINAME_SUFFIX;
+	String dateiName =  DATEINAME_PRÄFIX + getMonatLang(mSummen.getBerichtsMonatAsDate()) + DATEINAME_SUFFIX;
 	Path dateiPfad = Paths.get(strPath);	
 		
 		/*
@@ -235,7 +241,7 @@ private static final String ZELLE6_PRÄFIX = "AZV ";
 	{
 	boolean ready = false;
 	
-		if (mSummen.isChecked() && mSummen.isSummeOK())
+		if (mSummen.isChecked() && mSummen.isSummeOK() && getMonatsnummer(mSummen.getBerichtsMonatAsDate()).equalsIgnoreCase("02"))
 		{
 		ready = true;
 		}

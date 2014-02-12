@@ -52,6 +52,7 @@ import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.MonatsSummen;
 import de.hannit.fsch.common.csv.azv.Arbeitszeitanteil;
 import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
+import de.hannit.fsch.common.mitarbeiter.PersonalDurchschnittsKosten;
 import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppe;
 import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppen;
 import de.hannit.fsch.common.organisation.hannit.Organisation;
@@ -236,7 +237,11 @@ private double vzaeTotal = 0;
 		{
 		mSumme.setChecked(true);
 		mSumme.setSummeOK(true);
-		log.confirm("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin);	
+		log.confirm("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin);
+		
+		PersonalDurchschnittsKosten pdk = new PersonalDurchschnittsKosten(selectedMonth);
+		pdk.setMitarbeiter(mitarbeiter);
+		broker.send(Topics.PERSONALDURCHSCHNITTSKOSTEN, pdk);
 		}
 		else
 		{

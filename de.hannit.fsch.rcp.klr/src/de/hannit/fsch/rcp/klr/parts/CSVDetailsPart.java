@@ -12,6 +12,7 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.UIEventTopic;
+import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -37,6 +38,8 @@ public class CSVDetailsPart
 @Inject IEventBroker broker;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 @Inject @Named(AppConstants.CONTEXT_TARIFGRUPPEN) private Tarifgruppen tarifGruppen;
+@Inject private EMenuService menuService;
+private static final String POPUPMENUD_ID = "de.hannit.fsch.rcp.klr.menu.main.database";
 
 private Monatsbericht report;
 private MonatsSummen mSummen;
@@ -159,6 +162,7 @@ private Table table_3;
 		
 		vzae = new TableViewer(grpAzvDaten, SWT.BORDER | SWT.FULL_SELECTION);
 		vzaeTable = vzae.getTable();
+		menuService.registerContextMenu(vzae.getTable(), POPUPMENUD_ID);
 		vzaeTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		vzaeTable.setHeaderVisible(true);
 		

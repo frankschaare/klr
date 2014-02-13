@@ -7,15 +7,16 @@
         <children xsi:type="basic:PartSashContainer" xmi:id="_Qd0LouMVEeKJItlVKSINDA" containerData="30000" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_Qd0Lo-MVEeKJItlVKSINDA">
             <children xsi:type="basic:Part" xmi:id="_Qd0LpOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.parts.NavPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.NavPart" label="Mitarbeiter" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Users16x16.png" tooltip="Liste der aktuellen Mitarbeiter">
-              <menus xsi:type="menu:PopupMenu" xmi:id="__W7agOpQEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.popupmenu.user" label="Benutzer">
-                <children xsi:type="menu:HandledMenuItem" xmi:id="_hgiSMOpTEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.popup.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Benutzer hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
-              </menus>
+              <menus xsi:type="menu:PopupMenu" xmi:id="__W7agOpQEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menu.main.users" label="Benutzer"/>
               <toolbar xmi:id="_zGyXMOpTEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.parts.navpart.toolbar"/>
             </children>
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_FtkXIOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partsashcontainer.0" containerData="70000">
             <children xsi:type="basic:PartStack" xmi:id="_QGItcOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.details" containerData="7000">
               <children xsi:type="basic:Part" xmi:id="_gGmgYOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.part.CSVDetailsPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.CSVDetailsPart" label="CSV Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Sofern eine CSV Datei eingelesen wurde, wird hier der Inhalt dargestellt">
+                <menus xsi:type="menu:PopupMenu" xmi:id="_uP4j0JSjEeOZwqLiT8Xx2w" elementId="de.hannit.fsch.rcp.klr.menu.main.database" label="Vollzeitäquivalent">
+                  <children xsi:type="menu:MenuSeparator" xmi:id="_c-EL0JSlEeOZwqLiT8Xx2w" elementId="de.hannit.fsch.rcp.klr.menuseparator.database.0"/>
+                </menus>
                 <toolbar xmi:id="_fxhWwOrDEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.toolbar.2"/>
               </children>
             </children>
@@ -36,7 +37,9 @@
       </children>
       <children xsi:type="menu:Menu" xmi:id="_z2tccOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menu.main.users" label="Benutzer" iconURI="" tooltip="Benutzerverwaltung"/>
       <children xsi:type="menu:Menu" xmi:id="_kuuiUJMREeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.menu.main.personal" label="Personal"/>
-      <children xsi:type="menu:Menu" xmi:id="_fwNOsOrwEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.menu.main.database" label="Datenbank" tooltip="Datenbankspezifische Aktionen"/>
+      <children xsi:type="menu:Menu" xmi:id="_fwNOsOrwEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.menu.main.database" label="Datenbank" tooltip="Datenbankspezifische Aktionen">
+        <children xsi:type="menu:MenuSeparator" xmi:id="_MawKgJSlEeOZwqLiT8Xx2w" elementId="de.hannit.fsch.rcp.klr.menuseparator.database.0"/>
+      </children>
       <children xsi:type="menu:Menu" xmi:id="_jCLfII5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.menu.main.csv" label="CSV"/>
     </mainMenu>
     <trimBars xmi:id="_Qd0LpeMVEeKJItlVKSINDA">
@@ -103,18 +106,20 @@
     <children xsi:type="menu:HandledMenuItem" xmi:id="__aR7YOpOEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.remove" label="entfernen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserRemove16px.png" tooltip="Den aktuellen Mitarbeiter löschen" command="_wh0SUOpOEeK7nN3EOf8xtA"/>
   </menuContributions>
   <menuContributions xmi:id="_Pm43MOrvEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.menucontribution.database" parentId="de.hannit.fsch.rcp.klr.menu.main.database">
-    <children xsi:type="menu:HandledMenuItem" xmi:id="_OCLGgI5eEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.database.insertVZAE" label="Vollzeitäquivalet speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert die ermittelten Vollzeitäquivalente in der Datenbank" command="_cAnXUI5eEeO4TfksEninsA"/>
     <children xsi:type="menu:HandledMenuItem" xmi:id="_8g1_wI5HEeO40vRa6McLXQ" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.database.insertMonatssummen" label="Monatssummen speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert die Gesamtssumme der gemeldeten AZV-Anteile in der Datenbank" command="_Si_dwI5HEeO40vRa6McLXQ"/>
     <children xsi:type="menu:HandledMenuItem" xmi:id="_KyQOEOrwEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.database.search" label="Suchen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseSearch16px.png" tooltip="Prüft, ob das aktuelle Element in der Datenbank vorhanden ist" command="_L8bGgO0yEeKhPoDsRHBDHQ"/>
   </menuContributions>
   <menuContributions xmi:id="_tipNMI5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.menucontribution.csv" parentId="de.hannit.fsch.rcp.klr.menu.main.csv">
-    <children xsi:type="menu:HandledMenuItem" xmi:id="_8OnSYI5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.01Entlastung0400" label="01 - Entlastung 0400 erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 01_Entlastung 0400 auf andere KST" command="_QGwycI50EeORJJmPSsmVyQ"/>
-    <children xsi:type="menu:HandledMenuItem" xmi:id="_NT6kII_kEeOWnIf9ssKITg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.02Entlastung0400" label="02 - Entlastung 0400 erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 02_Entlastung 0400 auf andere KTR" command="_90mlMI_dEeOWnIf9ssKITg"/>
-    <children xsi:type="menu:HandledMenuItem" xmi:id="_YHbKAI_kEeOWnIf9ssKITg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.03Entlastung0400" label="03 - Entlastung 0400 erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 03_Entlastung 0400 auf andere KTR" command="_EmIjYI_eEeOWnIf9ssKITg"/>
-    <children xsi:type="menu:HandledMenuItem" xmi:id="_bfmmwI_kEeOWnIf9ssKITg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.04Entlastung0400" label="04 - Entlastung 0400 erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 04_Entlastung 0400 auf andere KTR" command="_KV6JoI_eEeOWnIf9ssKITg"/>
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_8OnSYI5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.01Entlastung0400" label="01 - Entlastung 0400 KST erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 01_Entlastung 0400 auf andere KST" command="_QGwycI50EeORJJmPSsmVyQ"/>
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_NT6kII_kEeOWnIf9ssKITg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.02Entlastung0400" label="02 - Entlastung 0400 KTR erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 02_Entlastung 0400 auf andere KTR" command="_90mlMI_dEeOWnIf9ssKITg"/>
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_YHbKAI_kEeOWnIf9ssKITg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.03Entlastung0400" label="03 - Entlastung 0400 KTR erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 03_Entlastung 0400 auf andere KTR" command="_EmIjYI_eEeOWnIf9ssKITg"/>
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_bfmmwI_kEeOWnIf9ssKITg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.04Entlastung0400" label="04 - Entlastung 0400 KTR erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 04_Entlastung 0400 auf andere KTR" command="_KV6JoI_eEeOWnIf9ssKITg"/>
   </menuContributions>
   <menuContributions xmi:id="_0hiTwJMREeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.menucontribution.personal" parentId="de.hannit.fsch.rcp.klr.menu.main.personal">
     <children xsi:type="menu:HandledMenuItem" xmi:id="_6ia4IJMREeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.personal.durchschittskosten" label="Durchschittskosten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Personaldurchschnittskosten für den aktuellen Monat" command="_SGj34JMSEeOiZMaQerBzZw"/>
+  </menuContributions>
+  <menuContributions xmi:id="_PSNcoJShEeOZwqLiT8Xx2w" elementId="de.hannit.fsch.rcp.klr.menucontribution.vzae" positionInParent="before=de.hannit.fsch.rcp.klr.menuseparator.database.0" parentId="de.hannit.fsch.rcp.klr.menu.main.database">
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_UV8cQJShEeOZwqLiT8Xx2w" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.database.insertVZAE" label="Vollzeitäquivalet speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert die ermittelten Vollzeitäquivalente in der Datenbank" command="_cAnXUI5eEeO4TfksEninsA"/>
   </menuContributions>
   <toolBarContributions xmi:id="__L6hEOrDEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.navpart.toolbarcontribution" parentId="de.hannit.fsch.rcp.klr.parts.navpart.toolbar">
     <children xsi:type="menu:HandledToolItem" xmi:id="_NNLcYOrEEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>

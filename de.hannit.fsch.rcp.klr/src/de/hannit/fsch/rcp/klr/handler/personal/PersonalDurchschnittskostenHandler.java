@@ -88,7 +88,7 @@ private PersonalDurchschnittsKosten pdk = null;
 	@CanExecute
 	public boolean canExecute() 
 	{
-	return pdk != null ? true : false;
+	return (pdk.isChecked() && pdk.isDatenOK()) ? true : false;
 	}
 		
 }

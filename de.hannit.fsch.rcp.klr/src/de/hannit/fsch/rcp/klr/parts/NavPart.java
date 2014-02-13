@@ -31,6 +31,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -69,6 +70,7 @@ private AuswertungsMonat auswertungsMonat = new AuswertungsMonat();
 @Inject DataService dataService;
 @Inject @Optional Organisation hannit;
 @Inject private EPartService partService;
+@Inject private EMenuService menuService;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 
 private TreeMap<Integer, Mitarbeiter> mitarbeiter;	
@@ -86,6 +88,8 @@ private Combo comboYear = null;
 private	SimpleDateFormat fMonat = new SimpleDateFormat("MMMM");
 private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM.yyyy");
 private	SimpleDateFormat fLog = new SimpleDateFormat("MMMM yyyy");
+
+private static final String POPUPMENUD_ID = "de.hannit.fsch.rcp.klr.menu.main.users";
 
 /**
  * Wieviel Vollzeitanteile wurden aus den Tarifgruppen verteilt ?
@@ -227,6 +231,9 @@ private double vzaeTotal = 0;
 		mSumme.setGesamtSummen(monatsSummen);
 		mSumme.setBerichtsMonat(selectedMonth);
 		
+		PersonalDurchschnittsKosten pdk = new PersonalDurchschnittsKosten(selectedMonth);
+		pdk.setMitarbeiter(mitarbeiter);
+				
 		/*
 		 * Nachdem alle Kostenstellen / Kostenträger verteilt sind, wird die Gesamtsumme gebildet und im Log ausgegeben.
 		 * Diese MUSS gleich dem Gesamtbruttoaufwand sein !
@@ -237,16 +244,16 @@ private double vzaeTotal = 0;
 		{
 		mSumme.setChecked(true);
 		mSumme.setSummeOK(true);
+		pdk.setChecked(true);
+		pdk.setDatenOK(true);
 		log.confirm("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin);
-		
-		PersonalDurchschnittsKosten pdk = new PersonalDurchschnittsKosten(selectedMonth);
-		pdk.setMitarbeiter(mitarbeiter);
-		broker.send(Topics.PERSONALDURCHSCHNITTSKOSTEN, pdk);
 		}
 		else
 		{
 		mSumme.setChecked(true);
 		mSumme.setSummeOK(false);
+		pdk.setChecked(true);
+		pdk.setDatenOK(false);
 		log.error("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin, null);
 		}	
 		
@@ -254,7 +261,8 @@ private double vzaeTotal = 0;
 	 * Nach Abschluss aller Prüfungen werden die Monatssummen versendet:	
 	 */
 	log.info("Eventbroker versendet Monatssummen für den Monat " + fLog.format(selectedMonth) + ", Topic: Topics.MONATSSUMMEN", plugin);
-	broker.send(Topics.MONATSSUMMEN, mSumme);	
+	broker.send(Topics.MONATSSUMMEN, mSumme);
+	broker.send(Topics.PERSONALDURCHSCHNITTSKOSTEN, pdk);
 	
 	treeViewer.setInput(mitarbeiter);
 	}		
@@ -356,8 +364,10 @@ private double vzaeTotal = 0;
 		NavTreeContentProvider cp = new NavTreeContentProvider();
 		treeViewer.setContentProvider(cp);
 		treeViewer.setLabelProvider(cp);
+		menuService.registerContextMenu(treeViewer.getTree(), POPUPMENUD_ID);
 			
 		Tree tree = treeViewer.getTree();
+
 		tbtmAktuell.setControl(tree);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 	

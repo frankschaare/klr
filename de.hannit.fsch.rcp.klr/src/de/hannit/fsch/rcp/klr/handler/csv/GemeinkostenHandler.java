@@ -1,5 +1,5 @@
  
-package de.hannit.fsch.rcp.klr.handler.personal;
+package de.hannit.fsch.rcp.klr.handler.csv;
 
 import java.util.TreeMap;
 
@@ -22,6 +22,7 @@ import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.MonatsSummen;
+import de.hannit.fsch.common.mitarbeiter.GemeinKosten;
 import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
 import de.hannit.fsch.common.mitarbeiter.PersonalDurchschnittsKosten;
 import de.hannit.fsch.klr.dataservice.DataService;
@@ -37,7 +38,7 @@ import de.hannit.fsch.rcp.klr.constants.Topics;
  * @since 07.02.2014
  *
  */
-public class PersonalDurchschnittskostenHandler
+public class GemeinkostenHandler
 {
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 @Inject DataService dataService;
@@ -47,7 +48,7 @@ private MPart pdkPart = null;
 private IEclipseContext partContext = null;
 @Inject EPartService partService;
 
-private PersonalDurchschnittsKosten pdk = null;
+private GemeinKosten gk = null;
 
 	
 	/*
@@ -55,17 +56,19 @@ private PersonalDurchschnittsKosten pdk = null;
 	 * Hieraus werden hier die Personaldurchschnittskosten gebildet.
 	 */
 	@Inject @Optional
-	public void handleEvent(@UIEventTopic(Topics.PERSONALDURCHSCHNITTSKOSTEN) PersonalDurchschnittsKosten incoming)
+	public void handleEvent(@UIEventTopic(Topics.GEMEINKOSTERKOSTEN) GemeinKosten incoming)
 	{
-	this.pdk = incoming;
+	this.gk = incoming;
 	}
 	
 	@Execute
 	public void execute(MApplication app, EModelService modelService) 
 	{
+	gk.splitTeams();
+	
 	// PartStack Details finden:
 	MPartStack details = (MPartStack) modelService.find("de.hannit.fsch.rcp.klr.partstack.details", app);
-	pdkPart = createPDKPart("Personaldurchschnittskosten");
+	pdkPart = createPDKPart("Gemeinkostenverteilung");
 	details.getChildren().add(pdkPart);
 	partService.activate(pdkPart);	
 	// setPersonaldurchschnittskosten();	
@@ -73,11 +76,11 @@ private PersonalDurchschnittsKosten pdk = null;
 
 	private MPart createPDKPart(String title)
 	{
-	pdkPart = partService.createPart("de.hannit.fsch.rcp.klr.partdescriptor.personal.durchschnittskosten");
+	pdkPart = partService.createPart("de.hannit.fsch.rcp.klr.partdescriptor.csv.gemeinkosten");
 	pdkPart.setLabel(title);
 	partContext = EclipseContextFactory.create();
 	pdkPart.setContext(partContext);
-	pdkPart.getContext().set(AppConstants.CONTEXT_PERSONALDURCHSCHNITTSKOSTEN, pdk);
+	pdkPart.getContext().set(AppConstants.CONTEXT_GEMEINKOSTEN, gk);
 	
 	return pdkPart;
 	}
@@ -86,7 +89,7 @@ private PersonalDurchschnittsKosten pdk = null;
 	@CanExecute
 	public boolean canExecute() 
 	{
-	return (pdk.isChecked() && pdk.isDatenOK()) ? true : false;
+	return (gk.isChecked() && gk.isDatenOK()) ? true : false;
 	}
 		
 }

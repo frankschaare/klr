@@ -15,7 +15,13 @@ public static final String LOGGER = "LOGGER";
 public static final String LOG_STACK = "LOGSTACK";
 public static final String CONTEXT_TARIFGRUPPEN = "cTARIFGRUPPEN";
 public static final String CONTEXT_PERSONALDURCHSCHNITTSKOSTEN = "cPDK";
+public static final String CONTEXT_GEMEINKOSTEN = "cGK";
 public static final DecimalFormat KOMMAZAHL = new DecimalFormat("#0,00");
+
+public static final String ENDKOSTENSTELLE_TEAM1 = "1110";
+public static final String ENDKOSTENSTELLE_TEAM2 = "2010";
+public static final String ENDKOSTENSTELLE_TEAM3 = "3010";
+public static final String ENDKOSTENSTELLE_TEAM4 = "4010";
 
 public static interface ActiveSelections
 {

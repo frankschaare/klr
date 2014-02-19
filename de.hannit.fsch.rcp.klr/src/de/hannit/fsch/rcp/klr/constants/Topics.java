@@ -9,4 +9,5 @@ public static final String AZV_DATEN = "AZV/Daten";
 public static final String TARIFGRUPPEN = "Tarifgruppen";
 public static final String MONATSSUMMEN = "Monatssummen";
 public static final String PERSONALDURCHSCHNITTSKOSTEN = "pdk";
+public static final String GEMEINKOSTERKOSTEN = "gk";
 }

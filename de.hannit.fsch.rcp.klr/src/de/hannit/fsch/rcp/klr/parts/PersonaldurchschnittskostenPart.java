@@ -148,7 +148,7 @@ private Group grpPersonaldurchschnittsKosten;
 			if (pdk != null)
 			{
 			pdkViever.setLabelProvider(pdk);		
-			pdkViever.setInput(pdk.getSummentabelle().toArray());	
+			pdkViever.setInput(pdk.getSummentabelle().values().toArray());	
 			grpBerichtsmonat.setText(fMonatJahr.format(pdk.getBerichtsMonat()));
 			lblSummeBrutto.setText("Summe Brutto: " + NumberFormat.getCurrencyInstance().format(pdk.getSummeBruttoGesamt()));
 			lblSummeStellen.setText("Summe Stellen: " + String.valueOf(pdk.getSummeVZAEGesamt()));

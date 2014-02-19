@@ -52,6 +52,7 @@ import de.hannit.fsch.common.AuswertungsMonat;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.MonatsSummen;
 import de.hannit.fsch.common.csv.azv.Arbeitszeitanteil;
+import de.hannit.fsch.common.mitarbeiter.GemeinKosten;
 import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
 import de.hannit.fsch.common.mitarbeiter.PersonalDurchschnittsKosten;
 import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppe;
@@ -233,6 +234,9 @@ private double vzaeTotal = 0;
 		
 		PersonalDurchschnittsKosten pdk = new PersonalDurchschnittsKosten(selectedMonth);
 		pdk.setMitarbeiter(mitarbeiter);
+		
+		GemeinKosten gk = new GemeinKosten(selectedMonth);
+		gk.setMitarbeiter(mitarbeiter);
 				
 		/*
 		 * Nachdem alle Kostenstellen / Kostenträger verteilt sind, wird die Gesamtsumme gebildet und im Log ausgegeben.
@@ -246,6 +250,8 @@ private double vzaeTotal = 0;
 		mSumme.setSummeOK(true);
 		pdk.setChecked(true);
 		pdk.setDatenOK(true);
+		gk.setChecked(true);
+		gk.setDatenOK(true);
 		log.confirm("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin);
 		}
 		else
@@ -254,6 +260,8 @@ private double vzaeTotal = 0;
 		mSumme.setSummeOK(false);
 		pdk.setChecked(true);
 		pdk.setDatenOK(false);
+		gk.setChecked(true);
+		gk.setDatenOK(false);
 		log.error("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin, null);
 		}	
 		
@@ -263,6 +271,7 @@ private double vzaeTotal = 0;
 	log.info("Eventbroker versendet Monatssummen für den Monat " + fLog.format(selectedMonth) + ", Topic: Topics.MONATSSUMMEN", plugin);
 	broker.send(Topics.MONATSSUMMEN, mSumme);
 	broker.send(Topics.PERSONALDURCHSCHNITTSKOSTEN, pdk);
+	broker.send(Topics.GEMEINKOSTERKOSTEN, gk);
 	
 	treeViewer.setInput(mitarbeiter);
 	}		

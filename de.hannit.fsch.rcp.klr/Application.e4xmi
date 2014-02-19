@@ -13,7 +13,7 @@
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_FtkXIOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partsashcontainer.0" containerData="70000">
             <children xsi:type="basic:PartStack" xmi:id="_QGItcOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.details" containerData="7000">
-              <children xsi:type="basic:Part" xmi:id="_gGmgYOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.part.CSVDetailsPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.CSVDetailsPart" label="CSV Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Sofern eine CSV Datei eingelesen wurde, wird hier der Inhalt dargestellt">
+              <children xsi:type="basic:Part" xmi:id="_gGmgYOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.part.CSVDetailsPart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.CSVDetailsPart" label="Monatssummen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Verteilung KST / KTR und Vollzeitäquivalent für den ausgewählten Monat">
                 <menus xsi:type="menu:PopupMenu" xmi:id="_uP4j0JSjEeOZwqLiT8Xx2w" elementId="de.hannit.fsch.rcp.klr.menu.main.database" label="Vollzeitäquivalent">
                   <children xsi:type="menu:MenuSeparator" xmi:id="_c-EL0JSlEeOZwqLiT8Xx2w" elementId="de.hannit.fsch.rcp.klr.menuseparator.database.0"/>
                 </menus>
@@ -37,6 +37,7 @@
       </children>
       <children xsi:type="menu:Menu" xmi:id="_z2tccOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menu.main.users" label="Benutzer" iconURI="" tooltip="Benutzerverwaltung"/>
       <children xsi:type="menu:Menu" xmi:id="_kuuiUJMREeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.menu.main.personal" label="Personal"/>
+      <children xsi:type="menu:Menu" xmi:id="_8wBA0JVxEeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.menu.main.gemeinkosten" label="Gemeinkosten"/>
       <children xsi:type="menu:Menu" xmi:id="_fwNOsOrwEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.menu.main.database" label="Datenbank" tooltip="Datenbankspezifische Aktionen">
         <children xsi:type="menu:MenuSeparator" xmi:id="_MawKgJSlEeOZwqLiT8Xx2w" elementId="de.hannit.fsch.rcp.klr.menuseparator.database.0"/>
       </children>
@@ -76,6 +77,7 @@
   <handlers xmi:id="_-RCa0I_jEeOWnIf9ssKITg" elementId="csv.create.03Entlastung0400" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.Create03Entlastung0400Handler" command="_EmIjYI_eEeOWnIf9ssKITg"/>
   <handlers xmi:id="_DQdiMI_kEeOWnIf9ssKITg" elementId="csv.create.04Entlastung0400" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.Create04Entlastung0400Handler" command="_KV6JoI_eEeOWnIf9ssKITg"/>
   <handlers xmi:id="_2OGGwJMSEeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.handler.personal.durchschnittskosten" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.personal.PersonalDurchschnittskostenHandler" command="_SGj34JMSEeOiZMaQerBzZw"/>
+  <handlers xmi:id="_PSGRYJVxEeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.handler.csv.gemeinkosten" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.GemeinkostenHandler" command="_ngo5AJVxEeODiOxJXpVSHQ"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -100,6 +102,9 @@
   <descriptors xmi:id="_mvd3wJMhEeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.partdescriptor.personal.durchschnittskosten" label="Personaldurchschnittskosten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Ausgabe der Personaldurchschnittskosten für den ausgewählten Monat" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.PersonaldurchschnittskostenPart">
     <toolbar xmi:id="_xFhFkJMhEeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.toolbar.1"/>
   </descriptors>
+  <descriptors xmi:id="_JncM8JV3EeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.partdescriptor.csv.gemeinkosten" label="Gemeinkosten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Versteilt die Restsumme der Endkostenstelle auf die Kostenträger des Teams" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.GemeinkostenPart">
+    <toolbar xmi:id="_JncM8ZV3EeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.toolbar.1"/>
+  </descriptors>
   <menuContributions xmi:id="_a7GTcOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menucontribution.user" parentId="de.hannit.fsch.rcp.klr.menu.main.users">
     <children xsi:type="menu:HandledMenuItem" xmi:id="_YWd2sOpQEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
     <children xsi:type="menu:HandledMenuItem" xmi:id="_TPePEOpNEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.edit" label="ändern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserEdit16px.png" tooltip="Änderungen am aktuellen Mitarbeiter vornehmen" command="_5HK0AOpNEeK7nN3EOf8xtA"/>
@@ -120,6 +125,9 @@
   </menuContributions>
   <menuContributions xmi:id="_PSNcoJShEeOZwqLiT8Xx2w" elementId="de.hannit.fsch.rcp.klr.menucontribution.vzae" positionInParent="before=de.hannit.fsch.rcp.klr.menuseparator.database.0" parentId="de.hannit.fsch.rcp.klr.menu.main.database">
     <children xsi:type="menu:HandledMenuItem" xmi:id="_UV8cQJShEeOZwqLiT8Xx2w" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.database.insertVZAE" label="Vollzeitäquivalet speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert die ermittelten Vollzeitäquivalente in der Datenbank" command="_cAnXUI5eEeO4TfksEninsA"/>
+  </menuContributions>
+  <menuContributions xmi:id="_QsXagJVyEeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.menucontribution.gemeinkosten" parentId="de.hannit.fsch.rcp.klr.menu.main.gemeinkosten">
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_Ww-BQJVyEeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.gemeinkostenVerteilung" label="Verteilung" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Verteilt die Kostenstellenreste für den aktuellen Monat auf die Kostenträger" command="_ngo5AJVxEeODiOxJXpVSHQ"/>
   </menuContributions>
   <toolBarContributions xmi:id="__L6hEOrDEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.navpart.toolbarcontribution" parentId="de.hannit.fsch.rcp.klr.parts.navpart.toolbar">
     <children xsi:type="menu:HandledToolItem" xmi:id="_NNLcYOrEEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
@@ -165,6 +173,7 @@
   <commands xmi:id="_EmIjYI_eEeOWnIf9ssKITg" elementId="de.hannit.fsch.rcp.klr.command.csv.create.03Entlastung0400" commandName="createCSV03" description="Erstellt die Datei 03_Entlastung 0400 auf andere KST für Quartalsmonat 2"/>
   <commands xmi:id="_KV6JoI_eEeOWnIf9ssKITg" elementId="de.hannit.fsch.rcp.klr.command.csv.create.04Entlastung0400" commandName="createCSV04" description="Erstellt die Datei 04_Entlastung 0400 auf andere KST für Quartalsmonat 3"/>
   <commands xmi:id="_SGj34JMSEeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.command.personal.durchschnittskosten" commandName="personalDurschschnittskosten" description="Erstellt die Personaldurchschnittskosten für den aktuellen Monat"/>
+  <commands xmi:id="_ngo5AJVxEeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.command.csv.gemeinkosten" commandName="gemeinKostenVerteilung" description="Verteilt die Kostenstellenreste für den aktuellen Monat auf die Kostenträger"/>
   <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

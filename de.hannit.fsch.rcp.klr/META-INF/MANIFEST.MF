@@ -34,3 +34,4 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: de.hannit.fsch.common.mitarbeiter,
  javax.annotation;version="1.0.0"
+Export-Package: de.hannit.fsch.common

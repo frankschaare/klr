@@ -39,7 +39,7 @@ public class PersonaldurchschnittskostenPart
 {
 @Inject IEventBroker broker;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
-@ Inject @Named(AppConstants.CONTEXT_PERSONALDURCHSCHNITTSKOSTEN) PersonalDurchschnittsKosten pdk;
+@Inject @Named(AppConstants.CONTEXT_PERSONALDURCHSCHNITTSKOSTEN) PersonalDurchschnittsKosten pdk;
 
 private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM yyyy");
 private Group grpBerichtsmonat = null;

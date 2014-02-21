@@ -36,12 +36,16 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LneMVEeKJItlVKSINDA" label="Quit" command="_Qd0LjOMVEeKJItlVKSINDA"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_z2tccOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menu.main.users" label="Benutzer" iconURI="" tooltip="Benutzerverwaltung"/>
-      <children xsi:type="menu:Menu" xmi:id="_kuuiUJMREeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.menu.main.personal" label="Personal"/>
+      <children xsi:type="menu:Menu" xmi:id="_kuuiUJMREeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.menu.main.personal" label="Personal">
+        <children xsi:type="menu:MenuSeparator" xmi:id="_6-L68JsQEeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.personal.menuseparator.0"/>
+      </children>
       <children xsi:type="menu:Menu" xmi:id="_8wBA0JVxEeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.menu.main.gemeinkosten" label="Gemeinkosten"/>
       <children xsi:type="menu:Menu" xmi:id="_fwNOsOrwEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.menu.main.database" label="Datenbank" tooltip="Datenbankspezifische Aktionen">
         <children xsi:type="menu:MenuSeparator" xmi:id="_MawKgJSlEeOZwqLiT8Xx2w" elementId="de.hannit.fsch.rcp.klr.menuseparator.database.0"/>
       </children>
-      <children xsi:type="menu:Menu" xmi:id="_jCLfII5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.menu.main.csv" label="CSV"/>
+      <children xsi:type="menu:Menu" xmi:id="_jCLfII5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.menu.main.csv" label="CSV">
+        <children xsi:type="menu:MenuSeparator" xmi:id="_ky1MkJofEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.menuseparator.csv.0"/>
+      </children>
     </mainMenu>
     <trimBars xmi:id="_Qd0LpeMVEeKJItlVKSINDA">
       <children xsi:type="menu:ToolBar" xmi:id="_Qd0LpuMVEeKJItlVKSINDA" elementId="toolbar:org.eclipse.ui.main.toolbar">
@@ -78,6 +82,12 @@
   <handlers xmi:id="_DQdiMI_kEeOWnIf9ssKITg" elementId="csv.create.04Entlastung0400" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.Create04Entlastung0400Handler" command="_KV6JoI_eEeOWnIf9ssKITg"/>
   <handlers xmi:id="_2OGGwJMSEeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.handler.personal.durchschnittskosten" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.personal.PersonalDurchschnittskostenHandler" command="_SGj34JMSEeOiZMaQerBzZw"/>
   <handlers xmi:id="_PSGRYJVxEeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.handler.csv.gemeinkosten" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.GemeinkostenHandler" command="_ngo5AJVxEeODiOxJXpVSHQ"/>
+  <handlers xmi:id="_t1fSIJoaEeONbJq8ToO0Iw" elementId="csv.create.05KSTEntlastungTeam1" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.Create05EndKSTEntlastungTeam1Handler" command="_hbLGgJoaEeONbJq8ToO0Iw"/>
+  <handlers xmi:id="_jec68JocEeONbJq8ToO0Iw" elementId="csv.create.06KSTEntlastungTeam2" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.Create06EndKSTEntlastungTeam2Handler" command="_Vg6CAJocEeONbJq8ToO0Iw"/>
+  <handlers xmi:id="_omDt8JocEeONbJq8ToO0Iw" elementId="csv.create.07KSTEntlastungTeam3" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.Create07EndKSTEntlastungTeam3Handler" command="_Y9ig8JocEeONbJq8ToO0Iw"/>
+  <handlers xmi:id="_shV3wJocEeONbJq8ToO0Iw" elementId="csv.create.08KSTEntlastungTeam4" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.Create08EndKSTEntlastungTeam4Handler" command="_dMKdgJocEeONbJq8ToO0Iw"/>
+  <handlers xmi:id="_nzoVIJsREeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.handler.personal.dbInsertDurchschnittskosten" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.personal.PDKInsertHandler" command="_YLs-AJsREeOuF9amZ-YqGA"/>
+  <handlers xmi:id="__3wnEJsSEeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.handler.personal.dbUpdateDurchschnittskosten" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.personal.PDKUpdateHandler" command="_HUuu8JsTEeOuF9amZ-YqGA"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -103,7 +113,8 @@
     <toolbar xmi:id="_xFhFkJMhEeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.toolbar.1"/>
   </descriptors>
   <descriptors xmi:id="_JncM8JV3EeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.partdescriptor.csv.gemeinkosten" label="Gemeinkosten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Versteilt die Restsumme der Endkostenstelle auf die Kostenträger des Teams" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.GemeinkostenPart">
-    <toolbar xmi:id="_JncM8ZV3EeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.toolbar.1"/>
+    <menus xsi:type="menu:PopupMenu" xmi:id="_K0uooJobEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.menu.main.csv" label="CSV Dateien erstellen" tooltip="Erstellt für die aktuellen Daten die CSV-Dateien"/>
+    <toolbar xmi:id="_JncM8ZV3EeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.menu.main.csv"/>
   </descriptors>
   <menuContributions xmi:id="_a7GTcOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menucontribution.user" parentId="de.hannit.fsch.rcp.klr.menu.main.users">
     <children xsi:type="menu:HandledMenuItem" xmi:id="_YWd2sOpQEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
@@ -114,13 +125,13 @@
     <children xsi:type="menu:HandledMenuItem" xmi:id="_8g1_wI5HEeO40vRa6McLXQ" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.database.insertMonatssummen" label="Monatssummen speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert die Gesamtssumme der gemeldeten AZV-Anteile in der Datenbank" command="_Si_dwI5HEeO40vRa6McLXQ"/>
     <children xsi:type="menu:HandledMenuItem" xmi:id="_KyQOEOrwEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.database.search" label="Suchen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseSearch16px.png" tooltip="Prüft, ob das aktuelle Element in der Datenbank vorhanden ist" command="_L8bGgO0yEeKhPoDsRHBDHQ"/>
   </menuContributions>
-  <menuContributions xmi:id="_tipNMI5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.menucontribution.csv" parentId="de.hannit.fsch.rcp.klr.menu.main.csv">
+  <menuContributions xmi:id="_tipNMI5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.menucontribution.csv" positionInParent="before=de.hannit.fsch.rcp.klr.menuseparator.csv.0" parentId="de.hannit.fsch.rcp.klr.menu.main.csv">
     <children xsi:type="menu:HandledMenuItem" xmi:id="_8OnSYI5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.01Entlastung0400" label="01 - Entlastung 0400 KST erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 01_Entlastung 0400 auf andere KST" command="_QGwycI50EeORJJmPSsmVyQ"/>
     <children xsi:type="menu:HandledMenuItem" xmi:id="_NT6kII_kEeOWnIf9ssKITg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.02Entlastung0400" label="02 - Entlastung 0400 KTR erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 02_Entlastung 0400 auf andere KTR" command="_90mlMI_dEeOWnIf9ssKITg"/>
     <children xsi:type="menu:HandledMenuItem" xmi:id="_YHbKAI_kEeOWnIf9ssKITg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.03Entlastung0400" label="03 - Entlastung 0400 KTR erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 03_Entlastung 0400 auf andere KTR" command="_EmIjYI_eEeOWnIf9ssKITg"/>
     <children xsi:type="menu:HandledMenuItem" xmi:id="_bfmmwI_kEeOWnIf9ssKITg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.04Entlastung0400" label="04 - Entlastung 0400 KTR erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 04_Entlastung 0400 auf andere KTR" command="_KV6JoI_eEeOWnIf9ssKITg"/>
   </menuContributions>
-  <menuContributions xmi:id="_0hiTwJMREeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.menucontribution.personal" parentId="de.hannit.fsch.rcp.klr.menu.main.personal">
+  <menuContributions xmi:id="_0hiTwJMREeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.menucontribution.personal" positionInParent="before=de.hannit.fsch.rcp.klr.personal.menuseparator.0" parentId="de.hannit.fsch.rcp.klr.menu.main.personal">
     <children xsi:type="menu:HandledMenuItem" xmi:id="_6ia4IJMREeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.personal.durchschittskosten" label="Durchschittskosten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Personaldurchschnittskosten für den aktuellen Monat" command="_SGj34JMSEeOiZMaQerBzZw"/>
   </menuContributions>
   <menuContributions xmi:id="_PSNcoJShEeOZwqLiT8Xx2w" elementId="de.hannit.fsch.rcp.klr.menucontribution.vzae" positionInParent="before=de.hannit.fsch.rcp.klr.menuseparator.database.0" parentId="de.hannit.fsch.rcp.klr.menu.main.database">
@@ -128,6 +139,16 @@
   </menuContributions>
   <menuContributions xmi:id="_QsXagJVyEeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.menucontribution.gemeinkosten" parentId="de.hannit.fsch.rcp.klr.menu.main.gemeinkosten">
     <children xsi:type="menu:HandledMenuItem" xmi:id="_Ww-BQJVyEeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.gemeinkostenVerteilung" label="Verteilung" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Verteilt die Kostenstellenreste für den aktuellen Monat auf die Kostenträger" command="_ngo5AJVxEeODiOxJXpVSHQ"/>
+  </menuContributions>
+  <menuContributions xmi:id="_C0CvsJobEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.menucontribution.csv.gemeinkosten" positionInParent="after=de.hannit.fsch.rcp.klr.menuseparator.csv.0" parentId="de.hannit.fsch.rcp.klr.menu.main.csv">
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_h728QJobEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.gemeinkostenDatei05" label="05 - KSTEntlastung für Team 1 erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 05_CSV_EndKST-Entlastung Team 1 für den ausgewählten Monat" command="_hbLGgJoaEeONbJq8ToO0Iw"/>
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_yu3xAJocEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.gemeinkostenDatei06" label="06 - KSTEntlastung für Team 2 erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 06_CSV_EndKST-Entlastung Team 2 für den ausgewählten Monat" command="_Vg6CAJocEeONbJq8ToO0Iw"/>
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_9z8A8JocEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.gemeinkostenDatei07" label="07 - KSTEntlastung für Team 3 erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 07_CSV_EndKST-Entlastung Team 3 für den ausgewählten Monat" command="_Y9ig8JocEeONbJq8ToO0Iw"/>
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_CNbJsJodEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.gemeinkostenDatei08" label="08 - KSTEntlastung für Team 4 erstellen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Erstellt die Datei 08_CSV_EndKST-Entlastung Team 4 für den ausgewählten Monat" command="_dMKdgJocEeONbJq8ToO0Iw"/>
+  </menuContributions>
+  <menuContributions xmi:id="_DAWakJsREeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.menucontribution.personal.database" positionInParent="after=de.hannit.fsch.rcp.klr.personal.menuseparator.0" parentId="de.hannit.fsch.rcp.klr.menu.main.personal">
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_DAWakZsREeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.personal.insertDurchschittskosten" label="Durchschittskosten speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert die Personaldurchschnittskosten für den aktuellen Monat" command="_YLs-AJsREeOuF9amZ-YqGA"/>
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_Ti2RoJsTEeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.personal.updateDurchschittskosten" label="Durchschittskosten aktualisieren" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseRollback16px.png" tooltip="Aktualisiert die Personaldurchschnittskosten für den aktuellen Monat, da bereits Daten gespeichert sind" command="_HUuu8JsTEeOuF9amZ-YqGA"/>
   </menuContributions>
   <toolBarContributions xmi:id="__L6hEOrDEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.navpart.toolbarcontribution" parentId="de.hannit.fsch.rcp.klr.parts.navpart.toolbar">
     <children xsi:type="menu:HandledToolItem" xmi:id="_NNLcYOrEEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
@@ -174,6 +195,12 @@
   <commands xmi:id="_KV6JoI_eEeOWnIf9ssKITg" elementId="de.hannit.fsch.rcp.klr.command.csv.create.04Entlastung0400" commandName="createCSV04" description="Erstellt die Datei 04_Entlastung 0400 auf andere KST für Quartalsmonat 3"/>
   <commands xmi:id="_SGj34JMSEeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.command.personal.durchschnittskosten" commandName="personalDurschschnittskosten" description="Erstellt die Personaldurchschnittskosten für den aktuellen Monat"/>
   <commands xmi:id="_ngo5AJVxEeODiOxJXpVSHQ" elementId="de.hannit.fsch.rcp.klr.command.csv.gemeinkosten" commandName="gemeinKostenVerteilung" description="Verteilt die Kostenstellenreste für den aktuellen Monat auf die Kostenträger"/>
+  <commands xmi:id="_hbLGgJoaEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.command.csv.create.05KSTEntlastungTeam1" commandName="createCSV05" description="Erstellt die Datei 05_CSV_EndKST-Entlastung Team 1"/>
+  <commands xmi:id="_Vg6CAJocEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.command.csv.create.06KSTEntlastungTeam2" commandName="createCSV06" description="Erstellt die Datei 06_CSV_EndKST-Entlastung Team 2"/>
+  <commands xmi:id="_Y9ig8JocEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.command.csv.create.07KSTEntlastungTeam3" commandName="createCSV07" description="Erstellt die Datei 07_CSV_EndKST-Entlastung Team 3"/>
+  <commands xmi:id="_dMKdgJocEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.command.csv.create.08KSTEntlastungTeam4" commandName="createCSV08" description="Erstellt die Datei 08_CSV_EndKST-Entlastung Team 4"/>
+  <commands xmi:id="_YLs-AJsREeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.command.personal.insertDurchschnittskosten" commandName="dbInsertPersonalDurschschnittskosten" description="Speichert die Personaldurchschnittskosten für den aktuellen Monat"/>
+  <commands xmi:id="_HUuu8JsTEeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.command.personal.updateDurchschnittskosten" commandName="dbupdatePersonalDurschschnittskosten" description="Aktualisiert die Personaldurchschnittskosten für den aktuellen Monat"/>
   <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

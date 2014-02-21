@@ -27,5 +27,6 @@ public static interface ActiveSelections
 {
 public static final String AUSWERTUNGSMONAT = "AUSWERTUNGSZEITRAUM/MONAT";
 public static final String MONATSBERICHT = "MONATSBERICHT";
+public static final String PART_GEMEINKOSTEN = "de.hannit.fsch.rcp.klr.partdescriptor.csv.gemeinkosten";
 }
 }

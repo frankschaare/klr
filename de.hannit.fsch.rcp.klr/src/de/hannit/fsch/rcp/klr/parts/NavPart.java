@@ -13,7 +13,6 @@ package de.hannit.fsch.rcp.klr.parts;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeMap;
 

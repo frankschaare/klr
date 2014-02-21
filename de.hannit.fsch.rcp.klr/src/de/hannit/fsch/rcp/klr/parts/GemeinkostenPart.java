@@ -9,6 +9,8 @@ import javax.inject.Named;
 
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -30,12 +32,13 @@ import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.mitarbeiter.GemeinKosten;
 import de.hannit.fsch.common.mitarbeiter.PersonalDurchschnittsKosten;
+import de.hannit.fsch.rcp.klr.constants.Topics;
 
 public class GemeinkostenPart 
 {
 @Inject IEventBroker broker;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
-@ Inject @Named(AppConstants.CONTEXT_GEMEINKOSTEN) GemeinKosten gk;
+@Inject @Named(AppConstants.CONTEXT_GEMEINKOSTEN) GemeinKosten gk;
 
 private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM yyyy");
 private Group grpBerichtsmonat = null;
@@ -50,7 +53,6 @@ private String txtLabelGemeinkosten = "Gemeinkosten ";
 private Text txtVerteilungsSumme;
 private double dVerteilungsSumme = 0;
 private Label lblNewLabel;
-
 
 	@Inject
 	public GemeinkostenPart() 
@@ -166,6 +168,7 @@ private Label lblNewLabel;
 		
 		gkViever = new TableViewer(grpGemeinKosten, SWT.BORDER | SWT.FULL_SELECTION);
 		gkTable = gkViever.getTable();
+		
 		gkTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		gkTable.setHeaderVisible(true);
 		
@@ -194,6 +197,8 @@ private Label lblNewLabel;
 		column.getColumn().setMoveable(true);
 				
 		gkViever.setContentProvider(new ArrayContentProvider());
+		//menuService.registerContextMenu(gkViever.getControl(), POPUPMENUD_ID);
+		
 			if (gk != null)
 			{
 			gkViever.setLabelProvider(gk);		

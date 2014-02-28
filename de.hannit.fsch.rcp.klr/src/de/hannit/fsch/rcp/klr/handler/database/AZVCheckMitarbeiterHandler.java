@@ -38,16 +38,33 @@ private AZVDatei azvDatei = null;
 	public void execute() 
 	{
 	boolean exists = false;
+	String plugin = this.getClass().getName() + ".execute()";
 	
 		for (AZVDatensatz datensatz : azvDatei.getDaten().values())
 		{
+		int pnr = 0;	
 		exists = dataService.existsMitarbeiter(datensatz.getPersonalNummer());
 		datensatz.setMitarbeiterChecked(true);
 		datensatz.setExistsMitarbeiter(exists);
 			if (! exists)
 			{
-			azvDatei.setErrors(true);	
-			log.warn("Personalnummer " + datensatz.getPersonalNummer() + " wurde nicht in Tabelle Mitarbeiter gefunden !", this.getClass().getName() + ".execute()");	
+			log.warn("Personalnummer " + datensatz.getPersonalNummer() + " wurde nicht in Tabelle Mitarbeiter gefunden ! Versuche, die PersonalNR aus der Danbank zu lesen.", plugin);
+			
+				pnr = dataService.getPersonalnummer(datensatz.getNachname());
+				switch (pnr)
+				{
+				case 0:
+				azvDatei.setErrors(true);
+				log.error("Bitte Mitarbeiter: " + datensatz.getNachname() + " VOR Verarbeitung dieser Datei eintragen.", plugin, null);
+				break;
+
+				default:
+				datensatz.setPersonalNummer(pnr);
+				datensatz.setExistsMitarbeiter(true);
+				datensatz.setpersonalNummerNachgetragen(true);
+				log.confirm("Personalnummer für Mitarbeiter: " + datensatz.getNachname() + " wurde aus der Datenbank nachgetragen.", plugin);
+				break;
+				}
 			}
 		}
 	azvDatei.setChecked(true);	

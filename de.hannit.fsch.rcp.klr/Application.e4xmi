@@ -19,6 +19,12 @@
                 </menus>
                 <toolbar xmi:id="_fxhWwOrDEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.toolbar.2"/>
               </children>
+              <children xsi:type="basic:Part" xmi:id="_Xy1ugJ00EeOBosfFzvJhiQ" elementId="de.hannit.fsch.rcp.klr.part.MitarbeiterDetailsPart" visible="false" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.MitarbeiterDetailsPart" label="Details" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserDetails16px.png" tooltip="Details zum aktuellen Benutzer anzeigen" closeable="true">
+                <toolbar xmi:id="_pRfWsJ00EeOBosfFzvJhiQ" elementId="de.hannit.fsch.rcp.klr.toolbar.3"/>
+              </children>
+              <children xsi:type="basic:Part" xmi:id="_yCgCoKBQEeOxW7Z6DLWtTg" elementId="de.hannit.fsch.rcp.klr.part.ErgebnisImportPart" visible="false" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.ErgebnisImportPart" label="Ergebnis" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Ergebnis aus geladener CSV-Datei" closeable="true">
+                <toolbar xmi:id="_yCgCoaBQEeOxW7Z6DLWtTg" elementId="de.hannit.fsch.rcp.klr.toolbar.3"/>
+              </children>
             </children>
             <children xsi:type="basic:PartStack" xmi:id="_Wap_gOPoEeKCAfI6yJX65A" elementId="de.hannit.fsch.rcp.klr.partstack.messages" containerData="3000">
               <children xsi:type="basic:Part" xmi:id="_BOVrAOYSEeKAwpnzjMnRVg" elementId="de.hannit.fsch.rcp.klr.parts.ConsolePart" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.ConsolePart" label="Meldungen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Gibt alle Meldungen der Applikation aus"/>
@@ -45,6 +51,7 @@
       </children>
       <children xsi:type="menu:Menu" xmi:id="_jCLfII5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.menu.main.csv" label="CSV">
         <children xsi:type="menu:MenuSeparator" xmi:id="_ky1MkJofEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.menuseparator.csv.0"/>
+        <children xsi:type="menu:MenuSeparator" xmi:id="_dkubEKBJEeOxW7Z6DLWtTg" elementId="de.hannit.fsch.rcp.klr.menuseparator.csv.1"/>
       </children>
     </mainMenu>
     <trimBars xmi:id="_Qd0LpeMVEeKJItlVKSINDA">
@@ -88,6 +95,8 @@
   <handlers xmi:id="_shV3wJocEeONbJq8ToO0Iw" elementId="csv.create.08KSTEntlastungTeam4" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.Create08EndKSTEntlastungTeam4Handler" command="_dMKdgJocEeONbJq8ToO0Iw"/>
   <handlers xmi:id="_nzoVIJsREeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.handler.personal.dbInsertDurchschnittskosten" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.personal.PDKInsertHandler" command="_YLs-AJsREeOuF9amZ-YqGA"/>
   <handlers xmi:id="__3wnEJsSEeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.handler.personal.dbUpdateDurchschnittskosten" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.personal.PDKUpdateHandler" command="_HUuu8JsTEeOuF9amZ-YqGA"/>
+  <handlers xmi:id="_-7ebEJ0tEeOBosfFzvJhiQ" elementId="de.hannit.fsch.rcp.klr.handler.user.details" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.user.DetailsHandler" command="_jQmPcJ0tEeOBosfFzvJhiQ"/>
+  <handlers xmi:id="_riRUAKBJEeOxW7Z6DLWtTg" elementId="de.hannit.fsch.rcp.klr.handler.openErgebnisCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.ergebnis.OpenErgebnisHandler" command="_zo6D8KBJEeOxW7Z6DLWtTg"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -119,6 +128,7 @@
   <menuContributions xmi:id="_a7GTcOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menucontribution.user" parentId="de.hannit.fsch.rcp.klr.menu.main.users">
     <children xsi:type="menu:HandledMenuItem" xmi:id="_YWd2sOpQEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
     <children xsi:type="menu:HandledMenuItem" xmi:id="_TPePEOpNEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.edit" label="ändern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserEdit16px.png" tooltip="Änderungen am aktuellen Mitarbeiter vornehmen" command="_5HK0AOpNEeK7nN3EOf8xtA"/>
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_HucFgJ0uEeOBosfFzvJhiQ" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.details" label="Details" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserDetails16px.png" tooltip="Detailierte Informationen zum aktuellen Mitarbeiter anzeigen" command="_jQmPcJ0tEeOBosfFzvJhiQ"/>
     <children xsi:type="menu:HandledMenuItem" xmi:id="__aR7YOpOEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.remove" label="entfernen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserRemove16px.png" tooltip="Den aktuellen Mitarbeiter löschen" command="_wh0SUOpOEeK7nN3EOf8xtA"/>
   </menuContributions>
   <menuContributions xmi:id="_Pm43MOrvEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.menucontribution.database" parentId="de.hannit.fsch.rcp.klr.menu.main.database">
@@ -149,6 +159,9 @@
   <menuContributions xmi:id="_DAWakJsREeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.menucontribution.personal.database" positionInParent="after=de.hannit.fsch.rcp.klr.personal.menuseparator.0" parentId="de.hannit.fsch.rcp.klr.menu.main.personal">
     <children xsi:type="menu:HandledMenuItem" xmi:id="_DAWakZsREeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.personal.insertDurchschittskosten" label="Durchschittskosten speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert die Personaldurchschnittskosten für den aktuellen Monat" command="_YLs-AJsREeOuF9amZ-YqGA"/>
     <children xsi:type="menu:HandledMenuItem" xmi:id="_Ti2RoJsTEeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.personal.updateDurchschittskosten" label="Durchschittskosten aktualisieren" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseRollback16px.png" tooltip="Aktualisiert die Personaldurchschnittskosten für den aktuellen Monat, da bereits Daten gespeichert sind" command="_HUuu8JsTEeOuF9amZ-YqGA"/>
+  </menuContributions>
+  <menuContributions xmi:id="_88wN4KBJEeOxW7Z6DLWtTg" elementId="de.hannit.fsch.rcp.klr.menucontribution.csv.ergebnis" positionInParent="after=de.hannit.fsch.rcp.klr.menuseparator.csv.1" parentId="de.hannit.fsch.rcp.klr.menu.main.csv">
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_ZmkuAKBKEeOxW7Z6DLWtTg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.csv.ergebnis.open" label="Ergebnis importieren" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Verarbeitet eine CSV-Datei mit einem KLR-Ergbnis" command="_zo6D8KBJEeOxW7Z6DLWtTg"/>
   </menuContributions>
   <toolBarContributions xmi:id="__L6hEOrDEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.navpart.toolbarcontribution" parentId="de.hannit.fsch.rcp.klr.parts.navpart.toolbar">
     <children xsi:type="menu:HandledToolItem" xmi:id="_NNLcYOrEEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
@@ -201,6 +214,8 @@
   <commands xmi:id="_dMKdgJocEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.command.csv.create.08KSTEntlastungTeam4" commandName="createCSV08" description="Erstellt die Datei 08_CSV_EndKST-Entlastung Team 4"/>
   <commands xmi:id="_YLs-AJsREeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.command.personal.insertDurchschnittskosten" commandName="dbInsertPersonalDurschschnittskosten" description="Speichert die Personaldurchschnittskosten für den aktuellen Monat"/>
   <commands xmi:id="_HUuu8JsTEeOuF9amZ-YqGA" elementId="de.hannit.fsch.rcp.klr.command.personal.updateDurchschnittskosten" commandName="dbupdatePersonalDurschschnittskosten" description="Aktualisiert die Personaldurchschnittskosten für den aktuellen Monat"/>
+  <commands xmi:id="_jQmPcJ0tEeOBosfFzvJhiQ" elementId="de.hannit.fsch.rcp.klr.command.user.details" commandName="userDetailsCommand" description="Details zum aktuellen Benutzer anzeigen"/>
+  <commands xmi:id="_zo6D8KBJEeOxW7Z6DLWtTg" elementId="de.hannit.fsch.rcp.klr.open.ergebnis" commandName="openErgebnisCommand"/>
   <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

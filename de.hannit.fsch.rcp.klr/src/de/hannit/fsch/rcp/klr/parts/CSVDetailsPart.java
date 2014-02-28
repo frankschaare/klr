@@ -28,9 +28,9 @@ import org.eclipse.swt.widgets.Table;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.common.Datumsformate;
 import de.hannit.fsch.common.MonatsSummen;
 import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppen;
-import de.hannit.fsch.common.organisation.reporting.Monatsbericht;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 
 public class CSVDetailsPart 
@@ -41,9 +41,7 @@ public class CSVDetailsPart
 @Inject private EMenuService menuService;
 private static final String POPUPMENUD_ID = "de.hannit.fsch.rcp.klr.menu.main.database";
 
-private Monatsbericht report;
 private MonatsSummen mSummen;
-private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM yyyy");
 private Group grpBerichtsmonat = null;
 private Label lblSummeBrutto = null;
 private Label lblSummeStellen = null;
@@ -73,7 +71,7 @@ private Table table_3;
 	vzae.setLabelProvider(tgs);	
 	vzae.setInput(tarifGruppen.getTarifGruppen().values().toArray());
 	
-	grpBerichtsmonat.setText(fMonatJahr.format(tarifGruppen.getBerichtsMonat()));
+	grpBerichtsmonat.setText(Datumsformate.MONATLANG_JAHR.format(tarifGruppen.getBerichtsMonat()));
 	lblSummeBrutto.setText("Summe Brutto: " + NumberFormat.getCurrencyInstance().format(tarifGruppen.getSummeTarifgruppen()));
 	lblSummeStellen.setText("Summe Stellen: " + String.valueOf(tarifGruppen.getSummeStellen()));
 	lblAnzahlMitarbeiter.setText(String.valueOf(tarifGruppen.getAnzahlMitarbeiter()) + " Mitarbeiter");
@@ -195,7 +193,7 @@ private Table table_3;
 			{
 			vzae.setLabelProvider(tarifGruppen);		
 			vzae.setInput(tarifGruppen.getTarifGruppen().values().toArray());	
-			grpBerichtsmonat.setText(fMonatJahr.format(tarifGruppen.getBerichtsMonat()));
+			grpBerichtsmonat.setText(Datumsformate.MONATLANG_JAHR.format(tarifGruppen.getBerichtsMonat()));
 			lblSummeBrutto.setText("Summe Brutto: " + NumberFormat.getCurrencyInstance().format(tarifGruppen.getSummeTarifgruppen()));
 			lblSummeStellen.setText("Summe Stellen: " + String.valueOf(tarifGruppen.getSummeStellen()));
 			lblAnzahlMitarbeiter.setText(String.valueOf(tarifGruppen.getAnzahlMitarbeiter()) + " Mitarbeiter");

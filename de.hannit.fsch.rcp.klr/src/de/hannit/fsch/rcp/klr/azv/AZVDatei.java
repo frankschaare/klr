@@ -8,6 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TreeMap;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -17,12 +20,17 @@ import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
+import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.CSVDatei;
+import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.csv.azv.AZVDatensatz;
+import de.hannit.fsch.klr.dataservice.DataService;
 
 public class AZVDatei extends CSVDatei implements ITableLabelProvider
 {
+@Inject DataService dataService;	
+@Inject @Named(AppConstants.LOGGER) private ContextLogger log;	
 private TreeMap<Integer, AZVDatensatz> daten;
 /*
  * Die gleiche TreeMap noch einmal zum ermitteln, welche Personalnummer AZV gemeldet hat.
@@ -106,6 +114,7 @@ private java.sql.Date berichtsMonatSQL;
 	 */
 	private AZVDatensatz split(String line)
 	{
+	int pnr	= 0;
 	datenSatz = new AZVDatensatz();	
 	datenSatz.setSource(line);
 	
@@ -113,14 +122,16 @@ private java.sql.Date berichtsMonatSQL;
 		// PNr.
 		try
 		{
-		int pnr = Integer.parseInt(parts[CSVConstants.AZV.PERSONALNUMMER_INDEX_CSV]);	
+		pnr = Integer.parseInt(parts[CSVConstants.AZV.PERSONALNUMMER_INDEX_CSV]);	
 		datenSatz.setPersonalNummer(pnr);
 		}
 		catch (NumberFormatException e)
 		{
 		e.printStackTrace();
-		getLog().error("NumberFormatException beim parsen der Zeile: " + datenSatz.getSource(), this.getClass().getName() + ".split()", e);
-		datenSatz.setPersonalNummer(999999);
+		getLog().error("NumberFormatException beim parsen der Zeile: " + datenSatz.getSource() + ", versuche Personalnummer aus der Datenbank zu lesen.", this.getClass().getName() + ".split()", e);
+		pnr = 999999;	
+		datenSatz.setNachname(parts[CSVConstants.AZV.NACHNAME_INDEX_CSV]);
+		datenSatz.setPersonalNummer(pnr);
 		}
 
 		// Team
@@ -253,11 +264,18 @@ private java.sql.Date berichtsMonatSQL;
 				{
 					if (datenSatz.existsMitarbeiter())
 					{
+						if (datenSatz.personalNummerNachgetragen())
+						{
+						url = FileLocator.find(bundle, new Path("icons/warn_tsk.gif"), null);	
+						}
+						else
+						{
 						url = FileLocator.find(bundle, new Path("icons/checked.gif"), null);
+						}
 					}
 					else
 					{
-						url = FileLocator.find(bundle, new Path("icons/error_tsk.gif"), null);						
+					url = FileLocator.find(bundle, new Path("icons/error_tsk.gif"), null);						
 					}					
 				ImageDescriptor image = ImageDescriptor.createFromURL(url);	
 				return image.createImage();

@@ -1,6 +1,7 @@
  
 package de.hannit.fsch.rcp.klr.parts;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
 import javax.annotation.PostConstruct;
@@ -40,6 +41,7 @@ public class GemeinkostenPart
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 @Inject @Named(AppConstants.CONTEXT_GEMEINKOSTEN) GemeinKosten gk;
 
+private String plugin = this.getClass().getName();
 private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM yyyy");
 private Group grpBerichtsmonat = null;
 private Label lblKostenstelle = null;
@@ -128,6 +130,9 @@ private Label lblNewLabel;
 				{
 				dVerteilungsSumme = Double.parseDouble(txtVerteilungsSumme.getText().replace(",", "."));
 				gk.setVerteilungsSumme(dVerteilungsSumme);
+				log.info("Starte Aufteilung der Gemeinkosten für Vorkostenstelle: " + gk.getVorkostenStelle() + ", Verteilungssumme = " + NumberFormat.getCurrencyInstance().format(gk.getVerteilungsSumme()), plugin + "txtVerteilungsSumme.focusLost(FocusEvent e)");
+				gk.setAufteilungGemeinKosten();
+				log.info("Die Summe der errechneten Gemeinkostenanteile für Vorkostenstelle: " + gk.getVorkostenStelle() + " ist = " + NumberFormat.getCurrencyInstance().format(gk.getSummeGemeinkostenanteile()), plugin + "txtVerteilungsSumme.focusLost(FocusEvent e)");
 				gkViever.setInput(gk.getAufteilungGemeinKosten().values().toArray());
 				}
 				catch (NumberFormatException e2)
@@ -141,8 +146,7 @@ private Label lblNewLabel;
 			@Override
 			public void focusGained(FocusEvent e)
 			{
-				// TODO Auto-generated method stub
-				
+			txtVerteilungsSumme.setText("");	
 			}
 		});
 		

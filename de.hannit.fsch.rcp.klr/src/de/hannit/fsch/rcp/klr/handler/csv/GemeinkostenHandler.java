@@ -44,7 +44,7 @@ public class GemeinkostenHandler
 @Inject DataService dataService;
 private String plugin = this.getClass().getName();
 
-private MPart pdkPart = null;
+private MPart gkPart = null;
 private IEclipseContext partContext = null;
 @Inject EPartService partService;
 
@@ -68,21 +68,21 @@ private GemeinKosten gk = null;
 	
 	// PartStack Details finden:
 	MPartStack details = (MPartStack) modelService.find("de.hannit.fsch.rcp.klr.partstack.details", app);
-	pdkPart = createPDKPart("Gemeinkostenverteilung");
-	details.getChildren().add(pdkPart);
-	partService.activate(pdkPart);	
+	gkPart = createPDKPart("Gemeinkostenverteilung");
+	details.getChildren().add(gkPart);
+	partService.activate(gkPart);	
 	// setPersonaldurchschnittskosten();	
 	}
 
 	private MPart createPDKPart(String title)
 	{
-	pdkPart = partService.createPart("de.hannit.fsch.rcp.klr.partdescriptor.csv.gemeinkosten");
-	pdkPart.setLabel(title);
+	gkPart = partService.createPart("de.hannit.fsch.rcp.klr.partdescriptor.csv.gemeinkosten");
+	gkPart.setLabel(title);
 	partContext = EclipseContextFactory.create();
-	pdkPart.setContext(partContext);
-	pdkPart.getContext().set(AppConstants.CONTEXT_GEMEINKOSTEN, gk);
+	gkPart.setContext(partContext);
+	gkPart.getContext().set(AppConstants.CONTEXT_GEMEINKOSTEN, gk);
 	
-	return pdkPart;
+	return gkPart;
 	}
 			
 

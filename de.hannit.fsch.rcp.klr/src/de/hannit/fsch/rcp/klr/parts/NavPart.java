@@ -44,6 +44,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.osgi.service.event.Event;
 
 import de.hannit.fsch.common.AppConstants;
@@ -74,6 +75,7 @@ private AuswertungsMonat auswertungsMonat = new AuswertungsMonat();
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 
 private TreeMap<Integer, Mitarbeiter> mitarbeiter;	
+private Mitarbeiter selectedMitarbeiter = null;
 private Tarifgruppen tarifgruppen = null;
 private TreeMap<String, Double> monatsSummen = null;
 private MonatsSummen mSumme = null;
@@ -375,6 +377,17 @@ private double vzaeTotal = 0;
 		menuService.registerContextMenu(treeViewer.getTree(), POPUPMENUD_ID);
 			
 		Tree tree = treeViewer.getTree();
+		tree.addSelectionListener(new SelectionAdapter() {
+			  @Override
+			  public void widgetSelected(SelectionEvent e) 
+			  {
+			  TreeItem item = (TreeItem) e.item;
+			      if (item.getItemCount() > 0) 
+			      {
+			      broker.send(Topics.TREESELECTION_MITARBEITER, item);
+			      }
+			    }
+			}); 
 
 		tbtmAktuell.setControl(tree);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));

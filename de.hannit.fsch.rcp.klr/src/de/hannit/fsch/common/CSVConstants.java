@@ -43,14 +43,14 @@ public class CSVConstants
 	 */
 	public static final int BRUTTO_INDEX_TABLE = 2;
 	public static final String BRUTTO_LABEL_TABLE = "Brutto";
-	public static final int BRUTTO_INDEX_CSV = 5;
+	public static final int BRUTTO_INDEX_CSV = 6;
 	
 	/**
 	 * Abrechnungsmonat
 	 */
 	public static final int ABRECHNUNGSMONAT_INDEX_TABLE = 3;
 	public static final String ABRECHNUNGSMONAT_LABEL_TABLE = "Monat";
-	public static final int ABRECHNUNGSMONAT_INDEX_CSV = 6;
+	public static final int ABRECHNUNGSMONAT_INDEX_CSV = 7;
 	public static final String ABRECHNUNGSMONAT_DATUMSFORMAT_CSV = "dd.MM.yyyy";
 	
 	
@@ -60,23 +60,31 @@ public class CSVConstants
 	 */
 	public static final int TARIFGRUPPE_INDEX_TABLE = 4;
 	public static final String TARIFGRUPPE_LABEL_TABLE = "Tarifgruppe";
-	public static final int TARIFGRUPPE_INDEX_CSV = 7;
+	public static final int TARIFGRUPPE_INDEX_CSV = 8;
 	
 	/**
 	 * Tarifstufe
 	 */
 	public static final int TARIFSTUFE_INDEX_TABLE = 5;
 	public static final String TARIFSTUFE_LABEL_TABLE = "Tarifstufe";	
-	public static final int TARIFSTUFE_INDEX_CSV = 8;
+	public static final int TARIFSTUFE_INDEX_CSV = 9;
 	
 	/**
 	 * Stellenanteil
 	 */
 	public static final int STELLENNTEIL_INDEX_TABLE = 6;
 	public static final String STELLENNTEIL_LABEL_TABLE = "Stellenanteil";	
-	public static final int STELLENNTEIL_INDEX_CSV = 9;
+	public static final int STELLENNTEIL_INDEX_CSV = 10;
 	
 	}	
+	
+	/**
+	 * Felder der AZV Daten
+	 */
+	public static interface ERGEBNIS 
+	{
+	public static final String ERGEBNIS_IMPORT_DIR = "\\\\regionhannover.de\\daten\\hannit\\Rechnungswesen AöR\\KLR\\KLR ab 01.01.2011\\Auswertungen\\2013Q1\\CSV";
+	}
 	
 	/**
 	 * Felder der AZV Daten
@@ -86,6 +94,11 @@ public class CSVConstants
 	public static final String CONTEXT_DATEN = "AZV";
 	public static final String AZV_IMPORT_DIR = "\\\\regionhannover.de\\daten\\DMS_System\\Zusatzkomponenten\\Workflow\\Azv\\Importe";
 
+
+	/**
+	 * Nachname
+	 */
+	public static final int NACHNAME_INDEX_CSV = 2;
 	
 	/**
 	 * Personalnummer

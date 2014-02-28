@@ -16,6 +16,8 @@ public static final String LOG_STACK = "LOGSTACK";
 public static final String CONTEXT_TARIFGRUPPEN = "cTARIFGRUPPEN";
 public static final String CONTEXT_PERSONALDURCHSCHNITTSKOSTEN = "cPDK";
 public static final String CONTEXT_GEMEINKOSTEN = "cGK";
+public static final String CONTEXT_ERGEBNIS = "cERGEBNIS";
+public static final String CONTEXT_SELECTED_MITARBEITER = "selectedMitarbeiter";
 public static final DecimalFormat KOMMAZAHL = new DecimalFormat("#0,00");
 
 public static final String ENDKOSTENSTELLE_TEAM1 = "1110";

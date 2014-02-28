@@ -180,7 +180,7 @@ private static final String ZELLE6_PRÄFIX = "AZV ";
 
 	/*
 	 * Splitte die Monatssumen nach Kostenstellen und Kostenträgern
-	 * Für diese Datei werden nur die Kostenstelle benötigt !
+	 * Für diese Datei werden nur die Kostenstellen benötigt !
 	 */
 	private void splitKostenobjekte()
 	{

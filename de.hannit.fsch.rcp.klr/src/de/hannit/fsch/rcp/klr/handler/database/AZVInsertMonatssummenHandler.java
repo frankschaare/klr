@@ -10,12 +10,14 @@ import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
+import org.eclipse.e4.ui.services.IServiceConstants;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.MonatsSummen;
 import de.hannit.fsch.common.csv.azv.AZVDatensatz;
 import de.hannit.fsch.common.loga.LoGaDatensatz;
+import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppen;
 import de.hannit.fsch.klr.dataservice.DataService;
 import de.hannit.fsch.klr.kostenrechnung.Kostenrechnungsobjekt;
 import de.hannit.fsch.rcp.klr.azv.AZVDatei;
@@ -71,11 +73,11 @@ private MonatsSummen mSummen = null;
 	
 	
 	@CanExecute
-	public boolean canExecute() 
+	public boolean canExecute(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object selection) 
 	{
 	boolean ready = false;
 	
-		if (mSummen.isChecked() && mSummen.isSummeOK())
+		if (selection instanceof MonatsSummen && mSummen.isChecked() && mSummen.isSummeOK())
 		{
 		ready = true;
 		}

@@ -12,11 +12,14 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.UIEventTopic;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -39,6 +42,7 @@ public class CSVDetailsPart
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 @Inject @Named(AppConstants.CONTEXT_TARIFGRUPPEN) private Tarifgruppen tarifGruppen;
 @Inject private EMenuService menuService;
+@ Inject ESelectionService selectionService;
 private static final String POPUPMENUD_ID = "de.hannit.fsch.rcp.klr.menu.main.database";
 
 private MonatsSummen mSummen;
@@ -126,6 +130,15 @@ private Table table_3;
 		gesamtTable = tvGesamt.getTable();
 		gesamtTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		gesamtTable.setHeaderVisible(true);
+		gesamtTable.addFocusListener(new FocusAdapter()
+		{
+			@Override
+			public void focusGained(FocusEvent e)
+			{
+			selectionService.setSelection((mSummen != null) ? mSummen : gesamtTable); 
+			}
+			
+		});
 		
 		column = new TableViewerColumn(tvGesamt, SWT.RIGHT, 0);
 		column.getColumn().setText("KST / KTR");
@@ -163,6 +176,16 @@ private Table table_3;
 		menuService.registerContextMenu(vzae.getTable(), POPUPMENUD_ID);
 		vzaeTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		vzaeTable.setHeaderVisible(true);
+		vzaeTable.addFocusListener(new FocusAdapter()
+		{
+
+			@Override
+			public void focusGained(FocusEvent e)
+			{
+			selectionService.setSelection((tarifGruppen != null) ? tarifGruppen : vzaeTable); 
+			}
+			
+		});
 		
 		column = new TableViewerColumn(vzae, SWT.RIGHT, 0);
 		column.getColumn().setText("Tarifgruppe");

@@ -12,4 +12,5 @@ public static final String TREESELECTION_MITARBEITER = "selectedMitarbeiter";
 public static final String MONATSSUMMEN = "Monatssummen";
 public static final String PERSONALDURCHSCHNITTSKOSTEN = "pdk";
 public static final String GEMEINKOSTERKOSTEN = "gk";
+public static final String CSV01 = "csv01";
 }

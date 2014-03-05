@@ -1,21 +1,8 @@
  
 package de.hannit.fsch.rcp.klr.handler.csv;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.TreeMap;
 
 import javax.inject.Inject;
@@ -24,49 +11,37 @@ import javax.inject.Named;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.UIEventTopic;
+import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
 
 import de.hannit.fsch.common.AppConstants;
+import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.common.Dezimalformate;
 import de.hannit.fsch.common.MonatsSummen;
-import de.hannit.fsch.klr.dataservice.DataService;
 import de.hannit.fsch.klr.kostenrechnung.KostenStelle;
 import de.hannit.fsch.klr.kostenrechnung.KostenTraeger;
 import de.hannit.fsch.klr.kostenrechnung.Kostenrechnungsobjekt;
 import de.hannit.fsch.rcp.klr.constants.Topics;
+import de.hannit.fsch.rcp.klr.csv.CSV01Datei;
 
 public class Create01Entlastung0400Handler extends CSVHandler
 {
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
-@Inject DataService dataService;
+@Inject IEventBroker broker;
 private String plugin = this.getClass().getName();
 
 private MonatsSummen mSummen = null;
 private TreeMap<String, KostenStelle> tmKostenstellen = null;
 private TreeMap<String, KostenTraeger> tmKostenträger = null;
 private double sumKST = 0;
+private double sumKSTGerundet = 0;
 
-private static final String DELIMITER = ";";
-private static final String ZELLE2_NEHME = "0";
-private static final String ZELLE2_GEBE = "1";
-private static final String ZELLE4_NEHME = "1100100";
-private static final String ZELLE4_GEBE = "1110100";
-private static final String ENTLASTUNGSKONTO = "0400";
-private static final String PATH_PRÄFIX = "\\\\RegionHannover.de\\daten\\hannit\\Rechnungswesen AöR\\KLR\\KLR ab 01.01.2011\\Arbeitszeitverteilung\\Reports\\";
-private static final String PATH_SUFFIX = "\\CSV\\";
-private static final String DATEINAME_PRÄFIX = "01_CSV_Entlastung 0400 auf andere KST ";
-private static final String DATEINAME_SUFFIX = ".csv";
-
-/**
- * "UML-" + Monatsziffer (01,02,03)
- */
-private static final String ZELLE5_PRÄFIX = "UML-";
-/**
- * "AZV " + Monat lang (MMMM)
- */
-private static final String ZELLE6_PRÄFIX = "AZV ";
-
-
+private CSV01Datei csvDatei = null;
 	
 	@Inject @Optional
 	public void handleEvent(@UIEventTopic(Topics.MONATSSUMMEN) MonatsSummen incoming)
@@ -75,16 +50,24 @@ private static final String ZELLE6_PRÄFIX = "AZV ";
 	}	
 
 	@Execute
-	public void execute() 
+	public void execute(MApplication app, EModelService modelService) 
 	{
 	splitKostenobjekte();
 	createCSV();
+	
+	MPartStack details = (MPartStack) modelService.find("de.hannit.fsch.rcp.klr.partstack.details", app);
+	MPart csv01 = createPart(AppConstants.PartIDs.CSV01);
+	csv01.getContext().set(AppConstants.CONTEXT_CSV01, csvDatei);
+	details.getChildren().add(csv01);
+	
+	broker.send(Topics.CSV01, csvDatei);
+	
+	partService.activate(csv01);
 	}
 	
 	/*
 	 * Erstellt alle Zeilen der Datei und schreibt diese
 	 */
-	@SuppressWarnings("unused")
 	private void createCSV()
 	{
 	String feld1 = null;
@@ -94,18 +77,18 @@ private static final String ZELLE6_PRÄFIX = "AZV ";
 	String feld5 = null;
 	String feld6 = null;
 	String feld7 = null;
+	String delimiter = CSVDatei.DEFAULT_DELIMITER;
 	
 	ArrayList<String> lines = new ArrayList<String>();	
 	
-	feld1 = getLetzterTagdesMonats(mSummen.getBerichtsMonatAsDate()) + DELIMITER;
-	feld2 = ZELLE2_NEHME + DELIMITER;
-	feld3 = ENTLASTUNGSKONTO + DELIMITER;
-	feld4 = ZELLE4_NEHME + DELIMITER;
-	feld5 = ZELLE5_PRÄFIX + getMonatsnummer(mSummen.getBerichtsMonatAsDate()) + DELIMITER;
-	feld6 = ZELLE6_PRÄFIX + getMonatLang(mSummen.getBerichtsMonatAsDate()) + DELIMITER;
+	feld1 = getLetzterTagdesMonats(mSummen.getBerichtsMonatAsDate()) + delimiter;
+	feld2 = CSV01Datei.ZELLE2_NEHME + delimiter;
+	feld3 = CSV01Datei.ENTLASTUNGSKONTO + delimiter;
+	feld4 = CSV01Datei.ZELLE4_NEHME + delimiter;
+	feld5 = CSV01Datei.ZELLE5_PRÄFIX + getMonatsnummer(mSummen.getBerichtsMonatAsDate()) + delimiter;
+	feld6 = CSV01Datei.ZELLE6_PRÄFIX + getMonatLang(mSummen.getBerichtsMonatAsDate()) + delimiter;
 	
-	DecimalFormat df = new DecimalFormat("0.00");
-	feld7 = "-" + df.format(sumKST);
+	feld7 = "-" + Dezimalformate.DEFAULT.format(sumKSTGerundet);
 	
 	lines.add(feld1+feld2+feld3+feld4+feld5+feld6+feld7);
 	
@@ -113,15 +96,27 @@ private static final String ZELLE6_PRÄFIX = "AZV ";
 		 * Abschliessend werden die Zeilen für alle Kostenstellen geschrieben
 		 * Die Zellen 1,6 und 6 bleiben dabei gleich
 		 */
-	feld2 = ZELLE2_GEBE + DELIMITER;
-	feld4 = ZELLE4_GEBE + DELIMITER;
+	feld2 = CSV01Datei.ZELLE2_GEBE + delimiter;
+	feld4 = CSV01Datei.ZELLE4_GEBE + delimiter;
+		
+		double summeBelastung = 0;
 		for (KostenStelle kst : tmKostenstellen.values())
 		{
-		feld3 = kst.getBezeichnung() + DELIMITER;
-		feld7 = df.format(kst.getSumme());
+		summeBelastung += kst.getSummeGerundet();	
+		feld3 = kst.getBezeichnung() + delimiter;
+		feld7 = Dezimalformate.DEFAULT.format(kst.getSummeGerundet());
 		
 		lines.add(feld1+feld2+feld3+feld4+feld5+feld6+feld7);
 		}
+		
+		if (sumKSTGerundet != summeBelastung)
+		{
+		log.error("Buchungssätze wurden erstellt. Entlastung 0400 = " + Dezimalformate.DEFAULT.format(sumKSTGerundet) + " entspricht NICHT der Summe Belastung Kostenstellen = " +  Dezimalformate.DEFAULT.format(summeBelastung), plugin + ".createCSV()", null);	
+		}
+		else
+		{
+		log.confirm("Buchungssätze wurden erstellt. Entlastung 0400 = " + Dezimalformate.DEFAULT.format(sumKSTGerundet) + " entspricht der Summe Belastung Kostenstellen = " +  Dezimalformate.DEFAULT.format(summeBelastung),  plugin + ".createCSV()");
+		}	
 	
 	/*
 	 * Alle Werte sind nun in der ArrayLIst lines gesichert, 
@@ -130,52 +125,12 @@ private static final String ZELLE6_PRÄFIX = "AZV ";
 	 * Dazu wird ein Pfad nach dem Muster:
 	 * PATH_PRÄFIX + YYYY Quartal # + PATH_SUFFIX + DATEINAME_PRÄFIX + YYYYMM + DATEINAME_SUFFIX benötigt: 	
 	 */
-	String strPath = PATH_PRÄFIX + getJahr(mSummen.getBerichtsMonatAsDate()) + " Quartal " + getQuartalsnummer(mSummen.getBerichtsMonatAsDate()) + PATH_SUFFIX;
-	String dateiName =  DATEINAME_PRÄFIX + getJahr(mSummen.getBerichtsMonatAsDate()) + getAuswertungsmonat(mSummen.getBerichtsMonatAsDate()) + DATEINAME_SUFFIX;
-	Path dateiPfad = Paths.get(strPath);	
-		
-		/*
-		 * Wenn das Verzeichnis nicht existiert, muss es zunächst neu angelegt werden
-		 */
-		if (!Files.exists(dateiPfad, new LinkOption[]{LinkOption.NOFOLLOW_LINKS}))
-		{
-		log.info("Dateipfad " + dateiPfad.toString() + " wurde nicht gefunden und wird neu angelegt.", this.getClass().getName() + ".execute");	
-			try
-			{
-			Files.createDirectory(dateiPfad);
-			log.confirm("Verzeichnis " + dateiPfad.toString() + " wurde erfogreich angelegt.", plugin);
-			}
-			catch (IOException e)
-			{
-			log.error("Verzeichnis " + dateiPfad.toString() + " konnte nicht erstellt werde. !", plugin, e);	
-			e.printStackTrace();
-			}
-		}
-		else
-		{
-		log.info("Dateipfad " + dateiPfad.toString() + " existiert bereits. Prüfe, ob Datei " + dateiName + " ebenfalls existiert.", plugin + ".execute");
-		
-			Path testPath = FileSystems.getDefault().getPath(strPath, dateiName);
-			if (Files.exists(testPath, new LinkOption[]{LinkOption.NOFOLLOW_LINKS}))
-			{
-			log.error("CSV-Datei " + testPath.toString() + " existiert bereits ! Bitte prüfen und ggf. manuell löschen.", plugin, null);	
-			}
-			else
-			{
-				try
-				{
-				Files.createFile(testPath);
-				Files.write(testPath, lines, Charset.forName("ISO-8859-15"), StandardOpenOption.WRITE);
-				log.confirm("Datei " + testPath.toString() + " wurde erfogreich angelegt.", plugin);
-				}
-				catch (IOException e)
-				{
-				log.error("Datei " + testPath.toString() + " konnte nicht erstellt werde. !", plugin, e);	
-				e.printStackTrace();
-				}	
-			}
-		}
+	String strPath = CSV01Datei.PATH_PRÄFIX + getJahr(mSummen.getBerichtsMonatAsDate()) + " Quartal " + getQuartalsnummer(mSummen.getBerichtsMonatAsDate()) + CSV01Datei.PATH_SUFFIX;
 
+	csvDatei = new CSV01Datei(strPath);
+	csvDatei.setLog(log);
+	csvDatei.hasHeader(false);
+	csvDatei.setContent(lines);
 	}
 
 	/*
@@ -216,9 +171,11 @@ private static final String ZELLE6_PRÄFIX = "AZV ";
 			 * und mit den Gesamtkosten verglichlichen. Diese MÜSSEN gleich sein !	
 			 */
 				sumKST = 0;
+				sumKSTGerundet = 0;
 				for (KostenStelle ks : tmKostenstellen.values())
 				{
-				sumKST += ks.getSumme();	
+				sumKST += ks.getSumme();
+				sumKSTGerundet += ks.getSummeGerundet();
 				}
 				
 				double sumKTR = 0;

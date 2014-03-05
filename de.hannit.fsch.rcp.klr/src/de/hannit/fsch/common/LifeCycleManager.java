@@ -3,29 +3,10 @@
  */
 package de.hannit.fsch.common;
 
-import java.util.Date;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.TreeMap;
-
-import javax.inject.Inject;
-
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.events.IEventBroker;
-import org.eclipse.e4.core.services.log.ILoggerProvider;
-import org.eclipse.e4.ui.model.application.MApplication;
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;
-import org.eclipse.e4.ui.workbench.modeling.EModelService;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.event.Event;
-import org.osgi.service.event.EventConstants;
-
-import de.hannit.fsch.rcp.klr.constants.Topics;
 
 /**
  * @author fsch

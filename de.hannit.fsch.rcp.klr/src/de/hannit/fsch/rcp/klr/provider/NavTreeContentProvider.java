@@ -28,19 +28,38 @@ import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
  */
 public class NavTreeContentProvider extends LabelProvider implements ITreeContentProvider 
 {
-URL url = null;	
+private URL url = null;
+private TreeMap<String, Image> imageCache = null;
+
 	/**
 	 * 
 	 */
 	public NavTreeContentProvider() 
 	{
-		
+	Bundle bundle = FrameworkUtil.getBundle(this.getClass());	
+	imageCache = new TreeMap<String, Image>();	
+	url = FileLocator.find(bundle, new Path("icons/User16px.png"), null);
+	ImageDescriptor image = ImageDescriptor.createFromURL(url);
+	imageCache.put("userDefault", image.createImage());
+	url = FileLocator.find(bundle, new Path("icons/UserYellow16px.png"), null);
+	image = ImageDescriptor.createFromURL(url);
+	imageCache.put("userYellow", image.createImage());
+	url = FileLocator.find(bundle, new Path("icons/UserRemove16px.png"), null);
+	image = ImageDescriptor.createFromURL(url);
+	imageCache.put("userRemove", image.createImage());
+	url = FileLocator.find(bundle, new Path("icons/UserDisabled16px.png"), null);
+	image = ImageDescriptor.createFromURL(url);
+	imageCache.put("userDisabled", image.createImage());
+	url = FileLocator.find(bundle, new Path("icons/clock16px.png"), null);
+	image = ImageDescriptor.createFromURL(url);
+	imageCache.put("azvClock", image.createImage());
 	}	
 	
 	@Override
 	public Image getImage(Object element) 
 	{
-	Bundle bundle = FrameworkUtil.getBundle(this.getClass());
+	String key = null;	
+	
 		if (element instanceof Mitarbeiter) 
 		{
 		Mitarbeiter m = (Mitarbeiter)element;	
@@ -50,29 +69,29 @@ URL url = null;
 				{
 					if (m.isAzvAktuell())
 					{
-					url = FileLocator.find(bundle, new Path("icons/User16px.png"), null);		
+					key = "userDefault";		
 					}
 					else
 					{
-					url = FileLocator.find(bundle, new Path("icons/UserYellow16px.png"), null);
+					key = "userYellow";
 					}
 				}
 				else
 				{
-				url = FileLocator.find(bundle, new Path("icons/UserRemove16px.png"), null);
+				key = "userRemove";
 				}
 			}
 			else
 			{
-			url = FileLocator.find(bundle, new Path("icons/UserDisabled16px.png"), null);
+			key = "userDisabled";
 			}
 		}
 		else if (element instanceof Arbeitszeitanteil) 
 		{
-		url = FileLocator.find(bundle, new Path("icons/clock16px.png"), null);
-		}
-	ImageDescriptor image = ImageDescriptor.createFromURL(url);	
-	return image.createImage();
+		key = "azvClock";
+		}	
+		
+	return imageCache.get(key);
 	}
 
 	@Override
@@ -99,8 +118,8 @@ URL url = null;
 	 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
 	 */
 	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
+	public void dispose() 
+	{
 
 	}
 

@@ -11,11 +11,13 @@ import javax.inject.Named;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -40,6 +42,7 @@ public class GemeinkostenPart
 @Inject IEventBroker broker;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 @Inject @Named(AppConstants.CONTEXT_GEMEINKOSTEN) GemeinKosten gk;
+@Inject ESelectionService selectionService;
 
 private String plugin = this.getClass().getName();
 private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM yyyy");
@@ -134,6 +137,7 @@ private Label lblNewLabel;
 				gk.setAufteilungGemeinKosten();
 				log.info("Die Summe der errechneten Gemeinkostenanteile für Vorkostenstelle: " + gk.getVorkostenStelle() + " ist = " + NumberFormat.getCurrencyInstance().format(gk.getSummeGemeinkostenanteile()), plugin + "txtVerteilungsSumme.focusLost(FocusEvent e)");
 				gkViever.setInput(gk.getAufteilungGemeinKosten().values().toArray());
+				selectionService.setSelection(gk);
 				}
 				catch (NumberFormatException e2)
 				{
@@ -175,6 +179,15 @@ private Label lblNewLabel;
 		
 		gkTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		gkTable.setHeaderVisible(true);
+		gkTable.addFocusListener(new FocusAdapter()
+		{
+			@Override
+			public void focusGained(FocusEvent e)
+			{
+			selectionService.setSelection((gk != null) ? gk : gkTable); 
+			}	
+		});
+		
 		
 		column = new TableViewerColumn(gkViever, SWT.RIGHT, 0);
 		column.getColumn().setText(GemeinKosten.COLUMN1_KTR);
@@ -213,6 +226,6 @@ private Label lblNewLabel;
 	@Focus
 	public void onFocus() 
 	{
-		//TODO Your code here
+	selectionService.setSelection((gk != null) ? gk : this); 
 	}
 }

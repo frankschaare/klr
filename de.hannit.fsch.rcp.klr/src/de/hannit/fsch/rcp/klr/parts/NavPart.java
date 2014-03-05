@@ -33,6 +33,8 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -48,7 +50,6 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.osgi.service.event.Event;
 
 import de.hannit.fsch.common.AppConstants;
-import de.hannit.fsch.common.AuswertungsMonat;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.MonatsSummen;
 import de.hannit.fsch.common.csv.azv.Arbeitszeitanteil;
@@ -63,10 +64,9 @@ import de.hannit.fsch.klr.dataservice.DataService;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.provider.NavTreeContentProvider;
 
+@SuppressWarnings("restriction")
 public class NavPart 
 {
-private AuswertungsMonat auswertungsMonat = new AuswertungsMonat();
-	
 @Inject IEventBroker broker;
 @Inject DataService dataService;
 @Inject @Optional Organisation hannit;
@@ -75,7 +75,6 @@ private AuswertungsMonat auswertungsMonat = new AuswertungsMonat();
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 
 private TreeMap<Integer, Mitarbeiter> mitarbeiter;	
-private Mitarbeiter selectedMitarbeiter = null;
 private Tarifgruppen tarifgruppen = null;
 private TreeMap<String, Double> monatsSummen = null;
 private MonatsSummen mSumme = null;
@@ -85,6 +84,8 @@ private TreeMap<String, Arbeitszeitanteil> azvMonat = null;
 private IEclipseContext context;
 
 private TreeViewer treeViewer = null;
+private Button btnForward = null;
+private Button btnBack = null;
 private Combo comboMonth = null;
 private Combo comboYear = null; 
 private	SimpleDateFormat fMonat = new SimpleDateFormat("MMMM");
@@ -126,6 +127,33 @@ private double vzaeTotal = 0;
 		
 	System.out.println(activePart.getElementId());
 	} 	
+	
+	private void refresh()
+	{
+	Date selected = parseCombos(comboMonth.getItem(comboMonth.getSelectionIndex()), comboYear.getItem(comboYear.getSelectionIndex()));	
+		
+	loadData(selected);
+		// TODO Monatsbericht ist überflüssig !
+	broker.send(AppConstants.ActiveSelections.AUSWERTUNGSMONAT, selected);
+	Monatsbericht selectedReport = hannit.getMonatsBerichte().get(selected);
+	broker.send(AppConstants.ActiveSelections.MONATSBERICHT, selectedReport);
+		if (comboMonth.getSelectionIndex() == (comboMonth.getItemCount() - 1))
+		{
+		btnForward.setEnabled(false);	
+		}
+		else 
+		{
+		btnForward.setEnabled(true);	
+		}
+		if (comboMonth.getSelectionIndex() == 0)
+		{
+		btnBack.setEnabled(false);	
+		}
+		else 
+		{
+		btnBack.setEnabled(true);	
+		}		
+	}
 
 	/*
 	 * Lädt Daten aus der DB zur Weiterverwendung im CSVDetailspart.
@@ -297,58 +325,94 @@ private double vzaeTotal = 0;
 	@PostConstruct
 	public void createComposite(Composite parent) 
 	{
-	String method = this.getClass().getName() + ".createComposite()";
 	hannit = dataService.getOrganisation();
 	
 		parent.setLayout(new GridLayout(1, false));
 		
 		Composite top = new Composite(parent, SWT.NONE);
-		GridLayout gl_top = new GridLayout(6, false);
+		GridLayout gl_top = new GridLayout(18, false);
 		gl_top.verticalSpacing = 0;
 		gl_top.marginWidth = 0;
 		gl_top.marginHeight = 0;
 		top.setLayout(gl_top);
-		top.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Button btnBack = new Button(top, SWT.FLAT | SWT.ARROW | SWT.LEFT);
+		btnBack = new Button(top, SWT.FLAT | SWT.ARROW | SWT.LEFT);
 		btnBack.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		btnBack.setToolTipText("Zum Vormonat wechseln");
 		btnBack.setText("<<");
+		btnBack.addMouseListener(new MouseAdapter()
+		{
+
+			@Override
+			public void mouseDown(MouseEvent e)
+			{
+				if (comboMonth != null && comboMonth.getSelectionIndex() != 0)
+				{
+				comboMonth.select((comboMonth.getSelectionIndex() - 1));
+				refresh();
+				}
+			}
+			
+		});
 		new Label(top, SWT.NONE);
 		
 		comboMonth = new Combo(top, SWT.READ_ONLY);
-		comboMonth.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+		comboMonth.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 			for (Date date : hannit.getMonatsBerichte().keySet())
 			{
 			comboMonth.add(fMonat.format(date));
 			comboMonth.setText(comboMonth.getItem(comboMonth.getItemCount()-1));
 			}
+
 		comboMonth.addSelectionListener(new SelectionAdapter()
 		{
 			@Override
 			public void widgetSelected(SelectionEvent e)
 			{
-			Date selected = parseCombos(comboMonth.getItem(comboMonth.getSelectionIndex()), comboYear.getItem(comboYear.getSelectionIndex()));	
-	
-			loadData(selected);
-			// TODO Monatsbericht ist überflüssig !
-			broker.send(AppConstants.ActiveSelections.AUSWERTUNGSMONAT, selected);
-			Monatsbericht selectedReport = hannit.getMonatsBerichte().get(selected);
-			broker.send(AppConstants.ActiveSelections.MONATSBERICHT, selectedReport);
+			refresh();	
 			}	
 		});	
 			
 		new Label(top, SWT.NONE);
 		
-		Button btnForward = new Button(top, SWT.FLAT | SWT.ARROW | SWT.RIGHT);
+		btnForward = new Button(top, SWT.FLAT | SWT.ARROW | SWT.RIGHT);
+		btnForward.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		btnForward.setToolTipText("Zum n\u00E4chsten Monat wechseln. (Nicht verf\u00FCgbar, wenn der aktuelle Monat gleich dem letzten Monat ist)");
-		btnForward.setEnabled(auswertungsMonat.lastMonth());;
+			if (comboMonth.getSelectionIndex() == (comboMonth.getItemCount() - 1))
+			{
+			btnForward.setEnabled(false);	
+			}
+		btnForward.addMouseListener(new MouseAdapter()
+			{
+				@Override
+				public void mouseDown(MouseEvent e)
+				{
+					if (comboMonth != null && (comboMonth.getSelectionIndex() != (comboMonth.getItemCount() - 1)))
+					{
+					comboMonth.select((comboMonth.getSelectionIndex() + 1));
+					refresh();
+					}
+				}
+				
+			});			
 		
 		comboYear = new Combo(top, SWT.READ_ONLY);
+		comboYear.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		comboYear.setToolTipText("Liste der Verf\u00FCgbaren Berichtsjahre");
-		comboYear.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		comboYear.add("2013");
 		comboYear.setText("2013");
+		new Label(top, SWT.NONE);
+		new Label(top, SWT.NONE);
+		new Label(top, SWT.NONE);
+		new Label(top, SWT.NONE);
+		new Label(top, SWT.NONE);
+		new Label(top, SWT.NONE);
+		new Label(top, SWT.NONE);
+		new Label(top, SWT.NONE);
+		new Label(top, SWT.NONE);
+		new Label(top, SWT.NONE);
+		new Label(top, SWT.NONE);
+		new Label(top, SWT.NONE);
 		// comboYear.add(auswertungsMonat.getActualYear());
 		// comboYear.setText(auswertungsMonat.getActualYear());
 		

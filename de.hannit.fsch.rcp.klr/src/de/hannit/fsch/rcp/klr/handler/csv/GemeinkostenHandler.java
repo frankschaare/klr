@@ -1,8 +1,6 @@
  
 package de.hannit.fsch.rcp.klr.handler.csv;
 
-import java.util.TreeMap;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,14 +17,9 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 import de.hannit.fsch.common.AppConstants;
-import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
-import de.hannit.fsch.common.MonatsSummen;
 import de.hannit.fsch.common.mitarbeiter.GemeinKosten;
-import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
-import de.hannit.fsch.common.mitarbeiter.PersonalDurchschnittsKosten;
 import de.hannit.fsch.klr.dataservice.DataService;
-import de.hannit.fsch.rcp.klr.azv.AZVDatei;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 
 /**

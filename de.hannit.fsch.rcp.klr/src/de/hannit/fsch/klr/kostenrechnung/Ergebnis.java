@@ -77,8 +77,19 @@ private TreeMap<Integer, Kostenrechnungsobjekt> services = null;
  * Datenquelle kann eine CSV-Datei oder die Datenbank sein
  */
 private String datenQuelle = null;
+private String dateiName = null;
+/**
+ * Für welches Team ist das Ergebnis ? 
+ */
+private int teamNR = 0;
 
 public Ergebnis(){}
+
+public int getTeamNR(){return teamNR;}
+public void setTeamNR(int teamNR){this.teamNR = teamNR;}
+
+public String getDateiName(){return dateiName;}
+public void setDateiName(String name){this.dateiName = name;}
 
 public String getDatenQuelle(){return datenQuelle;}
 public void setDatenQuelle(String datenQuelle){this.datenQuelle = datenQuelle;}
@@ -101,6 +112,11 @@ return activeServices;
 }
 public void setServices(TreeMap<Integer, Kostenrechnungsobjekt> services){this.services = services;}
 public Date getBerichtszeitraumVon(){return berichtszeitraumVon;}
+public java.sql.Date getBerichtsMonat()
+{
+java.sql.Date sqlDatum = new java.sql.Date(this.berichtszeitraumVon.getTime());
+return sqlDatum;
+}
 public void setBerichtszeitraumVon(Date berichtszeitraumVon){this.berichtszeitraumVon = berichtszeitraumVon;}
 public Date getBerichtszeitraumBis(){return berichtszeitraumBis;}
 public void setBerichtszeitraumBis(Date berichtszeitraumBis){this.berichtszeitraumBis = berichtszeitraumBis;}

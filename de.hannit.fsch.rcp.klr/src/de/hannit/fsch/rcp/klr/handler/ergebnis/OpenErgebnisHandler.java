@@ -51,9 +51,10 @@ private TreeMap<Integer, Kostenrechnungsobjekt> services = null;
 		csv.setDelimiter(";");
 		csv.hasHeader(false);
 		csv.read();
-		
+	
 		ergebnis = new Ergebnis();
 		ergebnis.setDatenQuelle(csv.getPath());
+		ergebnis.setDateiName(csv.getName());
 			/*
 			 * Zeilen werden erstmalig durchlaufen und es wird die Zeile gesucht, 
 			 * deren erstes Feld leer ist. Dies ist die Zeile mit den Services:
@@ -78,15 +79,22 @@ private TreeMap<Integer, Kostenrechnungsobjekt> services = null;
 			ergebnis.setServices(services);
 			
 			MPart ergebnisImportPart = partService.findPart("de.hannit.fsch.rcp.klr.part.ErgebnisImportPart");
-			/*
-			 * Services im PartContext speichern:
-			 */
-			IEclipseContext partContext = EclipseContextFactory.create();
-			ergebnisImportPart.setContext(partContext);
-			ergebnisImportPart.getContext().set(AppConstants.CONTEXT_ERGEBNIS, ergebnis);
-			ergebnisImportPart.setVisible(true);
-			partService.activate(ergebnisImportPart);
-			broker.send(Topics.ERGEBNIS_DATEN, ergebnis);
+				/*
+				 * Wird der Handler erstmalig aufgerufen, werden Services im PartContext gespeichert.
+				 * Erfolgt ein erneuter Aufruf, werden die Daten nur über den Broker versendet
+				 */				
+				if (ergebnisImportPart.getContext() != null)
+				{
+				broker.send(Topics.ERGEBNIS_DATEN, ergebnis);	
+				}
+				else 
+				{
+				IEclipseContext partContext = EclipseContextFactory.create();
+				ergebnisImportPart.setContext(partContext);
+				ergebnisImportPart.getContext().set(AppConstants.CONTEXT_ERGEBNIS, ergebnis);
+				ergebnisImportPart.setVisible(true);
+				partService.activate(ergebnisImportPart);
+				}
 			break;
 
 			default:

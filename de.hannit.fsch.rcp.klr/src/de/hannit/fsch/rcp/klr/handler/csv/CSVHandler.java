@@ -9,12 +9,21 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.inject.Inject;
+
+import org.eclipse.e4.core.contexts.EclipseContextFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+
 /**
  * @author fsch
  *
  */
 public class CSVHandler
 {
+@Inject EPartService partService;	
+private IEclipseContext partContext = null;	
 protected Calendar cal = Calendar.getInstance();	
 protected DecimalFormat summenFormat = new DecimalFormat("0.00");
 
@@ -199,6 +208,15 @@ protected DecimalFormat summenFormat = new DecimalFormat("0.00");
 	DateFormat df  = new SimpleDateFormat("MMMM");
 	
 	return df.format(cal.getTime());	
+	}		
+	
+	protected MPart createPart(String partID)
+	{
+	MPart part = partService.createPart(partID);
+	partContext = EclipseContextFactory.create();
+	part.setContext(partContext);
+	
+	return part;
 	}	
 
 }

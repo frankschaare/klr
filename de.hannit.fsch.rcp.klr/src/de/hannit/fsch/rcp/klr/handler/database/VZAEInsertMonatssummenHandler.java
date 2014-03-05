@@ -11,6 +11,7 @@ import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
+import org.eclipse.e4.ui.services.IServiceConstants;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
@@ -74,9 +75,18 @@ private	SimpleDateFormat datumsformat = new SimpleDateFormat("yyyy-MM-dd");
 	
 	
 	@CanExecute
-	public boolean canExecute() 
+	public boolean canExecute(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object selection) 
 	{
-	return tgs != null ? true : false;
+	boolean result = false;	
+		if (selection instanceof Tarifgruppen)
+		{
+		result = true;	
+		}
+		else
+		{
+		result = false;
+		}
+	return result;
 	}
 		
 }

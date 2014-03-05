@@ -88,9 +88,17 @@ private double ergebnis  = 0;
 		this.kostenart = kostenart;
 	}
 
+	/*
+	 * Summe auf zwei Nachkommastellen gerundet
+	 */
+	public double getSummeGerundet()
+	{
+	return Math.rint( summe * 100 ) / 100.;
+	}
+	
 	public double getSumme()
 	{
-		return summe;
+	return summe;
 	}
 
 	public void setSumme(double summe)

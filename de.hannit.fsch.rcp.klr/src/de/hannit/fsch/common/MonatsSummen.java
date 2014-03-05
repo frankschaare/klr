@@ -4,7 +4,6 @@
 package de.hannit.fsch.common;
 
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TreeMap;
 
@@ -12,7 +11,6 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
-import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppe;
 import de.hannit.fsch.klr.kostenrechnung.Kostenrechnungsobjekt;
 
 /**
@@ -21,7 +19,6 @@ import de.hannit.fsch.klr.kostenrechnung.Kostenrechnungsobjekt;
  */
 public class MonatsSummen implements ITableLabelProvider
 {
-private TreeMap<String, Double> gesamtSummen = null;
 private TreeMap<String, Kostenrechnungsobjekt> gesamtKosten = null;
 private Kostenrechnungsobjekt kto = null;
 private double kstktrMonatssumme = 0;
@@ -35,8 +32,6 @@ private boolean isChecked = false;
 private boolean summeOK = false;
 
 private Date berichtsMonat = null;
-private	SimpleDateFormat datumsformat = new SimpleDateFormat("yyyy-MM-dd");
-
 private String label;
 
 	/**
@@ -49,7 +44,6 @@ private String label;
 
 	public void setGesamtSummen(TreeMap<String, Double> gesamtSummen)
 	{
-	this.gesamtSummen = gesamtSummen;
 	gesamtKosten = new TreeMap<String, Kostenrechnungsobjekt>();
 	
 		for (String s : gesamtSummen.keySet())
@@ -64,7 +58,7 @@ private String label;
 	
 	public String getBerichtsMonat()
 	{
-	return datumsformat.format(berichtsMonat);
+	return Datumsformate.STANDARDFORMAT_SQLSERVER.format(berichtsMonat);
 	}
 	
 	public Date getBerichtsMonatAsDate()

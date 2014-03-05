@@ -153,7 +153,6 @@ private static final String DATEINAME_SUFFIX = ".csv";
 	public boolean canExecute() 
 	{
 	boolean ready = false;
-	System.out.println("Gemeinkostenhandler: canExecute() wurde aufgerufen.");	
 		if (gk.isChecked() && gk.isDatenOK() && gk.getAktuellesTeam().equalsIgnoreCase("1"))
 		{
 		ready = true;

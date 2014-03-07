@@ -13,7 +13,6 @@
 
    <windowImages/>
 
-
    <launcher>
       <solaris/>
       <win useIco="false">
@@ -33,6 +32,7 @@
       <plugin id="de.hannit.fsch.common.organisation.hannit"/>
       <plugin id="de.hannit.fsch.klr.dataservice"/>
       <plugin id="de.hannit.fsch.rcp.klr"/>
+      <plugin id="de.hannit.fsch.soa.osecm"/>
       <plugin id="javax.annotation"/>
       <plugin id="javax.inject"/>
       <plugin id="javax.xml"/>

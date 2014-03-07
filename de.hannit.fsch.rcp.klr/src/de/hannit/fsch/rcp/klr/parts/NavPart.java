@@ -326,7 +326,7 @@ private double vzaeTotal = 0;
 	public void createComposite(Composite parent) 
 	{
 	hannit = dataService.getOrganisation();
-	
+		
 		parent.setLayout(new GridLayout(1, false));
 		
 		Composite top = new Composite(parent, SWT.NONE);

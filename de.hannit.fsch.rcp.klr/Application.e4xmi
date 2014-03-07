@@ -50,6 +50,7 @@
         <children xsi:type="menu:MenuSeparator" xmi:id="_MawKgJSlEeOZwqLiT8Xx2w" elementId="de.hannit.fsch.rcp.klr.menuseparator.database.0"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_OP7NkKK1EeOkseQmRPbYag" elementId="de.hannit.fsch.rcp.klr.menuseparator.database.1"/>
       </children>
+      <children xsi:type="menu:Menu" xmi:id="_U80kgKYEEeO0w8dYFLiduw" elementId="de.hannit.fsch.rcp.klr.menu.main.services" label="Services" tooltip="Daten aus Webservices"/>
       <children xsi:type="menu:Menu" xmi:id="_jCLfII5qEeO4TfksEninsA" elementId="de.hannit.fsch.rcp.klr.menu.main.csv" label="CSV">
         <children xsi:type="menu:MenuSeparator" xmi:id="_ky1MkJofEeONbJq8ToO0Iw" elementId="de.hannit.fsch.rcp.klr.menuseparator.csv.0"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_dkubEKBJEeOxW7Z6DLWtTg" elementId="de.hannit.fsch.rcp.klr.menuseparator.csv.1"/>
@@ -105,6 +106,7 @@
   <handlers xmi:id="_-XfVQKK0EeOkseQmRPbYag" elementId="de.hannit.fsch.rcp.klr.handler.ergebnis.dbUpdateErgebnis" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.ErgebnisUpdateHandler" command="_yTyS0KK0EeOkseQmRPbYag"/>
   <handlers xmi:id="_OqMbsKRKEeO7_qvTCDlnIg" elementId="csv.write.01Entlastung0400" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.Write01Entlastung0400Handler" command="_-sGnUKRJEeO7_qvTCDlnIg"/>
   <handlers xmi:id="_U9OgAKRKEeO7_qvTCDlnIg" elementId="csv.append.01Entlastung0400" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.Append01Entlastung0400Handler" command="_FGkwYKRKEeO7_qvTCDlnIg"/>
+  <handlers xmi:id="_82HYUKYFEeO0w8dYFLiduw" elementId="de.hannit.fsch.rcp.klr.handler.services.azv.open" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.azv.OpenAZVServiceHandler" command="_ekvEgKYFEeO0w8dYFLiduw"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -178,6 +180,9 @@
     <children xsi:type="menu:HandledMenuItem" xmi:id="_U4h5QaK1EeOkseQmRPbYag" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.ergebnis.insertErgebnis" label="Ergebnis speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert das Ergebnis für den aktuellen Monat" command="_qOfmsKK0EeOkseQmRPbYag"/>
     <children xsi:type="menu:HandledMenuItem" xmi:id="_U4h5QqK1EeOkseQmRPbYag" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.ergebnis.updateErgebnis" label="Ergebnis aktualisieren" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseRollback16px.png" tooltip="Aktualisiert das Ergebnis für den aktuellen Monat, da bereits Daten gespeichert sind" command="_yTyS0KK0EeOkseQmRPbYag"/>
   </menuContributions>
+  <menuContributions xmi:id="_ln0iMKYEEeO0w8dYFLiduw" elementId="de.hannit.fsch.rcp.klr.menucontribution.services.azv" parentId="de.hannit.fsch.rcp.klr.menu.main.services">
+    <children xsi:type="menu:HandledMenuItem" xmi:id="_soLmkKYEEeO0w8dYFLiduw" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.services.openAZVService" label="AZV Webservice" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseWebservice16x.png" tooltip="Importiert AZV-Meldungen über den OS/ECM Webservice" command="_ekvEgKYFEeO0w8dYFLiduw"/>
+  </menuContributions>
   <toolBarContributions xmi:id="__L6hEOrDEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.navpart.toolbarcontribution" parentId="de.hannit.fsch.rcp.klr.parts.navpart.toolbar">
     <children xsi:type="menu:HandledToolItem" xmi:id="_NNLcYOrEEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
     <children xsi:type="menu:HandledToolItem" xmi:id="_nCChkOrEEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.edit" label="ändern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserEdit16px.png" tooltip="Änderungen am aktuellen Mitarbeiter vornehmen" command="_5HK0AOpNEeK7nN3EOf8xtA"/>
@@ -245,6 +250,7 @@
   <commands xmi:id="_yTyS0KK0EeOkseQmRPbYag" elementId="de.hannit.fsch.rcp.klr.command.ergebnis.updateErgebnis" commandName="dbupdateErgebnis" description="Aktualisiert das Ergebnis für den aktuellen Monat"/>
   <commands xmi:id="_-sGnUKRJEeO7_qvTCDlnIg" elementId="de.hannit.fsch.rcp.klr.command.csv.write.01Entlastung0400" commandName="writeCSV01" description="Schreibt die Datei 01_Entlastung 0400 auf andere KST"/>
   <commands xmi:id="_FGkwYKRKEeO7_qvTCDlnIg" elementId="de.hannit.fsch.rcp.klr.command.csv.append.01Entlastung0400" commandName="appendCSV01" description="Ergänzt eine vorhandene Datei 01_Entlastung 0400 auf andere KST"/>
+  <commands xmi:id="_ekvEgKYFEeO0w8dYFLiduw" elementId="de.hannit.fsch.rcp.klr.services.azv.open" commandName="openAZVService" description="Stellt eine Verbindung zum DMS-Webservice her und importiert AZV-Meldungen" category="_NBeCEKYFEeO0w8dYFLiduw"/>
   <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
@@ -252,4 +258,5 @@
   <addons xmi:id="_Qd0LhuMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_Qd0Lh-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
   <addons xmi:id="_Qd0LiOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
+  <categories xmi:id="_NBeCEKYFEeO0w8dYFLiduw" elementId="de.hannit.fsch.rcp.klr.category.azv" name="AZV" description="AZV-Meldungen bearbeiten"/>
 </application:Application>

@@ -30,7 +30,8 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  com.ibm.icu,
  org.eclipse.e4.core.commands,
  org.eclipse.core.commands,
- org.eclipse.e4.ui.workbench.swt;bundle-version="0.12.1"
+ org.eclipse.e4.ui.workbench.swt;bundle-version="0.12.1",
+ de.hannit.fsch.soa.osecm;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: de.hannit.fsch.common.mitarbeiter,
  javax.annotation;version="1.0.0"

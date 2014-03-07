@@ -23,6 +23,7 @@ import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.rcp.klr.azv.AZVDatei;
 import de.hannit.fsch.rcp.klr.constants.Topics;
+import de.hannit.fsch.soa.osecm.IAZVClient;
 
 /**
  * @author fsch
@@ -31,9 +32,11 @@ import de.hannit.fsch.rcp.klr.constants.Topics;
 public class AZVPart
 {	
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;	
+@Inject IAZVClient webService;
 private TableViewerColumn column = null;
 private TableViewer	tableViewer = null;
 private Label infoLabel = null;
+private String infoText = "Verbunden mit OS/ECM Webservice an IP: ";
 
 	@Inject @Optional
 	public void handleEvent(@UIEventTopic(Topics.AZV_DATEN) AZVDatei azvDatei)
@@ -45,14 +48,13 @@ private Label infoLabel = null;
 	}	
 
 	@Inject	
-	public AZVPart(Composite parent, @Named(CSVConstants.AZV.CONTEXT_DATEN) AZVDatei azvDatei)
+	public AZVPart(Composite parent, @Named(CSVConstants.AZV.CONTEXT_DATEN) AZVDatei azvDatei, @Named(CSVConstants.AZV.CONTEXT_WEBSERVICEIP) String strIP)
 	{
 	parent.setLayout(new GridLayout());
 
 	infoLabel = new Label(parent, SWT.NONE);
 	infoLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-	infoLabel.setText(azvDatei.getPath() + " [" + (azvDatei.getFields().size()) + " Datensätze]");
-
+	
 	tableViewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 	// Make lines and make header visible
 	final Table table = tableViewer.getTable();
@@ -104,11 +106,17 @@ private Label infoLabel = null;
 	column.getColumn().setMoveable(true);		
 	
 	tableViewer.setContentProvider(new ArrayContentProvider());
-	tableViewer.setLabelProvider(azvDatei);
+	
 		if (azvDatei != null)
 		{
+		tableViewer.setLabelProvider(azvDatei);	
+		infoLabel.setText(azvDatei.getPath() + " [" + (azvDatei.getFields().size()) + " Datensätze]");	
 		azvDatei.resetLineCount();	
 		tableViewer.setInput(azvDatei.getDaten().values().toArray());	
+		}
+		else
+		{
+		infoLabel.setText((strIP != null) ? infoText + strIP : "OS/ECM Webservice nicht verfügbar.");
 		}
 	}
 }

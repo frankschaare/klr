@@ -92,6 +92,7 @@ public class CSVConstants
 	public static interface AZV 
 	{
 	public static final String CONTEXT_DATEN = "AZV";
+	public static final String CONTEXT_WEBSERVICEIP = "IP";
 	public static final String AZV_IMPORT_DIR = "\\\\regionhannover.de\\daten\\DMS_System\\Zusatzkomponenten\\Workflow\\Azv\\Importe";
 
 

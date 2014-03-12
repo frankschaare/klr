@@ -15,7 +15,6 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Tree;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
@@ -120,7 +119,14 @@ private TreeMap<String, Image> imageCache = null;
 	@Override
 	public void dispose() 
 	{
-
+		if (imageCache != null)
+		{
+			for (Image img : imageCache.values())
+			{
+			img.dispose();	
+			}
+		imageCache = null;	
+		}
 	}
 
 	/* (non-Javadoc)

@@ -76,7 +76,7 @@ private IEclipseContext partContext = null;
 	azvPart.setLabel(title);
 	partContext = EclipseContextFactory.create();
 	azvPart.setContext(partContext);
-	azvPart.getContext().set(CSVConstants.AZV.CONTEXT_DATEN, azvDatei);
+	azvPart.getContext().set(CSVConstants.AZV.CONTEXT_DATEN_DATEI, azvDatei);
 	
 	return azvPart;
 	}

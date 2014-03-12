@@ -91,52 +91,65 @@ public class CSVConstants
 	 */
 	public static interface AZV 
 	{
-	public static final String CONTEXT_DATEN = "AZV";
+	public static final String CONTEXT_DATEN_DATEI = "//AZV/Daten/Datei";
+	public static final String CONTEXT_DATEN_WEBSERVICE = "//AZV/Daten/Webservice";
+	public static final String CONTEXT_DATEN_LETZERBERICHTSMONAT = "//AZV/Daten/Berichtsmonat/max";
 	public static final String CONTEXT_WEBSERVICEIP = "IP";
 	public static final String AZV_IMPORT_DIR = "\\\\regionhannover.de\\daten\\DMS_System\\Zusatzkomponenten\\Workflow\\Azv\\Importe";
-
-
+	
+	/**
+	 * Netzwerkname
+	 */
+	public static final String NODENAME_USERNAME = "Benutzer";
+	public static final int USERNAME_INDEX_TABLE = 2;
 	/**
 	 * Nachname
 	 */
+	public static final int NACHNAME_INDEX_TABLE = 3;
 	public static final int NACHNAME_INDEX_CSV = 2;
+	public static final String NODENAME_NACHNAME = "Name";
+	public static final String NODENAME_VORNAME = "Vorname";
 	
 	/**
 	 * Personalnummer
 	 */
 	public static final int PERSONALNUMMER_INDEX_TABLE = 1;
 	public static final int PERSONALNUMMER_INDEX_CSV = 7;
+	public static final String NODENAME_PERSONALNUMMER = "Personalnummer";
 		
 	/**
 	 * Team
 	 */
-	public static final int TEAM_INDEX_TABLE = 2;
+	public static final int TEAM_INDEX_TABLE = 4;
 	public static final int TEAM_INDEX_CSV = 4;
+	public static final String NODENAME_TEAM = "Team";
 	
 	/**
 	 * Abrechnungsjahr
 	 */
 	public static final int BERICHTSMONAT_INDEX_CSV = 9;
-	public static final int BERICHTSMONAT_INDEX_TABLE = 3;
+	public static final int BERICHTSMONAT_INDEX_TABLE = 5;
 	public static final String BERICHTSMONAT_LABEL_TABLE = "Berichtsmonat";	
 	public static final int BERICHTSJAHR_INDEX_CSV = 10;
 	public static final String BERICHTSMONAT_DATUMSFORMAT_CSV = "MMMM yyyy";
+	public static final String NODENAME_BERICHTSMONAT = "Monat";
+	public static final String NODENAME_BERICHTSJAHR = "Jahr";
 	
 	/**
 	 * Kostenstelle / Träger
 	 */
 	public static final int KOSTENSTELLE_INDEX_CSV = 12;
-	public static final int KOSTENSTELLE_INDEX_TABLE = 4;
+	public static final int KOSTENSTELLE_INDEX_TABLE = 6;
 	public static final String KOSTENSTELLE_LABEL_TABLE = "Kostenstelle";		
 	public static final int KOSTENTRAEGER_INDEX_CSV = 13;
-	public static final int KOSTENTRAEGER_INDEX_TABLE = 5;
+	public static final int KOSTENTRAEGER_INDEX_TABLE = 7;
 	public static final String KOSTENTRAEGER_LABEL_TABLE = "Kostenträger";	
 	
 	/**
 	 * Prozentanteil
 	 */
 	public static final int PROZENTANTEIL_INDEX_CSV = 14;
-	public static final int PROZENTANTEIL_INDEX_TABLE = 6;
+	public static final int PROZENTANTEIL_INDEX_TABLE = 8;
 	public static final String PROZENTANTEIL_LABEL_TABLE = "%";		
 	}	
 }

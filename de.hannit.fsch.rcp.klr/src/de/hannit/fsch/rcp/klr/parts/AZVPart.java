@@ -3,15 +3,20 @@
  */
 package de.hannit.fsch.rcp.klr.parts;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -21,6 +26,7 @@ import org.eclipse.swt.widgets.Table;
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.common.csv.azv.AZVDatensatz;
 import de.hannit.fsch.rcp.klr.azv.AZVDatei;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.soa.osecm.IAZVClient;
@@ -29,7 +35,7 @@ import de.hannit.fsch.soa.osecm.IAZVClient;
  * @author fsch
  *
  */
-public class AZVPart
+public class AZVPart implements ITableLabelProvider
 {	
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;	
 @Inject IAZVClient webService;
@@ -48,7 +54,7 @@ private String infoText = "Verbunden mit OS/ECM Webservice an IP: ";
 	}	
 
 	@Inject	
-	public AZVPart(Composite parent, @Named(CSVConstants.AZV.CONTEXT_DATEN) AZVDatei azvDatei, @Named(CSVConstants.AZV.CONTEXT_WEBSERVICEIP) String strIP)
+	public AZVPart(Composite parent, @Named (CSVConstants.AZV.CONTEXT_DATEN_DATEI) AZVDatei azvDatei, @Named (CSVConstants.AZV.CONTEXT_DATEN_WEBSERVICE) ArrayList<AZVDatensatz> azvMeldungen,  @Named(CSVConstants.AZV.CONTEXT_WEBSERVICEIP) String strIP)
 	{
 	parent.setLayout(new GridLayout());
 
@@ -116,7 +122,91 @@ private String infoText = "Verbunden mit OS/ECM Webservice an IP: ";
 		}
 		else
 		{
+		tableViewer.setLabelProvider(this);	
 		infoLabel.setText((strIP != null) ? infoText + strIP : "OS/ECM Webservice nicht verfügbar.");
+		Object[] test = azvMeldungen.toArray();
+		tableViewer.setInput(azvMeldungen.toArray());
 		}
+	}
+
+	@Override
+	public void addListener(ILabelProviderListener listener)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isLabelProperty(Object element, String property)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void removeListener(ILabelProviderListener listener)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Image getColumnImage(Object element, int columnIndex)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getColumnText(Object element, int columnIndex)
+	{
+	AZVDatensatz datenSatz =  (AZVDatensatz) element;
+	String label = "";
+	int lineCount = 0;
+
+		switch (columnIndex) 
+		{
+		case 0:
+		label = String.valueOf(lineCount);
+		lineCount++;
+		break;
+		
+		case CSVConstants.AZV.PERSONALNUMMER_INDEX_TABLE:
+		label = String.valueOf(datenSatz.getPersonalNummer());
+		break;
+		
+		case CSVConstants.AZV.TEAM_INDEX_TABLE:
+		label = datenSatz.getTeam();
+		break;		
+		
+		case CSVConstants.AZV.BERICHTSMONAT_INDEX_TABLE:
+		//label = format.format(datenSatz.getBerichtsMonat());
+		break;	
+		
+		case CSVConstants.AZV.KOSTENSTELLE_INDEX_TABLE:
+		label = datenSatz.getKostenstelle() == null ? null : datenSatz.getKostenstelle() + " - " + datenSatz.getKostenstellenBeschreibung();
+		break;		
+		
+		case CSVConstants.AZV.KOSTENTRAEGER_INDEX_TABLE:
+		label = datenSatz.getKostentraeger() == null ? null : datenSatz.getKostentraeger() + " - " + datenSatz.getKostenTraegerBeschreibung();
+		break;	
+		
+		case CSVConstants.AZV.PROZENTANTEIL_INDEX_TABLE:
+		label = String.valueOf(datenSatz.getProzentanteil());
+		break;			
+		
+		default:
+		label = "ERROR";
+		break;
+			
+		}
+	return label;
 	}
 }

@@ -51,6 +51,7 @@ import org.osgi.service.event.Event;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.common.Datumsformate;
 import de.hannit.fsch.common.MonatsSummen;
 import de.hannit.fsch.common.csv.azv.Arbeitszeitanteil;
 import de.hannit.fsch.common.mitarbeiter.GemeinKosten;
@@ -88,9 +89,8 @@ private Button btnForward = null;
 private Button btnBack = null;
 private Combo comboMonth = null;
 private Combo comboYear = null; 
-private	SimpleDateFormat fMonat = new SimpleDateFormat("MMMM");
+
 private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM.yyyy");
-private	SimpleDateFormat fLog = new SimpleDateFormat("MMMM yyyy");
 
 private static final String POPUPMENUD_ID = "de.hannit.fsch.rcp.klr.menu.main.users";
 
@@ -163,7 +163,7 @@ private double vzaeTotal = 0;
 	{
 	String plugin = this.getClass().getName() + ".loadData()";
 	
-	log.info("Fordere Mitarbeiterliste und AZV-Daten für den Monat " + fLog.format(selectedMonth) + " vom DataService an.", plugin);
+	log.info("Fordere Mitarbeiterliste und AZV-Daten für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " vom DataService an.", plugin);
 	mitarbeiter = dataService.getAZVMonat(selectedMonth);
 	log.confirm("Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter", plugin);
 	
@@ -178,7 +178,7 @@ private double vzaeTotal = 0;
 			}
 		}
 
-	log.info("Fordere Tarifgruppen für den Monat " + fLog.format(selectedMonth) + " vom DataService an.", plugin);	
+	log.info("Fordere Tarifgruppen für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " vom DataService an.", plugin);	
 	tarifgruppen = dataService.getTarifgruppen(selectedMonth);
 	tarifgruppen.setAnzahlMitarbeiter(mitarbeiter.size());
 	tarifgruppen.setBerichtsMonat(selectedMonth);
@@ -189,10 +189,10 @@ private double vzaeTotal = 0;
 		{
 		context = application.getContext();
 		context.set(AppConstants.CONTEXT_TARIFGRUPPEN, tarifgruppen);
-		log.info("Tarifgruppen für den Monat " + fLog.format(selectedMonth) + ", wurden im Applikationskontext gespeichert.", plugin);
+		log.info("Tarifgruppen für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + ", wurden im Applikationskontext gespeichert.", plugin);
 		}
 	
-	log.info("Eventbroker versendet Tarifgruppen für den Monat " + fLog.format(selectedMonth) + ", Topic: Topics.TARIFGRUPPEN", plugin);
+	log.info("Eventbroker versendet Tarifgruppen für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + ", Topic: Topics.TARIFGRUPPEN", plugin);
 	broker.send(Topics.TARIFGRUPPEN, tarifgruppen);
 	
 	/*
@@ -206,7 +206,7 @@ private double vzaeTotal = 0;
 		t = tarifgruppen.getTarifGruppen().get(m.getTarifGruppe());	
 		vzaeVerteilt += m.setVollzeitAequivalent(t.getVollzeitAequivalent());
 		}
-	log.info("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeVerteilt) + " Vollzeitäquivalente auf " + mitarbeiter.size() + " Mitarbeiter verteilt.", plugin);	
+	log.info("Für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeVerteilt) + " Vollzeitäquivalente auf " + mitarbeiter.size() + " Mitarbeiter verteilt.", plugin);	
 		
 	/*
 	 * Im Log wird nun zu Prüfzwecken ausgegeben, wie hoch das Vollzeitäquivalent Insgesamt beträgt:	
@@ -221,11 +221,11 @@ private double vzaeTotal = 0;
 		}
 		if (NumberFormat.getCurrencyInstance().format(vzaeTotal).equals(NumberFormat.getCurrencyInstance().format(vzaeVerteilt)))
 		{
-		log.confirm("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeTotal) + " Vollzeitäquivalente entsprechend der Arbeitszeitanteile verteilt.", plugin);	
+		log.confirm("Für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeTotal) + " Vollzeitäquivalente entsprechend der Arbeitszeitanteile verteilt.", plugin);	
 		}
 		else
 		{
-		log.error("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeTotal) + " Vollzeitäquivalente entsprechend der Arbeitszeitanteile verteilt.", plugin, null);
+		log.error("Für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeTotal) + " Vollzeitäquivalente entsprechend der Arbeitszeitanteile verteilt.", plugin, null);
 		}	
 		
 	/*
@@ -281,7 +281,7 @@ private double vzaeTotal = 0;
 		pdk.setDatenOK(true);
 		gk.setChecked(true);
 		gk.setDatenOK(true);
-		log.confirm("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin);
+		log.confirm("Für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin);
 		}
 		else
 		{
@@ -291,13 +291,13 @@ private double vzaeTotal = 0;
 		pdk.setDatenOK(false);
 		gk.setChecked(true);
 		gk.setDatenOK(false);
-		log.error("Für den Monat " + fLog.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin, null);
+		log.error("Für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin, null);
 		}	
 		
 	/*
 	 * Nach Abschluss aller Prüfungen werden die Monatssummen versendet:	
 	 */
-	log.info("Eventbroker versendet Monatssummen für den Monat " + fLog.format(selectedMonth) + ", Topic: Topics.MONATSSUMMEN", plugin);
+	log.info("Eventbroker versendet Monatssummen für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + ", Topic: Topics.MONATSSUMMEN", plugin);
 	broker.send(Topics.MONATSSUMMEN, mSumme);
 	broker.send(Topics.PERSONALDURCHSCHNITTSKOSTEN, pdk);
 	broker.send(Topics.GEMEINKOSTERKOSTEN, gk);
@@ -360,7 +360,7 @@ private double vzaeTotal = 0;
 		comboMonth.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 			for (Date date : hannit.getMonatsBerichte().keySet())
 			{
-			comboMonth.add(fMonat.format(date));
+			comboMonth.add(Datumsformate.MONATLANG.format(date));
 			comboMonth.setText(comboMonth.getItem(comboMonth.getItemCount()-1));
 			}
 

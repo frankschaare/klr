@@ -107,6 +107,9 @@
   <handlers xmi:id="_OqMbsKRKEeO7_qvTCDlnIg" elementId="csv.write.01Entlastung0400" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.Write01Entlastung0400Handler" command="_-sGnUKRJEeO7_qvTCDlnIg"/>
   <handlers xmi:id="_U9OgAKRKEeO7_qvTCDlnIg" elementId="csv.append.01Entlastung0400" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.Append01Entlastung0400Handler" command="_FGkwYKRKEeO7_qvTCDlnIg"/>
   <handlers xmi:id="_82HYUKYFEeO0w8dYFLiduw" elementId="de.hannit.fsch.rcp.klr.handler.services.azv.open" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.azv.OpenAZVServiceHandler" command="_ekvEgKYFEeO0w8dYFLiduw"/>
+  <handlers xmi:id="_u42lcKk1EeOAoOShNfe7Ew" elementId="de.hannit.fsch.rcp.klr.handler.services.azv.request" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.azv.ExuecuteAZVServiceHandler" command="_mJdMYKk1EeOAoOShNfe7Ew"/>
+  <handlers xmi:id="_lCrNcKnYEeO3fvfD6xDT7A" elementId="de.hannit.fsch.rcp.klr.handler.azv.webservice.check.personalnummer" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.AZVWebserviceCheckMitarbeiterHandler" command="_eN3RwKnYEeO3fvfD6xDT7A"/>
+  <handlers xmi:id="_lQe88Kn5EeO3fvfD6xDT7A" elementId="de.hannit.fsch.rcp.klr.handler.database.azv.webservice.insert" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.AZVWebserviceInsertHandler" command="_d_sP4Kn5EeO3fvfD6xDT7A"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -137,6 +140,9 @@
   </descriptors>
   <descriptors xmi:id="_e2I_wKOjEeOISL_387MeQQ" elementId="de.hannit.fsch.rcp.klr.partdescriptor.csv.csv01" label="01 - Entlastung 0400 auf andere KST " iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Erstellt die Datei CSV 01 - Entlastung 0400 auf andere KST " allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.CSV01Part">
     <toolbar xmi:id="_e2I_wqOjEeOISL_387MeQQ" elementId="de.hannit.fsch.rcp.klr.partdescriptor.01entlastung0400.toolbar"/>
+  </descriptors>
+  <descriptors xmi:id="_0DEEsKkuEeOAoOShNfe7Ew" elementId="de.hannit.fsch.rcp.klr.partdescriptor.azv.webservice" label="AZV Webservice" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.AZVWebServicePart">
+    <toolbar xmi:id="_0DEEsakuEeOAoOShNfe7Ew" elementId="de.hannit.fsch.rcp.klr.partdescriptor.azv.webservice.toolbar"/>
   </descriptors>
   <menuContributions xmi:id="_a7GTcOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menucontribution.user" parentId="de.hannit.fsch.rcp.klr.menu.main.users">
     <children xsi:type="menu:HandledMenuItem" xmi:id="_YWd2sOpQEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.user.add" label="hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_DQoFYOpQEeK7nN3EOf8xtA"/>
@@ -212,6 +218,11 @@
     <children xsi:type="menu:HandledToolItem" xmi:id="_psW28KRJEeO7_qvTCDlnIg" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.csv.write.01_Entlastung 0400" label="Datei 01_Entlastung 0400 auf andere KST schreiben" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Schreibt die Datei 01_Entlastung 0400 auf andere KST" command="_-sGnUKRJEeO7_qvTCDlnIg"/>
     <children xsi:type="menu:HandledToolItem" xmi:id="_0tqLwKRKEeO7_qvTCDlnIg" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.csv.apppend.01_Entlastung 0400" label="Datei 01_Entlastung 0400 auf andere KST ergänzen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/Logging16x16.png" tooltip="Ergänzt die Datei 01_Entlastung 0400 auf andere KST, da bereits Daten vorhanden sind" command="_FGkwYKRKEeO7_qvTCDlnIg"/>
   </toolBarContributions>
+  <toolBarContributions xmi:id="_EW-wYKk1EeOAoOShNfe7Ew" elementId="de.hannit.fsch.rcp.klr.azvpart.toolbarcontribution.azv.webservice" parentId="de.hannit.fsch.rcp.klr.partdescriptor.azv.webservice.toolbar">
+    <children xsi:type="menu:HandledToolItem" xmi:id="_KrEkoKk1EeOAoOShNfe7Ew" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.azv.webservice.request" label="AZV Webservice anfragen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseWebservice16x.png" tooltip="Ruft die Daten für den ausgewählten Berichtszeitraum vom OS/ECM Webservice ab" command="_mJdMYKk1EeOAoOShNfe7Ew"/>
+    <children xsi:type="menu:HandledToolItem" xmi:id="_-vSyEKnXEeO3fvfD6xDT7A" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.database.azv.check.pnr" label="Personalnummern prüfen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseSearch16px.png" tooltip="Prüft, ob für die einzufügenden Personalnummern alle Mitarbeiter gespeichert sind." command="_eN3RwKnYEeO3fvfD6xDT7A"/>
+    <children xsi:type="menu:HandledToolItem" xmi:id="_ABtcMKnYEeO3fvfD6xDT7A" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.database.azv.insert" label="speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert die aktuellen AZV-Daten in der Datenbank" command="_d_sP4Kn5EeO3fvfD6xDT7A"/>
+  </toolBarContributions>
   <commands xmi:id="_Qd0LjOMVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>
   <commands xmi:id="_Qd0LkOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.open.azv" commandName="openAZVCommand"/>
   <commands xmi:id="_Qd0Lk-MVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
@@ -251,6 +262,9 @@
   <commands xmi:id="_-sGnUKRJEeO7_qvTCDlnIg" elementId="de.hannit.fsch.rcp.klr.command.csv.write.01Entlastung0400" commandName="writeCSV01" description="Schreibt die Datei 01_Entlastung 0400 auf andere KST"/>
   <commands xmi:id="_FGkwYKRKEeO7_qvTCDlnIg" elementId="de.hannit.fsch.rcp.klr.command.csv.append.01Entlastung0400" commandName="appendCSV01" description="Ergänzt eine vorhandene Datei 01_Entlastung 0400 auf andere KST"/>
   <commands xmi:id="_ekvEgKYFEeO0w8dYFLiduw" elementId="de.hannit.fsch.rcp.klr.services.azv.open" commandName="openAZVService" description="Stellt eine Verbindung zum DMS-Webservice her und importiert AZV-Meldungen" category="_NBeCEKYFEeO0w8dYFLiduw"/>
+  <commands xmi:id="_mJdMYKk1EeOAoOShNfe7Ew" elementId="de.hannit.fsch.rcp.klr.services.azv.request" commandName="requestAZVService" description="Stellt eine Verbindung zum DMS-Webservice her und importiert AZV-Meldungen" category="_NBeCEKYFEeO0w8dYFLiduw"/>
+  <commands xmi:id="_eN3RwKnYEeO3fvfD6xDT7A" elementId="de.hannit.fsch.rcp.klr.command.azv.webservice.check.personalnummer" commandName="azvWebserviceCheckPersonalNR"/>
+  <commands xmi:id="_d_sP4Kn5EeO3fvfD6xDT7A" elementId="de.hannit.fsch.rcp.klr.command.database.azv.webservice.insert" commandName="dbAZVWebserviceInsert" description="Speichert die aktuellen Datensätze in der Datenbank"/>
   <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

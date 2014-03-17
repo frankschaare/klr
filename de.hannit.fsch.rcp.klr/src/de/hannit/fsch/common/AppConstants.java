@@ -14,6 +14,7 @@ public class AppConstants
 public static final String LOGGER = "LOGGER";
 public static final String LOG_STACK = "LOGSTACK";
 public static final String CONTEXT_TARIFGRUPPEN = "cTARIFGRUPPEN";
+public static final String CONTEXT_MONATSSUMMEN = "cMonatssummen";
 public static final String CONTEXT_PERSONALDURCHSCHNITTSKOSTEN = "cPDK";
 public static final String CONTEXT_CSV01 = "cCSV01";
 public static final String CONTEXT_GEMEINKOSTEN = "cGK";
@@ -41,6 +42,7 @@ public static final String PART_GEMEINKOSTEN = "de.hannit.fsch.rcp.klr.partdescr
 
 public static interface PartIDs
 {
+public static final String NAVPART = "de.hannit.fsch.rcp.klr.parts.NavPart";	
 public static final String CSV01 = "de.hannit.fsch.rcp.klr.partdescriptor.csv.csv01";
 public static final String AZVPART = "de.hannit.fsch.rcp.klr.partdescriptor.azv";
 public static final String AZVWEBSERVICEPART = "de.hannit.fsch.rcp.klr.partdescriptor.azv.webservice";

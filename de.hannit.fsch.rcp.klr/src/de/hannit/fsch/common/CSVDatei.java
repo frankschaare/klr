@@ -50,6 +50,13 @@ protected Path dateiPfad = null;
 protected boolean hasHeader = true;
 protected boolean errors = false;
 protected boolean checked = false;
+/**
+ * Gibt an, ob die Daten erfolgreich gespeichert wurden.
+ * Wenn der InsertHandler die Daten gespeichert hat, setzt er saved auf true
+ * und versendet die Datei erneut über den Broker.
+ * Der NavPart kann dann den Tree neu laden
+ */
+protected boolean saved = false;
 protected String delimiter = ";";
 protected int lineCount = -1;
 protected ContextLogger log;
@@ -255,6 +262,9 @@ protected ContextLogger log;
 	
 	public boolean hasErrors(){return errors;}
 	public void setErrors(boolean errors){this.errors = errors;}
+
+	public boolean isSaved(){return saved;}
+	public void setSaved(boolean saved){this.saved = saved;}
 
 	public void resetLineCount(){this.lineCount = 1;}
 	

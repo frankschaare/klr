@@ -9,7 +9,10 @@ import javax.inject.Named;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.UIEventTopic;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
@@ -20,6 +23,9 @@ import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
 
 public class LogaInsertHandler 
 {
+@Inject IEventBroker broker;	
+@Inject EPartService partService;
+@Inject ESelectionService selectionService;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 @Inject DataService dataService;
 private LoGaDatei logaDatei = null;	
@@ -57,7 +63,9 @@ private LoGaDatei logaDatei = null;
 		
 		if (errorCount == 0)
 		{
-		log.confirm(insertCount + " Loga-Datensätze erfolgreich in die Datenbank eingefügt.", plugin);	
+		logaDatei.setSaved(true);
+		broker.send(Topics.LOGA_DATEN, logaDatei);
+		log.confirm(insertCount + " Loga-Datensätze erfolgreich in die Datenbank eingefügt. Versende LoGa-Datei mit Flag saved=true.", plugin);	
 		}
 		else
 		{
@@ -71,7 +79,7 @@ private LoGaDatei logaDatei = null;
 	{
 	boolean ready = false;
 	
-		if (logaDatei.isChecked() && ! logaDatei.hasErrors())
+		if (logaDatei.isChecked() && ! logaDatei.hasErrors() && !logaDatei.isSaved())
 		{
 		ready = true;
 		}

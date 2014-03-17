@@ -121,6 +121,7 @@ public class CSVConstants
 	 * Team
 	 */
 	public static final int TEAM_INDEX_TABLE = 4;
+	public static final int TEAM_INDEX_TABLE_AZVPART = 2;
 	public static final int TEAM_INDEX_CSV = 4;
 	public static final String NODENAME_TEAM = "Team";
 	
@@ -129,6 +130,7 @@ public class CSVConstants
 	 */
 	public static final int BERICHTSMONAT_INDEX_CSV = 9;
 	public static final int BERICHTSMONAT_INDEX_TABLE = 5;
+	public static final int BERICHTSMONAT_INDEX_TABLE_AZVPART = 3;
 	public static final String BERICHTSMONAT_LABEL_TABLE = "Berichtsmonat";	
 	public static final int BERICHTSJAHR_INDEX_CSV = 10;
 	public static final String BERICHTSMONAT_DATUMSFORMAT_CSV = "MMMM yyyy";
@@ -140,9 +142,11 @@ public class CSVConstants
 	 */
 	public static final int KOSTENSTELLE_INDEX_CSV = 12;
 	public static final int KOSTENSTELLE_INDEX_TABLE = 6;
+	public static final int KOSTENSTELLE_INDEX_TABLE_AZVPART = 4;
 	public static final String KOSTENSTELLE_LABEL_TABLE = "Kostenstelle";		
 	public static final int KOSTENTRAEGER_INDEX_CSV = 13;
 	public static final int KOSTENTRAEGER_INDEX_TABLE = 7;
+	public static final int KOSTENTRAEGER_INDEX_TABLE_AZVPART = 5;
 	public static final String KOSTENTRAEGER_LABEL_TABLE = "Kostenträger";	
 	
 	/**
@@ -150,6 +154,7 @@ public class CSVConstants
 	 */
 	public static final int PROZENTANTEIL_INDEX_CSV = 14;
 	public static final int PROZENTANTEIL_INDEX_TABLE = 8;
+	public static final int PROZENTANTEIL_INDEX_TABLE_AZVPART = 6;
 	public static final String PROZENTANTEIL_LABEL_TABLE = "%";		
 	}	
 }

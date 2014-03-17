@@ -13,6 +13,7 @@ package de.hannit.fsch.rcp.klr.parts;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeMap;
 
@@ -63,6 +64,7 @@ import de.hannit.fsch.common.organisation.hannit.Organisation;
 import de.hannit.fsch.common.organisation.reporting.Monatsbericht;
 import de.hannit.fsch.klr.dataservice.DataService;
 import de.hannit.fsch.rcp.klr.constants.Topics;
+import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
 import de.hannit.fsch.rcp.klr.provider.NavTreeContentProvider;
 
 @SuppressWarnings("restriction")
@@ -103,6 +105,19 @@ private double vzaeVerteilt = 0;
  */
 private double vzaeTotal = 0;	
 
+
+	@Inject @Optional
+	public void handleEvent(@UIEventTopic(Topics.LOGA_DATEN) LoGaDatei logaDatei)
+	{
+		if (logaDatei != null && logaDatei.isSaved())
+		{
+		MPart navPart = partService.findPart(AppConstants.PartIDs.NAVPART);
+		partService.activate(navPart);
+		// DatumsCombos müssen neu geladen werden:
+		updateCombos();
+		refresh();	
+		}
+	}
 	/*
 	 * Beispiel für Registrierung an Eclipse Framework Events
 	 * Bei dem Event handelt es sich um einen org.osgi.service.event.Event !
@@ -124,11 +139,9 @@ private double vzaeTotal = 0;
 		{
 		context.set("myactivePartId", activePart.getElementId());
 		}
-		
-	System.out.println(activePart.getElementId());
 	} 	
 	
-	private void refresh()
+	public void refresh()
 	{
 	Date selected = parseCombos(comboMonth.getItem(comboMonth.getSelectionIndex()), comboYear.getItem(comboYear.getSelectionIndex()));	
 		
@@ -299,12 +312,47 @@ private double vzaeTotal = 0;
 	 */
 	log.info("Eventbroker versendet Monatssummen für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + ", Topic: Topics.MONATSSUMMEN", plugin);
 	broker.send(Topics.MONATSSUMMEN, mSumme);
+		// Speichert die Monatssummen zur initialen Verwendung im CSVDetailsPart im Applikationscontext ab:
+		if (application != null)
+		{
+		context = application.getContext();
+		context.set(AppConstants.CONTEXT_MONATSSUMMEN, mSumme);
+		log.info("Tarifgruppen für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + ", wurden im Applikationskontext gespeichert.", plugin);
+		}
 	broker.send(Topics.PERSONALDURCHSCHNITTSKOSTEN, pdk);
 	broker.send(Topics.GEMEINKOSTERKOSTEN, gk);
 	
 	treeViewer.setInput(mitarbeiter);
 	}		
 
+	private void updateCombos()
+	{
+	hannit = dataService.getOrganisation();
+	ArrayList<String> availableMonth = new ArrayList<String>();
+	ArrayList<String> availableYears = new ArrayList<String>();
+		for (Date date : hannit.getMonatsBerichte().keySet())
+		{
+			if (! availableMonth.contains(Datumsformate.MONATLANG.format(date)))
+			{
+			availableMonth.add(Datumsformate.MONATLANG.format(date));
+			}
+			if (! availableYears.contains(Datumsformate.JAHR.format(date)))
+			{
+			availableYears.add(Datumsformate.JAHR.format(date));
+			}			
+		}
+		for (String strMonth : availableMonth)
+		{
+		comboMonth.add(strMonth);	
+		}
+		for (String strYear : availableYears)
+		{
+		comboYear.add(strYear);	
+		}			
+	comboMonth.setText(availableMonth.get(availableMonth.size()-1));
+	comboYear.setText(availableYears.get(availableYears.size()-1));
+	}
+	
 	private Date parseCombos(String strMonth, String strYear)
 	{
 	Date selectedMonth = null;	
@@ -325,8 +373,6 @@ private double vzaeTotal = 0;
 	@PostConstruct
 	public void createComposite(Composite parent) 
 	{
-	hannit = dataService.getOrganisation();
-		
 		parent.setLayout(new GridLayout(1, false));
 		
 		Composite top = new Composite(parent, SWT.NONE);
@@ -358,12 +404,6 @@ private double vzaeTotal = 0;
 		
 		comboMonth = new Combo(top, SWT.READ_ONLY);
 		comboMonth.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-			for (Date date : hannit.getMonatsBerichte().keySet())
-			{
-			comboMonth.add(Datumsformate.MONATLANG.format(date));
-			comboMonth.setText(comboMonth.getItem(comboMonth.getItemCount()-1));
-			}
-
 		comboMonth.addSelectionListener(new SelectionAdapter()
 		{
 			@Override
@@ -399,8 +439,8 @@ private double vzaeTotal = 0;
 		comboYear = new Combo(top, SWT.READ_ONLY);
 		comboYear.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		comboYear.setToolTipText("Liste der Verf\u00FCgbaren Berichtsjahre");
-		comboYear.add("2013");
-		comboYear.setText("2013");
+		updateCombos();
+		
 		new Label(top, SWT.NONE);
 		new Label(top, SWT.NONE);
 		new Label(top, SWT.NONE);
@@ -470,6 +510,5 @@ private double vzaeTotal = 0;
 	@Focus
 	public void setFocus() 
 	{
-		// tableViewer.getTable().setFocus();
 	}
 }

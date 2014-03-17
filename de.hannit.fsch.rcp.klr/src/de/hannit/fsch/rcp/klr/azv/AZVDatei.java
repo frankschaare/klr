@@ -307,23 +307,23 @@ private java.sql.Date berichtsMonatSQL;
 		label = String.valueOf(datenSatz.getPersonalNummer());
 		break;
 		
-		case CSVConstants.AZV.TEAM_INDEX_TABLE:
+		case CSVConstants.AZV.TEAM_INDEX_TABLE_AZVPART:
 		label = datenSatz.getTeam();
 		break;		
 		
-		case CSVConstants.AZV.BERICHTSMONAT_INDEX_TABLE:
+		case CSVConstants.AZV.BERICHTSMONAT_INDEX_TABLE_AZVPART:
 		label = format.format(datenSatz.getBerichtsMonat());
 		break;	
 		
-		case CSVConstants.AZV.KOSTENSTELLE_INDEX_TABLE:
+		case CSVConstants.AZV.KOSTENSTELLE_INDEX_TABLE_AZVPART:
 		label = datenSatz.getKostenstelle() == null ? null : datenSatz.getKostenstelle() + " - " + datenSatz.getKostenstellenBeschreibung();
 		break;		
 		
-		case CSVConstants.AZV.KOSTENTRAEGER_INDEX_TABLE:
+		case CSVConstants.AZV.KOSTENTRAEGER_INDEX_TABLE_AZVPART:
 		label = datenSatz.getKostentraeger() == null ? null : datenSatz.getKostentraeger() + " - " + datenSatz.getKostenTraegerBeschreibung();
 		break;	
 		
-		case CSVConstants.AZV.PROZENTANTEIL_INDEX_TABLE:
+		case CSVConstants.AZV.PROZENTANTEIL_INDEX_TABLE_AZVPART:
 		label = String.valueOf(datenSatz.getProzentanteil());
 		break;			
 		

@@ -37,8 +37,8 @@ import de.hannit.fsch.soa.osecm.IAZVClient;
  */
 public class AZVPart implements ITableLabelProvider
 {	
-@Inject @Named(AppConstants.LOGGER) private ContextLogger log;	
-@Inject IAZVClient webService;
+@Inject @Named(AppConstants.LOGGER) private ContextLogger log;
+@Inject @Named(CSVConstants.AZV.CONTEXT_DATEN_DATEI) AZVDatei azvDatei;	
 private TableViewerColumn column = null;
 private TableViewer	tableViewer = null;
 private Label infoLabel = null;
@@ -49,12 +49,14 @@ private String infoText = "Verbunden mit OS/ECM Webservice an IP: ";
 	{
 	log.info("Empfange AZV-Datei mit " + azvDatei.getDaten().size() + " Datensätzen.", this.getClass().getName() + ".handleEvent()");	
 	azvDatei.resetLineCount();	
+	tableViewer.setContentProvider(new ArrayContentProvider());
+	tableViewer.setLabelProvider(azvDatei);
 	tableViewer.setInput(azvDatei.getDaten().values().toArray());
 	infoLabel.setText(azvDatei.getPath() + " [" + (azvDatei.getDaten().size()) + " Datensätze von " + azvDatei.getDatenDistinct().size() + " Mitarbeitern]");
 	}	
 
 	@Inject	
-	public AZVPart(Composite parent, @Named (CSVConstants.AZV.CONTEXT_DATEN_DATEI) AZVDatei azvDatei, @Named (CSVConstants.AZV.CONTEXT_DATEN_WEBSERVICE) ArrayList<AZVDatensatz> azvMeldungen,  @Named(CSVConstants.AZV.CONTEXT_WEBSERVICEIP) String strIP)
+	public AZVPart(Composite parent)
 	{
 	parent.setLayout(new GridLayout());
 
@@ -81,31 +83,31 @@ private String infoText = "Verbunden mit OS/ECM Webservice an IP: ";
 	column.getColumn().setResizable(true);
 	column.getColumn().setMoveable(true);
 	
-	column = new TableViewerColumn(tableViewer, SWT.LEFT, CSVConstants.AZV.TEAM_INDEX_TABLE);
+	column = new TableViewerColumn(tableViewer, SWT.LEFT, CSVConstants.AZV.TEAM_INDEX_TABLE_AZVPART);
 	column.getColumn().setText("Team");
 	column.getColumn().setWidth(200);
 	column.getColumn().setResizable(true);
 	column.getColumn().setMoveable(true);
 	
-	column = new TableViewerColumn(tableViewer, SWT.LEFT, CSVConstants.AZV.BERICHTSMONAT_INDEX_TABLE);
+	column = new TableViewerColumn(tableViewer, SWT.LEFT, CSVConstants.AZV.BERICHTSMONAT_INDEX_TABLE_AZVPART);
 	column.getColumn().setText(CSVConstants.AZV.BERICHTSMONAT_LABEL_TABLE);
 	column.getColumn().setWidth(200);
 	column.getColumn().setResizable(true);
 	column.getColumn().setMoveable(true);
 	
-	column = new TableViewerColumn(tableViewer, SWT.LEFT, CSVConstants.AZV.KOSTENSTELLE_INDEX_TABLE);
+	column = new TableViewerColumn(tableViewer, SWT.LEFT, CSVConstants.AZV.KOSTENSTELLE_INDEX_TABLE_AZVPART);
 	column.getColumn().setText(CSVConstants.AZV.KOSTENSTELLE_LABEL_TABLE);
 	column.getColumn().setWidth(200);
 	column.getColumn().setResizable(true);
 	column.getColumn().setMoveable(true);	
 	
-	column = new TableViewerColumn(tableViewer, SWT.LEFT, CSVConstants.AZV.KOSTENTRAEGER_INDEX_TABLE);
+	column = new TableViewerColumn(tableViewer, SWT.LEFT, CSVConstants.AZV.KOSTENTRAEGER_INDEX_TABLE_AZVPART);
 	column.getColumn().setText(CSVConstants.AZV.KOSTENTRAEGER_LABEL_TABLE);
 	column.getColumn().setWidth(600);
 	column.getColumn().setResizable(true);
 	column.getColumn().setMoveable(true);	
 	
-	column = new TableViewerColumn(tableViewer, SWT.CENTER, CSVConstants.AZV.PROZENTANTEIL_INDEX_TABLE);
+	column = new TableViewerColumn(tableViewer, SWT.CENTER, CSVConstants.AZV.PROZENTANTEIL_INDEX_TABLE_AZVPART);
 	column.getColumn().setText(CSVConstants.AZV.PROZENTANTEIL_LABEL_TABLE);
 	column.getColumn().setWidth(100);
 	column.getColumn().setResizable(true);
@@ -119,13 +121,6 @@ private String infoText = "Verbunden mit OS/ECM Webservice an IP: ";
 		infoLabel.setText(azvDatei.getPath() + " [" + (azvDatei.getFields().size()) + " Datensätze]");	
 		azvDatei.resetLineCount();	
 		tableViewer.setInput(azvDatei.getDaten().values().toArray());	
-		}
-		else
-		{
-		tableViewer.setLabelProvider(this);	
-		infoLabel.setText((strIP != null) ? infoText + strIP : "OS/ECM Webservice nicht verfügbar.");
-		Object[] test = azvMeldungen.toArray();
-		tableViewer.setInput(azvMeldungen.toArray());
 		}
 	}
 

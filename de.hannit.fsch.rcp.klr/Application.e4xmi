@@ -129,7 +129,7 @@
     <toolbar xmi:id="_-_IKwO4PEeKCvZc-XLvArg" elementId="de.hannit.fsch.rcp.klr.partdescriptor.azv.toolbar"/>
   </descriptors>
   <descriptors xmi:id="_eS4w4Pg9EeK97I_3NoMIKQ" elementId="de.hannit.fsch.rcp.klr.partdescriptor.user.add" label="Mitarbeiter hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Speichert einen neuen Mitarbeiter in der Datenbanktabelle 'Mitarbeiter'" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.AddMitarbeiterPart">
-    <toolbar xmi:id="_86Gx0Pg9EeK97I_3NoMIKQ" elementId="de.hannit.fsch.rcp.klr.toolbar.0"/>
+    <toolbar xmi:id="_86Gx0Pg9EeK97I_3NoMIKQ" elementId="de.hannit.fsch.rcp.klr.partdescriptor.addMitarbeiter.toolbar"/>
   </descriptors>
   <descriptors xmi:id="_mvd3wJMhEeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.partdescriptor.personal.durchschnittskosten" label="Personaldurchschnittskosten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Ausgabe der Personaldurchschnittskosten für den ausgewählten Monat" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.PersonaldurchschnittskostenPart">
     <toolbar xmi:id="_xFhFkJMhEeOiZMaQerBzZw" elementId="de.hannit.fsch.rcp.klr.toolbar.1"/>
@@ -222,6 +222,11 @@
     <children xsi:type="menu:HandledToolItem" xmi:id="_KrEkoKk1EeOAoOShNfe7Ew" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.azv.webservice.request" label="AZV Webservice anfragen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseWebservice16x.png" tooltip="Ruft die Daten für den ausgewählten Berichtszeitraum vom OS/ECM Webservice ab" command="_mJdMYKk1EeOAoOShNfe7Ew"/>
     <children xsi:type="menu:HandledToolItem" xmi:id="_-vSyEKnXEeO3fvfD6xDT7A" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.database.azv.check.pnr" label="Personalnummern prüfen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseSearch16px.png" tooltip="Prüft, ob für die einzufügenden Personalnummern alle Mitarbeiter gespeichert sind." command="_eN3RwKnYEeO3fvfD6xDT7A"/>
     <children xsi:type="menu:HandledToolItem" xmi:id="_ABtcMKnYEeO3fvfD6xDT7A" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.database.azv.insert" label="speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/dataBaseInsert16px.png" tooltip="Speichert die aktuellen AZV-Daten in der Datenbank" command="_d_sP4Kn5EeO3fvfD6xDT7A"/>
+  </toolBarContributions>
+  <toolBarContributions xmi:id="_m-tFEKt0EeOuKYmIWrkZkQ" elementId="de.hannit.fsch.rcp.klr.AddMitarbeiterPart.toolbarcontribution" parentId="de.hannit.fsch.rcp.klr.partdescriptor.addMitarbeiter.toolbar">
+    <children xsi:type="menu:HandledToolItem" xmi:id="_m-tFEat0EeOuKYmIWrkZkQ" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.add" label="speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Fügt einen neuen Mitarbeiter hinzu" command="_d3P2UPkEEeK6aqW3DPHcyA"/>
+    <children xsi:type="menu:HandledToolItem" xmi:id="_m-tFEqt0EeOuKYmIWrkZkQ" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.edit" label="ändern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserEdit16px.png" tooltip="Änderungen am aktuellen Mitarbeiter vornehmen" command="_5HK0AOpNEeK7nN3EOf8xtA"/>
+    <children xsi:type="menu:HandledToolItem" xmi:id="_m-tFE6t0EeOuKYmIWrkZkQ" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.remove" label="entfernen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserRemove16px.png" tooltip="Den aktuellen Mitarbeiter löschen" command="_wh0SUOpOEeK7nN3EOf8xtA"/>
   </toolBarContributions>
   <commands xmi:id="_Qd0LjOMVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>
   <commands xmi:id="_Qd0LkOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.open.azv" commandName="openAZVCommand"/>

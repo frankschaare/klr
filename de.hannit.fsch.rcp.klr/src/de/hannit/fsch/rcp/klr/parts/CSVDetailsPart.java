@@ -40,12 +40,12 @@ public class CSVDetailsPart
 {
 @Inject IEventBroker broker;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
-@Inject @Named(AppConstants.CONTEXT_TARIFGRUPPEN) private Tarifgruppen tarifGruppen;
+@Inject @Named(AppConstants.CONTEXT_TARIFGRUPPEN) Tarifgruppen tarifGruppen;
+@Inject @Named(AppConstants.CONTEXT_MONATSSUMMEN) MonatsSummen mSummen;
 @Inject private EMenuService menuService;
 @ Inject ESelectionService selectionService;
 private static final String POPUPMENUD_ID = "de.hannit.fsch.rcp.klr.menu.main.database";
 
-private MonatsSummen mSummen;
 private Group grpBerichtsmonat = null;
 private Label lblSummeBrutto = null;
 private Label lblSummeStellen = null;
@@ -82,10 +82,10 @@ private Table table_3;
 	}
 
 	@Inject @Optional
-	public void handleEvent(@UIEventTopic(Topics.MONATSSUMMEN) MonatsSummen ms)
+	public void handleEvent(@UIEventTopic(Topics.MONATSSUMMEN) MonatsSummen ms, Composite parent)
 	{
 	this.mSummen = ms;
-	
+	grpAzvDaten.setForeground(mSummen.isSummeOK() ? parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN) : parent.getDisplay().getSystemColor(SWT.COLOR_DARK_RED));
 	grpAzvDaten.setText("Summe KST / KTR = " + NumberFormat.getCurrencyInstance().format(mSummen.getKstktrMonatssumme()));
 	tvGesamt.setLabelProvider(mSummen);	
 	tvGesamt.setInput(mSummen.getGesamtKosten().values().toArray());
@@ -118,7 +118,16 @@ private Table table_3;
 		grpAzvDaten = new Group(parent, SWT.NONE);
 		grpAzvDaten.setLayout(new GridLayout(3, true));
 		grpAzvDaten.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpAzvDaten.setText("AZV Daten");
+		
+			if (mSummen != null)
+			{
+			grpAzvDaten.setForeground(mSummen.isSummeOK() ? parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN) : parent.getDisplay().getSystemColor(SWT.COLOR_DARK_RED));
+			grpAzvDaten.setText("Summe KST / KTR = " + NumberFormat.getCurrencyInstance().format(mSummen.getKstktrMonatssumme()));
+			}
+			else
+			{
+			grpAzvDaten.setText("AZV Daten");
+			}
 		
 		TabFolder tabFolder = new TabFolder(grpAzvDaten, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 2));

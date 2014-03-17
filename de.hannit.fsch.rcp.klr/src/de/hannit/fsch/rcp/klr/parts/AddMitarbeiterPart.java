@@ -1,69 +1,51 @@
  
 package de.hannit.fsch.rcp.klr.parts;
 
-import java.net.URL;
-import java.util.ArrayList;
-
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.eclipse.core.commands.Command;
-import org.eclipse.core.commands.ParameterizedCommand;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.e4.core.commands.ECommandService;
-import org.eclipse.e4.core.commands.EHandlerService;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
-import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
 import de.hannit.fsch.klr.dataservice.DataService;
-import de.hannit.fsch.rcp.klr.handler.user.InsertHandler;
-
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
+import de.hannit.fsch.rcp.klr.constants.Topics;
 
 public class AddMitarbeiterPart implements ITableLabelProvider
 {
+private DataBindingContext m_bindingContext;
 @Inject DataService dataService;
-@Inject ECommandService commandService;
-@Inject EHandlerService handlerService;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
+@Inject IEventBroker broker;
 
-private ArrayList<Mitarbeiter> mitarbeiter = null;
 private Mitarbeiter m = null;
-private Mitarbeiter mInsert = new Mitarbeiter();
-private Bundle bundle = FrameworkUtil.getBundle(this.getClass());
-private URL url = FileLocator.find(bundle, new Path("icons/UserAdd128px.png"), null);
-private ImageDescriptor image = ImageDescriptor.createFromURL(url);
-
+private Mitarbeiter toInsert = new Mitarbeiter();
 private TableViewerColumn column = null;
 private TableViewer	tableViewer = null;
 private Table table;
@@ -71,13 +53,11 @@ private Text textPNr;
 private Text textUsername;
 private Text textNachname;
 private Text textVorname;
-private Button btnInsert = null;
 
 private String label = null;
 
 private String plugin  = this.getClass().getName();
 
-	
 	@PostConstruct
 	public void postConstruct(Composite parent) {
 		parent.setLayout(new GridLayout(1, false));
@@ -120,13 +100,11 @@ private String plugin  = this.getClass().getName();
 					log.error("ACHTUNG, die eingegebene Personalnummer existiert bereits ! " + textPNr.getText() + " kann nicht gespeichert werden !", plugin, null);
 					textPNr.setBackground(e.display.getSystemColor(SWT.COLOR_RED));
 					textPNr.setFocus();	
-					btnInsert.setEnabled(false);
 					}
 					else
 					{
 					log.confirm("Die eingegebene Personalnummer wurde erfolgreich geprüft. ", plugin);
 					textPNr.setBackground(e.display.getSystemColor(SWT.COLOR_WHITE));
-					btnInsert.setEnabled(true);
 					}
 				}
 				catch (NumberFormatException ex)
@@ -134,7 +112,6 @@ private String plugin  = this.getClass().getName();
 				log.error("Fehlerhafte Eingabe der Personalnummer im Feld 'Personalnummer'. " + textPNr.getText() + " ist keine gültige Personalnummer !", this.getClass().getName(), ex);
 				textPNr.setBackground(e.display.getSystemColor(SWT.COLOR_RED));
 				textPNr.setFocus();
-				btnInsert.setEnabled(false);
 				}	
 			}
 		});
@@ -171,6 +148,19 @@ private String plugin  = this.getClass().getName();
 		
 		textVorname = new Text(grpMitarbeiterDaten, SWT.BORDER);
 		textVorname.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		textVorname.addFocusListener(new FocusAdapter()
+		{
+
+			@Override
+			public void focusLost(FocusEvent e)
+			{
+				if (toInsert.getPersonalNR() != 0 && toInsert.getNachname() != null)
+				{
+				broker.send(Topics.MITARBEITER_INSERT, toInsert);	
+				}
+			}
+			
+		});
 		new Label(grpMitarbeiterDaten, SWT.NONE);
 		new Label(grpMitarbeiterDaten, SWT.NONE);
 		new Label(grpMitarbeiterDaten, SWT.NONE);
@@ -179,20 +169,7 @@ private String plugin  = this.getClass().getName();
 		new Label(grpMitarbeiterDaten, SWT.NONE);
 		new Label(grpMitarbeiterDaten, SWT.NONE);
 		
-		btnInsert = new Button(grpMitarbeiterDaten, SWT.NONE);
-		btnInsert.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) 
-			{
-			Command insert = commandService.getCommand("de.hannit.fsch.rcp.klr.command.user.insert");
-			handlerService.activateHandler("de.hannit.fsch.rcp.klr.command.user.insert", new InsertHandler());
-			ParameterizedCommand cmd = commandService.createCommand("de.hannit.fsch.rcp.klr.command.user.insert", null);
-			handlerService.executeHandler(cmd);
-			}
-		});
-		btnInsert.setToolTipText("Mitarbeiter in der Datenbank speichern");
-		btnInsert.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-		btnInsert.setImage(ResourceManager.getPluginImage("de.hannit.fsch.rcp.klr", "icons/UserAdd128px.png"));
+		new Label(grpMitarbeiterDaten, SWT.NONE);
 		new Label(grpMitarbeiterDaten, SWT.NONE);
 		
 		Group grpAktuelleDaten = new Group(composite, SWT.NONE);
@@ -230,9 +207,22 @@ private String plugin  = this.getClass().getName();
 		column.getColumn().setResizable(true);
 		column.getColumn().setMoveable(true);
 		
+		tableViewer.addSelectionChangedListener(new ISelectionChangedListener()
+		{
+			@Override
+			public void selectionChanged(SelectionChangedEvent event)
+			{
+			IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+				if (selection.getFirstElement() instanceof Mitarbeiter)
+				{
+				}
+			}
+		});
+		
 		tableViewer.setContentProvider(new ArrayContentProvider());
 		tableViewer.setLabelProvider(this);
 		tableViewer.setInput(dataService.getMitarbeiter().toArray());
+		m_bindingContext = initDataBindings();
 	}
 	
 	@Focus
@@ -283,5 +273,26 @@ private String plugin  = this.getClass().getName();
 		break;
 		}
 	return label;
+	}
+	protected DataBindingContext initDataBindings() {
+		DataBindingContext bindingContext = new DataBindingContext();
+		//
+		IObservableValue observeTextTextPNrObserveWidget = WidgetProperties.text(SWT.Modify).observe(textPNr);
+		IObservableValue personalNRAsStringMObserveValue = PojoProperties.value("personalNRAsString").observe(toInsert);
+		bindingContext.bindValue(observeTextTextPNrObserveWidget, personalNRAsStringMObserveValue, null, null);
+		//
+		IObservableValue observeTextTextUsernameObserveWidget = WidgetProperties.text(SWT.Modify).observe(textUsername);
+		IObservableValue benutzerNameMObserveValue = PojoProperties.value("benutzerName").observe(toInsert);
+		bindingContext.bindValue(observeTextTextUsernameObserveWidget, benutzerNameMObserveValue, null, null);
+		//
+		IObservableValue observeTextTextNachnameObserveWidget = WidgetProperties.text(SWT.Modify).observe(textNachname);
+		IObservableValue nachnameMObserveValue = PojoProperties.value("nachname").observe(toInsert);
+		bindingContext.bindValue(observeTextTextNachnameObserveWidget, nachnameMObserveValue, null, null);
+		//
+		IObservableValue observeTextTextVornameObserveWidget = WidgetProperties.text(SWT.Modify).observe(textVorname);
+		IObservableValue vornameMObserveValue = PojoProperties.value("vorname").observe(toInsert);
+		bindingContext.bindValue(observeTextTextVornameObserveWidget, vornameMObserveValue, null, null);
+		//
+		return bindingContext;
 	}
 }

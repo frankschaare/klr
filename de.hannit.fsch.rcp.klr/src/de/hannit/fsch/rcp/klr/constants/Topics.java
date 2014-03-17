@@ -10,6 +10,7 @@ public static final String AZV_WEBSERVICE = "AZV/Webservice/Daten";
 public static final String ERGEBNIS_DATEN = "Ergebnis/Daten";
 public static final String TARIFGRUPPEN = "Tarifgruppen";
 public static final String TREESELECTION_MITARBEITER = "selectedMitarbeiter";
+public static final String MITARBEITER_INSERT = "Mitarbeiter/Insert";
 public static final String MONATSSUMMEN = "Monatssummen";
 public static final String PERSONALDURCHSCHNITTSKOSTEN = "pdk";
 public static final String GEMEINKOSTERKOSTEN = "gk";

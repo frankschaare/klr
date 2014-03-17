@@ -14,7 +14,7 @@ public class LogaCommitHandler {
 	@CanExecute
 	public boolean canExecute() {
 		//TODO Your code goes here
-		return true;
+		return false;
 	}
 		
 }

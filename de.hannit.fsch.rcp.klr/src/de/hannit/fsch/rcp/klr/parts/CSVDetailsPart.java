@@ -56,9 +56,14 @@ private TableViewer vzae = null;
 private Table vzaeTable;
 private Group grpAzvDaten;
 private TableViewer tvGesamt = null;
+private TableViewer tvKST = null;
+private TableViewer tvKTR = null;
 private Table gesamtTable;
-private Table table_2;
-private Table table_3;
+private Table kstTable;
+private Table ktrTable;
+private TabItem tabKST;
+private TabItem tabKTR;
+private TabItem tbtmGesamt;
 
 
 	@Inject
@@ -87,9 +92,15 @@ private Table table_3;
 	this.mSummen = ms;
 	grpAzvDaten.setForeground(mSummen.isSummeOK() ? parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN) : parent.getDisplay().getSystemColor(SWT.COLOR_DARK_RED));
 	grpAzvDaten.setText("Summe KST / KTR = " + NumberFormat.getCurrencyInstance().format(mSummen.getKstktrMonatssumme()));
+	tbtmGesamt.setText(mSummen != null ? "Gesamt (" + NumberFormat.getCurrencyInstance().format(mSummen.getKstktrMonatssumme()) + ")" : "Gesamt");
 	tvGesamt.setLabelProvider(mSummen);	
 	tvGesamt.setInput(mSummen.getGesamtKosten().values().toArray());
 	
+	tabKST.setText(mSummen != null ? "Kostenstellen (" + NumberFormat.getCurrencyInstance().format(mSummen.getKSTMonatssumme()) + ")" : "Kostenstellen");
+	tabKTR.setText(mSummen != null ? "Kostenträger (" + NumberFormat.getCurrencyInstance().format(mSummen.getKTRMonatssumme()) + ")" : "Kostenträger");
+	
+	tvKST.setInput(mSummen.getGesamtKostenstellen().values().toArray());
+	tvKTR.setInput(mSummen.getGesamtKostentraeger().values().toArray());
 	}
 	
 	@PostConstruct
@@ -132,8 +143,8 @@ private Table table_3;
 		TabFolder tabFolder = new TabFolder(grpAzvDaten, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 2));
 		
-		TabItem tbtmGesamt = new TabItem(tabFolder, SWT.NONE);
-		tbtmGesamt.setText("Gesamt");
+		tbtmGesamt = new TabItem(tabFolder, SWT.NONE);
+		tbtmGesamt.setText(mSummen != null ? "Gesamt (" + NumberFormat.getCurrencyInstance().format(mSummen.getKstktrMonatssumme()) + ")" : "Gesamt");
 		
 		tvGesamt = new TableViewer(tabFolder, SWT.BORDER | SWT.FULL_SELECTION);
 		gesamtTable = tvGesamt.getTable();
@@ -151,7 +162,7 @@ private Table table_3;
 		
 		column = new TableViewerColumn(tvGesamt, SWT.RIGHT, 0);
 		column.getColumn().setText("KST / KTR");
-		column.getColumn().setWidth(150);
+		column.getColumn().setWidth(300);
 		column.getColumn().setResizable(true);
 		column.getColumn().setMoveable(true);
 		
@@ -162,19 +173,49 @@ private Table table_3;
 		column.getColumn().setMoveable(true);
 		tbtmGesamt.setControl(gesamtTable);
 		
-		TabItem tabKST = new TabItem(tabFolder, SWT.NONE);
-		tabKST.setText("Kostenstellen");
+		tabKST = new TabItem(tabFolder, SWT.NONE);
+		tabKST.setText(mSummen != null ? "Kostenstellen (" + NumberFormat.getCurrencyInstance().format(mSummen.getKSTMonatssumme()) + ")" : "Kostenstellen");
 		
-		TableViewer tableViewer_2 = new TableViewer(tabFolder, SWT.BORDER | SWT.FULL_SELECTION);
-		table_2 = tableViewer_2.getTable();
-		tabKST.setControl(table_2);
+		tvKST = new TableViewer(tabFolder, SWT.BORDER | SWT.FULL_SELECTION);
+		kstTable = tvKST.getTable();
+		kstTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		kstTable.setHeaderVisible(true);
+	
+		column = new TableViewerColumn(tvKST, SWT.RIGHT, 0);
+		column.getColumn().setText("Kostenstelle");
+		column.getColumn().setWidth(300);
+		column.getColumn().setResizable(true);
+		column.getColumn().setMoveable(true);
 		
-		TabItem tabKTR = new TabItem(tabFolder, SWT.NONE);
-		tabKTR.setText("Kostenträger");
+		column = new TableViewerColumn(tvKST, SWT.RIGHT, 1);
+		column.getColumn().setText("Summe");
+		column.getColumn().setWidth(150);
+		column.getColumn().setResizable(true);
+		column.getColumn().setMoveable(true);
+			
+		tabKST.setControl(kstTable);
 		
-		TableViewer tableViewer_3 = new TableViewer(tabFolder, SWT.BORDER | SWT.FULL_SELECTION);
-		table_3 = tableViewer_3.getTable();
-		tabKTR.setControl(table_3);		
+		tabKTR = new TabItem(tabFolder, SWT.NONE);
+		tabKTR.setText(mSummen != null ? "Kostenträger (" + NumberFormat.getCurrencyInstance().format(mSummen.getKTRMonatssumme()) + ")" : "Kostenträger");
+		
+		tvKTR = new TableViewer(tabFolder, SWT.BORDER | SWT.FULL_SELECTION);
+		ktrTable = tvKTR.getTable();
+		ktrTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		ktrTable.setHeaderVisible(true);
+	
+		column = new TableViewerColumn(tvKTR, SWT.RIGHT, 0);
+		column.getColumn().setText("Kostenträger");
+		column.getColumn().setWidth(300);
+		column.getColumn().setResizable(true);
+		column.getColumn().setMoveable(true);
+		
+		column = new TableViewerColumn(tvKTR, SWT.RIGHT, 1);
+		column.getColumn().setText("Summe");
+		column.getColumn().setWidth(150);
+		column.getColumn().setResizable(true);
+		column.getColumn().setMoveable(true);
+
+		tabKTR.setControl(ktrTable);		
 		
 		lblVollzeitquivalent = new Label(grpAzvDaten, SWT.NONE);
 		lblVollzeitquivalent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -232,10 +273,16 @@ private Table table_3;
 			}
 			
 		tvGesamt.setContentProvider(new ArrayContentProvider());
+		tvKTR.setContentProvider(new ArrayContentProvider());
+		tvKST.setContentProvider(new ArrayContentProvider());
 			if (mSummen != null)
 			{
 			tvGesamt.setLabelProvider(mSummen);
+			tvKST.setLabelProvider(mSummen);
+			tvKTR.setLabelProvider(mSummen);
 			tvGesamt.setInput(mSummen.getGesamtKosten().values().toArray());
+			tvKST.setInput(mSummen.getGesamtKostenstellen().values().toArray());
+			tvKTR.setInput(mSummen.getGesamtKostentraeger().values().toArray());
 			}
 	}	
 	@Focus

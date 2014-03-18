@@ -11,6 +11,8 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
+import de.hannit.fsch.common.csv.azv.Arbeitszeitanteil;
+import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
 import de.hannit.fsch.klr.kostenrechnung.Kostenrechnungsobjekt;
 
 /**
@@ -20,6 +22,8 @@ import de.hannit.fsch.klr.kostenrechnung.Kostenrechnungsobjekt;
 public class MonatsSummen implements ITableLabelProvider
 {
 private TreeMap<String, Kostenrechnungsobjekt> gesamtKosten = null;
+private TreeMap<String, Kostenrechnungsobjekt> gesamtKostenstellen = null;
+private TreeMap<String, Kostenrechnungsobjekt> gesamtKostentraeger = null;
 private Kostenrechnungsobjekt kto = null;
 private double kstktrMonatssumme = 0;
 /**
@@ -41,20 +45,52 @@ private String label;
 	{
 		// TODO Auto-generated constructor stub
 	}
-
-	public void setGesamtSummen(TreeMap<String, Double> gesamtSummen)
+	
+	public void setGesamtSummen(TreeMap<Integer, Mitarbeiter> incoming)
 	{
 	gesamtKosten = new TreeMap<String, Kostenrechnungsobjekt>();
+	gesamtKostenstellen = new TreeMap<String, Kostenrechnungsobjekt>();
+	gesamtKostentraeger = new TreeMap<String, Kostenrechnungsobjekt>();
 	
-		for (String s : gesamtSummen.keySet())
-		{
-		kto = new Kostenrechnungsobjekt();	
-		kto.setBezeichnung(s);
-		kto.setSumme(gesamtSummen.get(s));
-		
-		gesamtKosten.put(s, kto);
+		for (Mitarbeiter m : incoming.values())
+		{	
+			for (Arbeitszeitanteil azv : m.getAzvMonat().values())
+			{
+				/*
+				 * Ist die Kostenstelle / Kostenträger bereits in den Monatssummen gespeichert ?
+				 * Wenn Ja, wird der Bruttoaufwand addiert,
+				 * Wenn Nein, wird die Kostenstelle / Kostenträger neu eingefügt:
+				 */
+				String bezeichnung = (azv.getKostenstelle() != null) ? azv.getKostenstelle() : azv.getKostentraeger();
+				if (gesamtKosten.containsKey(bezeichnung))
+				{
+				kto = gesamtKosten.get(bezeichnung);	
+				kto.setSumme((kto.getSumme() + azv.getBruttoAufwand()));
+				}
+				else
+				{
+				kto = new Kostenrechnungsobjekt();	
+				kto.setBezeichnung(bezeichnung);
+				kto.setBeschreibung(azv.isKostenstelle() ? azv.getKostenStelleBezeichnung() : azv.getKostenTraegerBezeichnung());
+				kto.setSumme(azv.getBruttoAufwand());
+				
+				gesamtKosten.put(bezeichnung, kto);
+				}
+			}
 		}
-	}
+		for (Kostenrechnungsobjekt k : gesamtKosten.values())
+		{
+			if (k.getArt().equalsIgnoreCase(Kostenrechnungsobjekt.KST))
+			{
+			gesamtKostenstellen.put(k.getBezeichnung(), k);	
+			}
+			else
+			{
+			gesamtKostentraeger.put(k.getBezeichnung(), k);	
+			}
+			
+		}
+	}	
 	
 	public String getBerichtsMonat()
 	{
@@ -83,10 +119,9 @@ private String label;
 	public boolean isSummeOK() {return summeOK;}
 	public void setSummeOK(boolean summeOK) {this.summeOK = summeOK;}
 
-	public TreeMap<String, Kostenrechnungsobjekt> getGesamtKosten()
-	{
-	return gesamtKosten;
-	}
+	public TreeMap<String, Kostenrechnungsobjekt> getGesamtKosten()	{return gesamtKosten;}
+	public TreeMap<String, Kostenrechnungsobjekt> getGesamtKostenstellen()	{return gesamtKostenstellen;}
+	public TreeMap<String, Kostenrechnungsobjekt> getGesamtKostentraeger()	{return gesamtKostentraeger;}
 
 	/*
 	 * Die Gesamtsumme alle gemeldeten Kostenstellen / Kostenträger
@@ -103,6 +138,36 @@ private String label;
 	return kstktrMonatssumme;
 	}
 
+	/*
+	 * Die Gesamtsumme alle gemeldeten Kostenstellen
+	 */
+	public double getKSTMonatssumme()
+	{
+	double result = 0;
+
+		for (String s : gesamtKostenstellen.keySet())
+		{
+		result += gesamtKostenstellen.get(s).getSumme();	
+		}
+
+	return result;
+	}
+	
+	/*
+	 * Die Gesamtsumme alle gemeldeten Kostenstellen
+	 */
+	public double getKTRMonatssumme()
+	{
+	double result = 0;
+
+		for (String s : gesamtKostentraeger.keySet())
+		{
+		result += gesamtKostentraeger.get(s).getSumme();	
+		}
+
+	return result;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.jface.viewers.ILabelProviderListener)
 	 */
@@ -164,7 +229,7 @@ private String label;
 		switch (columnIndex) 
 		{
 		case 0:
-		label = kto.getBezeichnung();
+		label = (kto.getBeschreibung() != null) ? kto.getBezeichnung() + ": " + kto.getBeschreibung() : kto.getBezeichnung() ;
 		break;
 		
 		case 1:
@@ -178,5 +243,4 @@ private String label;
 		}
 	return label;
 	}
-
 }

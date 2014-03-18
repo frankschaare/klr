@@ -13,6 +13,7 @@ public static final String KST = "Kostenstelle";
 public static final String KTR = "Kostenträger";
 	
 private String bezeichnung = null;
+private String beschreibung = null;
 private String kostenart = null;
 private double summe = 0;
 private String art = null;
@@ -62,13 +63,18 @@ private double ergebnis  = 0;
 	 */
 	public Kostenrechnungsobjekt() {}
 
-	public String getBezeichnung()
-	{
-	return bezeichnung;
-	}
+	public String getBezeichnung(){return bezeichnung;}
+	public String getBeschreibung(){return beschreibung;}
+	public void setBeschreibung(String incoming){this.beschreibung = incoming;}
 
 	public void setBezeichnung(String bezeichnung)
 	{
+		if (bezeichnung.contains(":"))
+		{
+		String[] parts = bezeichnung.split(":");	
+		bezeichnung = parts[0].trim();
+		setBeschreibung(parts[1].trim());
+		}
 	this.bezeichnung = bezeichnung;
 	setArt(bezeichnung);
 	}

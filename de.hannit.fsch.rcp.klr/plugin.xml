@@ -22,7 +22,11 @@
 		<property 
 				name="lifeCycleURI" 
 				value="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.common.LifeCycleManager">
-		</property>         
+		</property>
+  <property
+        name="windowImages"
+        value="icons/Users16x16.png,icons/Users32x32.png,icons/Users48x48.png,icons/Users64x64.png">
+  </property>         
       </product>
    </extension>
 

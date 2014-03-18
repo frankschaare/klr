@@ -6,6 +6,7 @@ package de.hannit.fsch.rcp.klr.provider;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.TreeMap;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
@@ -29,13 +30,36 @@ private Event event = null;
 private String label = null;
 private DateFormat dfmt = new SimpleDateFormat( "dd.MM.yyyy HH:mm:ss" );
 private URL url = null;
+private TreeMap<String, Image> imageCache = null;
+private static final String KEY_ERROR = "error";
+private static final String KEY_WARN = "warn";
+private static final String KEY_CONFIRM = "confirm";
+private static final String KEY_INFO = "info";
 
 
 	/**
 	 * 
 	 */
-	public LogTableLabelProvider() {
-		// TODO Auto-generated constructor stub
+	public LogTableLabelProvider() 
+	{
+	Bundle bundle = FrameworkUtil.getBundle(this.getClass());	
+	imageCache = new TreeMap<String, Image>();	
+	
+	url = FileLocator.find(bundle, new Path("icons/error_tsk.gif"), null);
+	ImageDescriptor image = ImageDescriptor.createFromURL(url);
+	imageCache.put(LogTableLabelProvider.KEY_ERROR, image.createImage());
+	
+	url = FileLocator.find(bundle, new Path("icons/warn_tsk.gif"), null);
+	image = ImageDescriptor.createFromURL(url);
+	imageCache.put(LogTableLabelProvider.KEY_WARN, image.createImage());
+	
+	url = FileLocator.find(bundle, new Path("icons/checked.gif"), null);
+	image = ImageDescriptor.createFromURL(url);
+	imageCache.put(LogTableLabelProvider.KEY_CONFIRM, image.createImage());
+	
+	url = FileLocator.find(bundle, new Path("icons/info_tsk.gif"), null);
+	image = ImageDescriptor.createFromURL(url);
+	imageCache.put(LogTableLabelProvider.KEY_INFO, image.createImage());
 	}
 
 	/* (non-Javadoc)
@@ -51,9 +75,16 @@ private URL url = null;
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
 	 */
 	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-
+	public void dispose() 
+	{
+		if (imageCache != null)
+		{
+			for (Image img : imageCache.values())
+			{
+			img.dispose();	
+			}
+		imageCache = null;	
+		}
 	}
 
 	/* (non-Javadoc)
@@ -80,32 +111,24 @@ private URL url = null;
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) 
 	{
+	String key = null;		
+	
 		switch (columnIndex)
 		{
 		case 0:
-			Bundle bundle = FrameworkUtil.getBundle(this.getClass());
 			if (element instanceof Event) 
 			{
-				event = (Event) element;	
+			event = (Event) element;	
 			}
 			
 			switch ((int) event.getProperty(EventConstants.EVENT_FILTER))
 			{
-			case IStatus.ERROR:
-				url = FileLocator.find(bundle, new Path("icons/error_tsk.gif"), null);	
-				break;
-			case IStatus.WARNING:
-				url = FileLocator.find(bundle, new Path("icons/warn_tsk.gif"), null);	
-				break;	
-			case IStatus.OK:
-				url = FileLocator.find(bundle, new Path("icons/checked.gif"), null);	
-				break;	
-			default:
-				url = FileLocator.find(bundle, new Path("icons/info_tsk.gif"), null);	
-				break;
+			case IStatus.ERROR: key = LogTableLabelProvider.KEY_ERROR; break;
+			case IStatus.WARNING: key = LogTableLabelProvider.KEY_WARN;	break;	
+			case IStatus.OK: key = LogTableLabelProvider.KEY_CONFIRM; break;	
+			default: key = LogTableLabelProvider.KEY_INFO; break;
 			}
-		ImageDescriptor image = ImageDescriptor.createFromURL(url);	
-		return image.createImage();
+		return imageCache.get(key);
 
 		default:
 		return null;	

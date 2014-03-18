@@ -12,7 +12,6 @@ package de.hannit.fsch.rcp.klr.parts;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeMap;
@@ -66,6 +65,7 @@ import de.hannit.fsch.klr.dataservice.DataService;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
 import de.hannit.fsch.rcp.klr.provider.NavTreeContentProvider;
+import de.hannit.fsch.rcp.klr.provider.TeamTreeContentProvider;
 
 @SuppressWarnings("restriction")
 public class NavPart 
@@ -76,23 +76,19 @@ public class NavPart
 @Inject private EPartService partService;
 @Inject private EMenuService menuService;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
-
-private TreeMap<Integer, Mitarbeiter> mitarbeiter;	
-private Tarifgruppen tarifgruppen = null;
-private TreeMap<String, Double> monatsSummen = null;
-private MonatsSummen mSumme = null;
-private TreeMap<String, Arbeitszeitanteil> azvMonat = null;
-
 @Inject @Optional private MApplication application;
+
+private Tarifgruppen tarifgruppen = null;
+private MonatsSummen mSumme = null;
 private IEclipseContext context;
 
-private TreeViewer treeViewer = null;
+private TreeViewer tvPNR = null;
+private TreeViewer tvNachname = null;
+private TreeViewer tvTeams = null;
 private Button btnForward = null;
 private Button btnBack = null;
 private Combo comboMonth = null;
 private Combo comboYear = null; 
-
-private	SimpleDateFormat fMonatJahr = new SimpleDateFormat("MMMM.yyyy");
 
 private static final String POPUPMENUD_ID = "de.hannit.fsch.rcp.klr.menu.main.users";
 
@@ -177,13 +173,13 @@ private double vzaeTotal = 0;
 	String plugin = this.getClass().getName() + ".loadData()";
 	
 	log.info("Fordere Mitarbeiterliste und AZV-Daten für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " vom DataService an.", plugin);
-	mitarbeiter = dataService.getAZVMonat(selectedMonth);
-	log.confirm("Mitarbeiterliste enthält " + mitarbeiter.size() + " Mitarbeiter", plugin);
+	hannit.setMitarbeiter(dataService.getAZVMonat(selectedMonth));
+	log.confirm("Mitarbeiterliste enthält " + hannit.getMitarbeiterNachPNR().size() + " Mitarbeiter", plugin);
 	
 	/*
 	 * Prüfung, ob alle AZV-Anteile des Mitarbeiters zusammengezählt 100% ergeben 
 	 */
-		for (Mitarbeiter m : mitarbeiter.values())
+		for (Mitarbeiter m : hannit.getMitarbeiterNachPNR().values())
 		{
 			if (m.getAzvProzentSumme() != 100)
 			{
@@ -193,7 +189,7 @@ private double vzaeTotal = 0;
 
 	log.info("Fordere Tarifgruppen für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " vom DataService an.", plugin);	
 	tarifgruppen = dataService.getTarifgruppen(selectedMonth);
-	tarifgruppen.setAnzahlMitarbeiter(mitarbeiter.size());
+	tarifgruppen.setAnzahlMitarbeiter(hannit.getMitarbeiterNachPNR().size());
 	tarifgruppen.setBerichtsMonat(selectedMonth);
 	log.confirm("Es wurden "+ tarifgruppen.getTarifGruppen().size() + " Tarifgruppen geladen.", plugin);
 	
@@ -214,18 +210,18 @@ private double vzaeTotal = 0;
 	 */
 	vzaeVerteilt = 0;
 		Tarifgruppe t = null;
-		for (Mitarbeiter m : mitarbeiter.values())
+		for (Mitarbeiter m : hannit.getMitarbeiterNachPNR().values())
 		{
 		t = tarifgruppen.getTarifGruppen().get(m.getTarifGruppe());	
 		vzaeVerteilt += m.setVollzeitAequivalent(t.getVollzeitAequivalent());
 		}
-	log.info("Für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeVerteilt) + " Vollzeitäquivalente auf " + mitarbeiter.size() + " Mitarbeiter verteilt.", plugin);	
+	log.info("Für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeVerteilt) + " Vollzeitäquivalente auf " + hannit.getMitarbeiterNachPNR().size() + " Mitarbeiter verteilt.", plugin);	
 		
 	/*
 	 * Im Log wird nun zu Prüfzwecken ausgegeben, wie hoch das Vollzeitäquivalent Insgesamt beträgt:	
 	 */
 	vzaeTotal = 0;	
-		for (Mitarbeiter m : mitarbeiter.values())
+		for (Mitarbeiter m : hannit.getMitarbeiterNachPNR().values())
 		{
 			for (String a : m.getAzvMonat().keySet())
 			{
@@ -241,44 +237,20 @@ private double vzaeTotal = 0;
 		log.error("Für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(vzaeTotal) + " Vollzeitäquivalente entsprechend der Arbeitszeitanteile verteilt.", plugin, null);
 		}	
 		
-	/*
-	 * Nun steht das Vollzeitäquivalent für jeden Mitarbeiter fest.
-	 * Die Mitarbeiter werden erneut durchlaufen und es werden die Monatssummen für alle
-	 * gemeldeten Kostenstellen / Kostenträger gebildet	
-	 */
-	monatsSummen = new TreeMap<String, Double>();	
-		for (Mitarbeiter m : mitarbeiter.values())
-		{
-		azvMonat = m.getAzvMonat();
-			for (String strKSTKTR : azvMonat.keySet())
-			{
-				/*
-				 * Ist die Kostenstelle / Kostenträger bereits in den Monatssummen gespeichert ?
-				 * Wenn Ja, wird der Bruttoaufwand addiert,
-				 * Wenn Nein, wird die Kostenstelle / Kostenträger neu eingefügt:
-				 */
-				try
-				{
-				double monatssumme = monatsSummen.get(strKSTKTR);
-				// System.out.println("Addiere: " + strKSTKTR + ": " + azvMonat.get(strKSTKTR).getBruttoAufwand());
-				monatsSummen.put(strKSTKTR, (monatssumme + azvMonat.get(strKSTKTR).getBruttoAufwand()));
-				}
-				catch (NullPointerException e)
-				{
-				monatsSummen.put(strKSTKTR, azvMonat.get(strKSTKTR).getBruttoAufwand());	
-				// System.out.println("Neu: " + strKSTKTR + ": " + azvMonat.get(strKSTKTR).getBruttoAufwand());	
-				}	
-			}
-		}
+		/*
+		 * Nun steht das Vollzeitäquivalent für jeden Mitarbeiter fest.
+		 * Die Mitarbeiter werden erneut durchlaufen und es werden die Monatssummen für alle
+		 * gemeldeten Kostenstellen / Kostenträger gebildet	
+		 */
 		mSumme = new MonatsSummen();
-		mSumme.setGesamtSummen(monatsSummen);
+		mSumme.setGesamtSummen(hannit.getMitarbeiterNachPNR());
 		mSumme.setBerichtsMonat(selectedMonth);
 		
 		PersonalDurchschnittsKosten pdk = new PersonalDurchschnittsKosten(selectedMonth);
-		pdk.setMitarbeiter(mitarbeiter);
+		pdk.setMitarbeiter(hannit.getMitarbeiterNachPNR());
 		
 		GemeinKosten gk = new GemeinKosten(selectedMonth);
-		gk.setMitarbeiter(mitarbeiter);
+		gk.setMitarbeiter(hannit.getMitarbeiterNachPNR());
 				
 		/*
 		 * Nachdem alle Kostenstellen / Kostenträger verteilt sind, wird die Gesamtsumme gebildet und im Log ausgegeben.
@@ -294,7 +266,7 @@ private double vzaeTotal = 0;
 		pdk.setDatenOK(true);
 		gk.setChecked(true);
 		gk.setDatenOK(true);
-		log.confirm("Für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin);
+		log.confirm("Für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + mSumme.getGesamtKosten().size() + " Kostenstellen / Kostenträger verteilt.", plugin);
 		}
 		else
 		{
@@ -304,7 +276,7 @@ private double vzaeTotal = 0;
 		pdk.setDatenOK(false);
 		gk.setChecked(true);
 		gk.setDatenOK(false);
-		log.error("Für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + monatsSummen.size() + " Kostenstellen / Kostenträger verteilt.", plugin, null);
+		log.error("Für den Monat " + Datumsformate.MONATLANG_JAHR.format(selectedMonth) + " wurden insgesamt " + NumberFormat.getCurrencyInstance().format(monatssummenTotal) + " auf " + mSumme.getGesamtKosten().size() + " Kostenstellen / Kostenträger verteilt.", plugin, null);
 		}	
 		
 	/*
@@ -322,7 +294,8 @@ private double vzaeTotal = 0;
 	broker.send(Topics.PERSONALDURCHSCHNITTSKOSTEN, pdk);
 	broker.send(Topics.GEMEINKOSTERKOSTEN, gk);
 	
-	treeViewer.setInput(mitarbeiter);
+	tvPNR.setInput(hannit.getMitarbeiterNachPNR());
+	tvNachname.setInput(hannit.getMitarbeiterNachName());
 	}		
 
 	private void updateCombos()
@@ -359,7 +332,7 @@ private double vzaeTotal = 0;
 	
 		try
 		{
-		selectedMonth = fMonatJahr.parse(strMonth  +  "." + strYear);
+		selectedMonth = Datumsformate.MONATLANG_PUNKT_JAHR.parse(strMonth  +  "." + strYear);
 		}
 		catch (ParseException ex)
 		{
@@ -468,19 +441,24 @@ private double vzaeTotal = 0;
 		tabs.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		TabItem tbtmAktuell = new TabItem(tabs, SWT.NONE);
-		tbtmAktuell.setToolTipText("Alle Mitarbeiter, die f\u00FCr den ausgew\u00E4hlten Monat Gehalt bezogen haben");
-		tbtmAktuell.setText("Aktuell");
+		tbtmAktuell.setToolTipText("Alle Mitarbeiter, die f\u00FCr den ausgew\u00E4hlten Monat Gehalt bezogen haben, sortiert nach Personalnummer");
+		tbtmAktuell.setText("PNr");
 		
-		TabItem tabItem_1 = new TabItem(tabs, SWT.NONE);
-		tabItem_1.setText("New Item");
+		TabItem tbtmNachname = new TabItem(tabs, SWT.NONE);
+		tbtmNachname.setToolTipText("Alle Mitarbeiter, die f\u00FCr den ausgew\u00E4hlten Monat Gehalt bezogen haben, sortiert nach Nachname");
+		tbtmNachname.setText("Nachname");
+
+		TabItem tbtmTeams = new TabItem(tabs, SWT.NONE);
+		tbtmTeams.setToolTipText("Alle Mitarbeiter, die f\u00FCr den ausgew\u00E4hlten Monat Gehalt bezogen haben, sortiert nach Teams");
+		tbtmTeams.setText("Teams");
 		
-		treeViewer = new TreeViewer(tabs, SWT.BORDER);
+		tvPNR = new TreeViewer(tabs, SWT.BORDER);
 		NavTreeContentProvider cp = new NavTreeContentProvider();
-		treeViewer.setContentProvider(cp);
-		treeViewer.setLabelProvider(cp);
-		menuService.registerContextMenu(treeViewer.getTree(), POPUPMENUD_ID);
+		tvPNR.setContentProvider(cp);
+		tvPNR.setLabelProvider(cp);
+		menuService.registerContextMenu(tvPNR.getTree(), POPUPMENUD_ID);
 			
-		Tree tree = treeViewer.getTree();
+		Tree tree = tvPNR.getTree();
 		tree.addSelectionListener(new SelectionAdapter() {
 			  @Override
 			  public void widgetSelected(SelectionEvent e) 
@@ -495,10 +473,55 @@ private double vzaeTotal = 0;
 
 		tbtmAktuell.setControl(tree);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
-	
+
+		tvNachname = new TreeViewer(tabs, SWT.BORDER);
+		tvNachname.setContentProvider(cp);
+		tvNachname.setLabelProvider(cp);
+		menuService.registerContextMenu(tvNachname.getTree(), POPUPMENUD_ID);
+			
+		Tree nachnameTree = tvNachname.getTree();
+		nachnameTree.addSelectionListener(new SelectionAdapter() {
+			  @Override
+			  public void widgetSelected(SelectionEvent e) 
+			  {
+			  TreeItem item = (TreeItem) e.item;
+			      if (item.getItemCount() > 0) 
+			      {
+			      broker.send(Topics.TREESELECTION_MITARBEITER, item);
+			      }
+			    }
+			}); 
+
+		tbtmNachname.setControl(nachnameTree);
+		nachnameTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));	
+		
+		tvTeams = new TreeViewer(tabs, SWT.BORDER);
+		TeamTreeContentProvider tp = new TeamTreeContentProvider();
+		tvTeams.setContentProvider(tp);
+		tvTeams.setLabelProvider(tp);
+		menuService.registerContextMenu(tvTeams.getTree(), POPUPMENUD_ID);
+			
+		Tree teamTree = tvTeams.getTree();
+		teamTree.addSelectionListener(new SelectionAdapter() {
+			  @Override
+			  public void widgetSelected(SelectionEvent e) 
+			  {
+			  TreeItem item = (TreeItem) e.item;
+			      if (item.getItemCount() > 0) 
+			      {
+			      broker.send(Topics.TREESELECTION_MITARBEITER, item);
+			      }
+			    }
+			}); 
+
+		tbtmTeams.setControl(teamTree);
+		teamTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));			
+		
 		loadData(parseCombos(comboMonth.getItem(comboMonth.getSelectionIndex()), comboYear.getItem(comboYear.getSelectionIndex())));
 
-		treeViewer.setInput(mitarbeiter);
+		tvPNR.setInput(hannit.getMitarbeiterNachPNR());
+		tvNachname.setInput(hannit.getMitarbeiterNachName());
+		tvTeams.setInput(hannit.getTeams());
 	
 		// application.getContext().declareModifiable(AppConstants.LOG_STACK);
 		//application.getContext().runAndTrack(new RunAndTrackExample(application.getContext(), logStack));

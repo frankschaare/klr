@@ -8,16 +8,18 @@
 
    <launcherArgs>
       <programArgs>-clearPersistedState</programArgs>
-      <vmArgs>-Xms512m -Xmx1024m</vmArgs>
+      <vmArgs>-Xms1024m -Xmx4096m</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages/>
+   <windowImages i16="/de.hannit.fsch.rcp.klr/icons/Users16x16.png" i32="/de.hannit.fsch.rcp.klr/icons/Users32x32.png" i48="/de.hannit.fsch.rcp.klr/icons/Users48x48.png" i64="/de.hannit.fsch.rcp.klr/icons/Users64x64.png"/>
 
    <launcher name="KLR.exe">
       <solaris/>
       <win useIco="false">
-         <bmp/>
+         <ico path="/de.hannit.fsch.rcp.klr/icons/KLR-App.ico"/>
+         <bmp
+            winSmallHigh="/de.hannit.fsch.rcp.klr/icons/KLR-App16x16x32.bmp"/>
       </win>
    </launcher>
 

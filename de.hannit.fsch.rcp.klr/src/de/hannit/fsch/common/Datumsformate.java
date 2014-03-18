@@ -4,7 +4,8 @@ import java.text.SimpleDateFormat;
 
 public class Datumsformate
 {
-public static final SimpleDateFormat MONATLANG_JAHR = new SimpleDateFormat("MMMM yyyy");	
+public static final SimpleDateFormat MONATLANG_JAHR = new SimpleDateFormat("MMMM yyyy");
+public static final	SimpleDateFormat MONATLANG_PUNKT_JAHR = new SimpleDateFormat("MMMM.yyyy");
 public static final	SimpleDateFormat MONATLANG = new SimpleDateFormat("MMMM");
 public static final	SimpleDateFormat JAHR = new SimpleDateFormat("yyyy");
 public static final SimpleDateFormat STANDARDFORMAT = new SimpleDateFormat( "dd.MM.yy" );

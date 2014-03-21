@@ -3,29 +3,40 @@
 
 <product name="de.hannit.fsch.rcp.klr" uid="de.hannit.fsch.rcp.klr.1.1.0" id="de.hannit.fsch.rcp.klr.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.1.0.qualifier" useFeatures="false" includeLaunchers="true">
 
+
    <configIni use="default">
    </configIni>
 
    <launcherArgs>
       <programArgs>-clearPersistedState</programArgs>
-      <vmArgs>-Xms1024m -Xmx4096m</vmArgs>
+      <vmArgs>-Xms512m -Xmx1024m</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
    <windowImages i16="/de.hannit.fsch.rcp.klr/icons/Users16x16.png" i32="/de.hannit.fsch.rcp.klr/icons/Users32x32.png" i48="/de.hannit.fsch.rcp.klr/icons/Users48x48.png" i64="/de.hannit.fsch.rcp.klr/icons/Users64x64.png"/>
 
+   <splash
+      location="de.hannit.fsch.rcp.klr" />
    <launcher name="KLR.exe">
       <solaris/>
       <win useIco="false">
          <ico path="/de.hannit.fsch.rcp.klr/icons/KLR-App.ico"/>
          <bmp
-            winSmallHigh="/de.hannit.fsch.rcp.klr/icons/KLR-App16x16x32.bmp"/>
+            winSmallHigh="/de.hannit.fsch.rcp.klr/icons/KLR-App16x16x32.bmp"
+            winSmallLow="/de.hannit.fsch.rcp.klr/icons/KLR-App16x16x8.bmp"
+            winMediumHigh="/de.hannit.fsch.rcp.klr/icons/KLR-App32x32x32.bmp"
+            winMediumLow="/de.hannit.fsch.rcp.klr/icons/KLR-App32x32x8.bmp"
+            winLargeHigh="/de.hannit.fsch.rcp.klr/icons/KLR-App48x48x32.bmp"
+            winLargeLow="/de.hannit.fsch.rcp.klr/icons/KLR-App48x48x8.bmp"
+            winExtraLargeHigh="/de.hannit.fsch.rcp.klr/icons/KLR-App256x256x32.bmp"/>
       </win>
    </launcher>
+
 
    <vm>
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</windows>
    </vm>
+
 
    <plugins>
       <plugin id="com.ibm.icu"/>

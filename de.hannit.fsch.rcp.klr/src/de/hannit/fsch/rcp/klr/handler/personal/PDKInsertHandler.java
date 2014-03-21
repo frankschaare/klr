@@ -2,6 +2,7 @@
 package de.hannit.fsch.rcp.klr.handler.personal;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -49,6 +50,7 @@ private PersonalDurchschnittsKosten pdk = null;
 	@Execute
 	public void execute() 
 	{
+	ArrayList<SQLException> exceptions = new ArrayList<>();
 	SQLException e = null;	
 	int teamNR = -1;
 	double sumBruttoAngestellte = 0;
@@ -81,13 +83,23 @@ private PersonalDurchschnittsKosten pdk = null;
 		
 			if (e != null)
 			{
-			log.error("SQLException beim Speichern der Personaldurchschnittskosten für Team: " + teamNR + " (" +  teamNR + "; " + pdk.getBerichtsMonat() + "; "  + sumBruttoAngestellte + "; " +  sumVZAEAngestellte + "; " +  sumBruttoBeamte + "; " + sumVZAEBeamte + "; " + abzugVorkostenstellen + ")",	plugin + ".execute()", e);	
+			log.error("SQLException beim Speichern der Personaldurchschnittskosten für Team: " + teamNR + " (" +  teamNR + "; " + pdk.getBerichtsMonat() + "; "  + sumBruttoAngestellte + "; " +  sumVZAEAngestellte + "; " +  sumBruttoBeamte + "; " + sumVZAEBeamte + "; " + abzugVorkostenstellen + ")",	plugin + ".execute()", e);
+			exceptions.add(e);
 			}
 			else
 			{
 			log.confirm("Personaldurchschnittskosten für Team: " + teamNR + " erfolgreich in der Datenbank gespeichert", plugin + ".execute()");	
 			}
 		}
+		if (exceptions.size() > 0)
+		{
+		//TODO: Auf echte Transktion umstellen !	
+		}
+		else
+		{
+			
+		}
+		
 	}
 
 	@CanExecute

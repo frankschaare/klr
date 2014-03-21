@@ -72,6 +72,7 @@ private TableViewer tableViewer;
 		parent.setLayout(new GridLayout(1, false));
 		
 		message = new Label(parent, SWT.NONE);
+		message.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		message.setText("0 Meldungen");
 		
 		tableViewer = new TableViewer(parent, SWT.BORDER | SWT.FULL_SELECTION);

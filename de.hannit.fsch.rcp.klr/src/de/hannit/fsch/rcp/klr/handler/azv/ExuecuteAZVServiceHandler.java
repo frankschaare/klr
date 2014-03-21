@@ -64,6 +64,8 @@ private XPath xpath = xpathfactory.newXPath();
 		doc = webService.getResultList();
 		parseDocument();
 		azvDaten.setAzvMeldungen(azvMeldungen);
+		azvDaten.setErrors(false);
+		azvDaten.setChecked(false);
 		azvDaten.setRequestComplete(true);
 		broker.send(Topics.AZV_WEBSERVICE, azvDaten);
 		}

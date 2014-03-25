@@ -1,6 +1,9 @@
  
 package de.hannit.fsch.rcp.klr.handler.database;
 
+import java.util.ArrayList;
+import java.util.TreeMap;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -12,9 +15,9 @@ import org.eclipse.e4.ui.di.UIEventTopic;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
-import de.hannit.fsch.common.csv.azv.AZVDatensatz;
 import de.hannit.fsch.klr.dataservice.DataService;
-import de.hannit.fsch.rcp.klr.azv.AZVDaten;
+import de.hannit.fsch.klr.model.azv.AZVDaten;
+import de.hannit.fsch.klr.model.azv.AZVDatensatz;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 
 public class AZVWebserviceCheckMitarbeiterHandler 
@@ -65,9 +68,38 @@ private AZVDaten azvDaten = null;
 				}
 			}
 		}
+		
+	checkTeamMitgliedschaften();	
 	azvDaten.setChecked(true);	
 	broker.send(Topics.AZV_WEBSERVICE, azvDaten);
 	}
+	
+	private void checkTeamMitgliedschaften()
+	{
+	TreeMap<Integer, ArrayList<Integer>> tm = azvDaten.setTeamMitgliedschaft();
+	ArrayList<Integer> teamNummern = null;
+	TreeMap<Integer, Integer> checked = new TreeMap<>();
+	
+	log.info("Es wurden Teammitgliedschaften für " + tm.size() + " Mitarbeiter aus den AZV-Meldungen ermittelt. Prüfe Daten...", this.getClass().getName() + ".checkTeamMitgliedschaften()");
+		
+		for (Integer pnr : tm.keySet())
+		{
+		teamNummern = tm.get(pnr);
+			switch (teamNummern.size())
+			{
+			// I.d.R. sollte ein Mitarbeiter AZV-Meldungen für genau EIN Team abgeben:
+			case 1:
+			checked.put(pnr, teamNummern.get(teamNummern.size() - 1));	
+			break;
+
+			default:
+			log.warn("Mitarbeiter " + pnr + " hat AZV-Meldungen ein fehlerhaftes oder für mehrere Team abgegeben. Bitte manuell prüfen !", this.getClass().getName() + ".checkTeamMitgliedschaften()");				
+			break;
+			}
+		}
+	azvDaten.setTeamMitglieder(checked);
+	log.confirm("Prüfung abgeschlossen. Für " + tm.size() + " Mitarbeiter wurden gültige AZV-Meldungen ermittelt.", this.getClass().getName() + ".checkTeamMitgliedschaften()");
+	}	
 	
 	/*
 	 * Befehl ist ausführbar, wenn die Mitarbeitertabelle noch nicht geprüft wurde.

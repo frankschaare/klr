@@ -18,8 +18,9 @@ import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
-import de.hannit.fsch.common.csv.azv.Arbeitszeitanteil;
-import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
+import de.hannit.fsch.klr.model.azv.Arbeitszeitanteil;
+import de.hannit.fsch.klr.model.mitarbeiter.Mitarbeiter;
+
 
 /**
  * @author fsch

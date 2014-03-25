@@ -16,8 +16,6 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -32,12 +30,10 @@ import org.eclipse.swt.widgets.TreeItem;
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.Datumsformate;
-import de.hannit.fsch.common.csv.azv.Arbeitszeitanteil;
-import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
 import de.hannit.fsch.klr.dataservice.DataService;
+import de.hannit.fsch.klr.model.azv.Arbeitszeitanteil;
+import de.hannit.fsch.klr.model.mitarbeiter.Mitarbeiter;
 import de.hannit.fsch.rcp.klr.constants.Topics;
-
-import org.eclipse.swt.widgets.TableColumn;
 
 public class MitarbeiterDetailsPart implements ITableLabelProvider
 {

@@ -5,7 +5,6 @@ package de.hannit.fsch.rcp.klr.provider;
 
 import java.net.URL;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.TreeMap;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -18,9 +17,9 @@ import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
-import de.hannit.fsch.common.csv.azv.Arbeitszeitanteil;
-import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
-import de.hannit.fsch.common.mitarbeiter.Team;
+import de.hannit.fsch.klr.model.azv.Arbeitszeitanteil;
+import de.hannit.fsch.klr.model.mitarbeiter.Mitarbeiter;
+import de.hannit.fsch.klr.model.team.Team;
 
 /**
  * @author fsch

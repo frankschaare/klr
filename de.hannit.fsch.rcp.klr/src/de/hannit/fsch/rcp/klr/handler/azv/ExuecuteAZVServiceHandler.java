@@ -3,7 +3,6 @@ package de.hannit.fsch.rcp.klr.handler.azv;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,8 +25,8 @@ import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.Datumsformate;
-import de.hannit.fsch.common.csv.azv.AZVDatensatz;
-import de.hannit.fsch.rcp.klr.azv.AZVDaten;
+import de.hannit.fsch.klr.model.azv.AZVDaten;
+import de.hannit.fsch.klr.model.azv.AZVDatensatz;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.soa.osecm.IAZVClient;
 
@@ -57,12 +56,13 @@ private XPath xpath = xpathfactory.newXPath();
 	e = webService.setAZVRequest(azvDaten.getRequestedMonth(), azvDaten.getRequestedYear());
 		if (e != null)
 		{
-		log.error(e.getMessage(), this.getClass().getName() + "execute()", e);	
+		log.error(e.getMessage(), this.getClass().getName() + ".execute()", e);	
 		}
 		else
 		{
 		doc = webService.getResultList();
 		parseDocument();
+
 		azvDaten.setAzvMeldungen(azvMeldungen);
 		azvDaten.setErrors(false);
 		azvDaten.setChecked(false);
@@ -197,7 +197,7 @@ private XPath xpath = xpathfactory.newXPath();
 						azv.setTeam(field.getTextContent());
 						break;
 						case CSVConstants.AZV.NODENAME_PERSONALNUMMER:
-						String strPersonalnummer = strPersonalnummer = field.getTextContent();	
+						String strPersonalnummer = field.getTextContent();	
 						azv.setPersonalNummer((strPersonalnummer.length() > 0) ? Integer.parseInt(field.getTextContent()) : 0);
 						break;
 	

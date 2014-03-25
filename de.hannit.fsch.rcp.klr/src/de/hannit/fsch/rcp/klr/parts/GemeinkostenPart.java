@@ -10,9 +10,7 @@ import javax.inject.Named;
 
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
-import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -33,9 +31,8 @@ import org.eclipse.swt.widgets.Text;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
-import de.hannit.fsch.common.mitarbeiter.GemeinKosten;
-import de.hannit.fsch.common.mitarbeiter.PersonalDurchschnittsKosten;
-import de.hannit.fsch.rcp.klr.constants.Topics;
+import de.hannit.fsch.klr.model.mitarbeiter.GemeinKosten;
+import de.hannit.fsch.rcp.klr.provider.GemeinkostenLabelProvider;
 
 public class GemeinkostenPart 
 {
@@ -218,7 +215,7 @@ private Label lblNewLabel;
 		
 			if (gk != null)
 			{
-			gkViever.setLabelProvider(gk);		
+			gkViever.setLabelProvider(new GemeinkostenLabelProvider());		
 			gkViever.setInput(gk.getAufteilungGemeinKosten().values().toArray());	
 			grpBerichtsmonat.setText(fMonatJahr.format(gk.getBerichtsMonat()));
 			}

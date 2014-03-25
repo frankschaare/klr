@@ -9,7 +9,6 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -22,9 +21,9 @@ import org.eclipse.e4.ui.di.UIEventTopic;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
-import de.hannit.fsch.common.csv.azv.Arbeitszeitanteil;
-import de.hannit.fsch.common.mitarbeiter.GemeinKosten;
 import de.hannit.fsch.klr.dataservice.DataService;
+import de.hannit.fsch.klr.model.azv.Arbeitszeitanteil;
+import de.hannit.fsch.klr.model.mitarbeiter.GemeinKosten;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 
 public class Create07EndKSTEntlastungTeam3Handler extends CSVHandler
@@ -61,7 +60,6 @@ private static final String DATEINAME_SUFFIX = ".csv";
 	/*
 	 * Erstellt alle Zeilen der Datei und schreibt diese
 	 */
-	@SuppressWarnings("unused")
 	private void createCSV()
 	{
 	String feld1 = null;

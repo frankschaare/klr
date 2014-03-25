@@ -18,8 +18,8 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
-import de.hannit.fsch.common.mitarbeiter.GemeinKosten;
 import de.hannit.fsch.klr.dataservice.DataService;
+import de.hannit.fsch.klr.model.mitarbeiter.GemeinKosten;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 
 /**
@@ -35,8 +35,6 @@ public class GemeinkostenHandler
 {
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 @Inject DataService dataService;
-private String plugin = this.getClass().getName();
-
 private MPart gkPart = null;
 private IEclipseContext partContext = null;
 @Inject EPartService partService;

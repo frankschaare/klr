@@ -1,6 +1,7 @@
  
 package de.hannit.fsch.rcp.klr.handler.database;
 
+import java.sql.Date;
 import java.sql.SQLException;
 
 import javax.inject.Inject;
@@ -11,11 +12,13 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
 
+import com.ibm.icu.util.Calendar;
+
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
-import de.hannit.fsch.common.csv.azv.AZVDatensatz;
 import de.hannit.fsch.klr.dataservice.DataService;
-import de.hannit.fsch.rcp.klr.azv.AZVDaten;
+import de.hannit.fsch.klr.model.azv.AZVDaten;
+import de.hannit.fsch.klr.model.azv.AZVDatensatz;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 
 public class AZVWebserviceInsertHandler 
@@ -38,6 +41,9 @@ private AZVDaten azvDaten = null;
 	int insertCount = 0;
 	int errorCount = 0;
 	String plugin = this.getClass().getName() + ".execute()";
+	
+	// Zuerst werden die Teammitgliedschaften aktualisiert:
+	setTeammitgliedschaften();
 	
 		for (AZVDatensatz ds : azvDaten.getAzvMeldungen())
 		{
@@ -91,6 +97,56 @@ private AZVDaten azvDaten = null;
 	}
 	
 	
+	private void setTeammitgliedschaften()
+	{
+	SQLException e = null;	
+	String plugin = this.getClass().getName() + ".setTeammitgliedschaften()";
+	int aktuellesTeam = -1;
+	int gespeichertesTeam = -1;
+	
+		for (Integer pnr : azvDaten.getTeamMitglieder().keySet())
+		{
+		aktuellesTeam = azvDaten.getTeamMitglieder().get(pnr);	
+		gespeichertesTeam = dataService.getAktuellesTeam(pnr);	
+		
+			if (gespeichertesTeam == - 1) // Personalnummer nicht vorhanden. Neue Teammitgliedschaft einfügen
+			{
+			e = dataService.setTeammitgliedschaft(pnr, aktuellesTeam, azvDaten.getBerichtsMonatSQL());
+				if (e != null)
+				{
+				log.error("SQLException beim Speichern der Teammitgliedschaft für Personalnummer: " + pnr, plugin, e);	
+				}
+				else
+				{
+				log.confirm("Teammitgliedschaft für Personalnummer " + pnr + " erfolgreich in der Datenbank gespeichert", plugin);
+				}
+			}
+			else
+			{	
+				// Neue Teaminformation. Endatum (Vormonat) im vorhandenen Datensatz setzten und neuen Datensatz einfügen
+				if (aktuellesTeam != gespeichertesTeam)
+				{
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(azvDaten.getBerichtsMonatSQL());
+				cal.add(Calendar.DAY_OF_MONTH, - 1);
+				java.sql.Date endDatum = new Date(cal.getTimeInMillis());
+				
+				e = dataService.updateTeammitgliedschaft(pnr, gespeichertesTeam, aktuellesTeam, azvDaten.getBerichtsMonatSQL(), endDatum);
+					if (e != null)
+					{
+					log.error("SQLException beim Update der Teammitgliedschaft für Personalnummer: " + pnr, plugin, e);
+					}
+					else
+					{
+					log.confirm("Teammitgliedschaft für Personalnummer" + pnr + " erfolgreich aktualisiert. Neue Teamnummer ist Team " + aktuellesTeam, plugin);
+					}
+					
+				}
+			}
+		}
+		
+	}
+
 	@CanExecute
 	public boolean canExecute() 
 	{

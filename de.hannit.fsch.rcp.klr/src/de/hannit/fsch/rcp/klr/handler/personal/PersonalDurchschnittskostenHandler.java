@@ -1,8 +1,6 @@
  
 package de.hannit.fsch.rcp.klr.handler.personal;
 
-import java.util.TreeMap;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,13 +17,9 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 import de.hannit.fsch.common.AppConstants;
-import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
-import de.hannit.fsch.common.MonatsSummen;
-import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
-import de.hannit.fsch.common.mitarbeiter.PersonalDurchschnittsKosten;
 import de.hannit.fsch.klr.dataservice.DataService;
-import de.hannit.fsch.rcp.klr.azv.AZVDatei;
+import de.hannit.fsch.klr.model.mitarbeiter.PersonalDurchschnittsKosten;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 
 /**
@@ -41,8 +35,6 @@ public class PersonalDurchschnittskostenHandler
 {
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 @Inject DataService dataService;
-private String plugin = this.getClass().getName();
-
 private MPart pdkPart = null;
 private IEclipseContext partContext = null;
 @Inject EPartService partService;

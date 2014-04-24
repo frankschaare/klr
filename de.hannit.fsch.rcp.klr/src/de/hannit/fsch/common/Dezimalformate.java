@@ -4,5 +4,6 @@ import java.text.DecimalFormat;
 
 public class Dezimalformate
 {
-public static final DecimalFormat DEFAULT = new DecimalFormat("0.00");	
+public static final DecimalFormat DEFAULT = new DecimalFormat("0.00");
+public static final DecimalFormat KOMMAZAHL = new DecimalFormat("#0.00"); 
 }

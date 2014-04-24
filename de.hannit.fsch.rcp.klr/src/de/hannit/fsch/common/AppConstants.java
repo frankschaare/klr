@@ -26,12 +26,14 @@ public static final String ENDKOSTENSTELLE_TEAM1 = "1110";
 public static final String ENDKOSTENSTELLE_TEAM2 = "2010";
 public static final String ENDKOSTENSTELLE_TEAM3 = "3010";
 public static final String ENDKOSTENSTELLE_TEAM4 = "4010";
+public static final String KOSTENSTELLE_AUSBILDUNG = "1060";
 
 public static final String TEAM1 = "Team 1";
 public static final String TEAM2 = "Team 2";
 public static final String TEAM3 = "Team 3";
 public static final String TEAM4 = "Team 4";
 public static final String TEAM5 = "Team 5";
+public static final int INTEGER_TEAM_AUSZUBILDENDE = 1;
 
 public static interface ActiveSelections
 {

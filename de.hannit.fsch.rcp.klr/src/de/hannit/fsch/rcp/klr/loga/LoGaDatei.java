@@ -22,7 +22,7 @@ import org.osgi.framework.FrameworkUtil;
 
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.CSVDatei;
-import de.hannit.fsch.common.loga.LoGaDatensatz;
+import de.hannit.fsch.klr.model.loga.LoGaDatensatz;
 
 /**
  * @author fsch

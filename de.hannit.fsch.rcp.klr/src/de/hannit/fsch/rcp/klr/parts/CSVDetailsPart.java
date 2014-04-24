@@ -33,8 +33,9 @@ import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.Datumsformate;
 import de.hannit.fsch.common.MonatsSummen;
-import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppen;
+import de.hannit.fsch.klr.model.mitarbeiter.Tarifgruppen;
 import de.hannit.fsch.rcp.klr.constants.Topics;
+import de.hannit.fsch.rcp.klr.provider.TarifgruppenLabelProvider;
 
 public class CSVDetailsPart 
 {
@@ -64,6 +65,7 @@ private Table ktrTable;
 private TabItem tabKST;
 private TabItem tabKTR;
 private TabItem tbtmGesamt;
+private TarifgruppenLabelProvider tglp = new TarifgruppenLabelProvider();
 
 
 	@Inject
@@ -77,7 +79,7 @@ private TabItem tbtmGesamt;
 	{
 	log.info("Es wurden "+ tgs.getTarifGruppen().size() + " Tarifgruppen geladen.", this.getClass().getName());
 	tarifGruppen = tgs;
-	vzae.setLabelProvider(tgs);	
+	vzae.setLabelProvider(tglp);	
 	vzae.setInput(tarifGruppen.getTarifGruppen().values().toArray());
 	
 	grpBerichtsmonat.setText(Datumsformate.MONATLANG_JAHR.format(tarifGruppen.getBerichtsMonat()));
@@ -264,7 +266,7 @@ private TabItem tbtmGesamt;
 		vzae.setContentProvider(new ArrayContentProvider());
 			if (tarifGruppen != null)
 			{
-			vzae.setLabelProvider(tarifGruppen);		
+			vzae.setLabelProvider(tglp);		
 			vzae.setInput(tarifGruppen.getTarifGruppen().values().toArray());	
 			grpBerichtsmonat.setText(Datumsformate.MONATLANG_JAHR.format(tarifGruppen.getBerichtsMonat()));
 			lblSummeBrutto.setText("Summe Brutto: " + NumberFormat.getCurrencyInstance().format(tarifGruppen.getSummeTarifgruppen()));

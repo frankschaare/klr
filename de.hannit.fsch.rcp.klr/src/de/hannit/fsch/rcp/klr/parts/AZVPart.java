@@ -3,8 +3,6 @@
  */
 package de.hannit.fsch.rcp.klr.parts;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -26,10 +24,9 @@ import org.eclipse.swt.widgets.Table;
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
-import de.hannit.fsch.common.csv.azv.AZVDatensatz;
+import de.hannit.fsch.klr.model.azv.AZVDatensatz;
 import de.hannit.fsch.rcp.klr.azv.AZVDatei;
 import de.hannit.fsch.rcp.klr.constants.Topics;
-import de.hannit.fsch.soa.osecm.IAZVClient;
 
 /**
  * @author fsch

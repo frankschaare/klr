@@ -34,8 +34,9 @@ import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.Datumsformate;
-import de.hannit.fsch.rcp.klr.azv.AZVDaten;
+import de.hannit.fsch.klr.model.azv.AZVDaten;
 import de.hannit.fsch.rcp.klr.constants.Topics;
+import de.hannit.fsch.rcp.klr.provider.AZVWebservicePartLabelProvider;
 
 public class AZVWebServicePart 
 {
@@ -58,6 +59,7 @@ private int anzahlAZVMeldungen = 0;
 private String letzterBerichtsMonat = "";
 private Label lblBerichtsMonatInfo;
 
+
 	@Inject @Optional
 	public void handleEvent(@UIEventTopic(Topics.AZV_WEBSERVICE) AZVDaten incoming)
 	{
@@ -71,7 +73,7 @@ private Label lblBerichtsMonatInfo;
 		{
 		grpAZVMeldungen.setText(azvDaten.getAzvMeldungen().size() + " AZV-Meldungen für den Monat " + azvDaten.getRequestedMonth() + " " + azvDaten.getRequestedYear() + " vom OS/ECM Webservice empfangen.");
 		tableViewer.setContentProvider(new ArrayContentProvider());
-		tableViewer.setLabelProvider(azvDaten);
+		tableViewer.setLabelProvider(new AZVWebservicePartLabelProvider());
 		tableViewer.setInput(azvDaten.getAzvMeldungen().toArray());
 		}
 	}

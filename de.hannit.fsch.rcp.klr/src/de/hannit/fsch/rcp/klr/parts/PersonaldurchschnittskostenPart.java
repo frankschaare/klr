@@ -3,16 +3,13 @@ package de.hannit.fsch.rcp.klr.parts;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
-import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -22,18 +19,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
-import de.hannit.fsch.common.MonatsSummen;
-import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
-import de.hannit.fsch.common.mitarbeiter.PersonalDurchschnittsKosten;
-import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppen;
-import de.hannit.fsch.common.organisation.reporting.Monatsbericht;
-import de.hannit.fsch.rcp.klr.constants.Topics;
+import de.hannit.fsch.klr.model.mitarbeiter.PersonalDurchschnittsKosten;
+import de.hannit.fsch.rcp.klr.provider.PersonalDurchschnittsKostenLabelProvider;
 
 public class PersonaldurchschnittskostenPart 
 {
@@ -147,7 +138,7 @@ private Group grpPersonaldurchschnittsKosten;
 		pdkViever.setContentProvider(new ArrayContentProvider());
 			if (pdk != null)
 			{
-			pdkViever.setLabelProvider(pdk);		
+			pdkViever.setLabelProvider(new PersonalDurchschnittsKostenLabelProvider());		
 			pdkViever.setInput(pdk.getSummentabelle().values().toArray());	
 			grpBerichtsmonat.setText(fMonatJahr.format(pdk.getBerichtsMonat()));
 			lblSummeBrutto.setText("Summe Brutto: " + NumberFormat.getCurrencyInstance().format(pdk.getSummeBruttoGesamt()));

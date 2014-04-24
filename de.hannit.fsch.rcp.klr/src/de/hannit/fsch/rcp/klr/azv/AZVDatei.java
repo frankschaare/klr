@@ -24,8 +24,8 @@ import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.common.ContextLogger;
-import de.hannit.fsch.common.csv.azv.AZVDatensatz;
 import de.hannit.fsch.klr.dataservice.DataService;
+import de.hannit.fsch.klr.model.azv.AZVDatensatz;
 
 public class AZVDatei extends CSVDatei implements ITableLabelProvider
 {

@@ -15,16 +15,10 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
-import de.hannit.fsch.common.MonatsSummen;
-import de.hannit.fsch.common.csv.azv.AZVDatensatz;
-import de.hannit.fsch.common.loga.LoGaDatensatz;
-import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppe;
-import de.hannit.fsch.common.mitarbeiter.besoldung.Tarifgruppen;
 import de.hannit.fsch.klr.dataservice.DataService;
-import de.hannit.fsch.klr.kostenrechnung.Kostenrechnungsobjekt;
-import de.hannit.fsch.rcp.klr.azv.AZVDatei;
+import de.hannit.fsch.klr.model.mitarbeiter.Tarifgruppe;
+import de.hannit.fsch.klr.model.mitarbeiter.Tarifgruppen;
 import de.hannit.fsch.rcp.klr.constants.Topics;
-import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
 
 public class VZAEInsertMonatssummenHandler 
 {

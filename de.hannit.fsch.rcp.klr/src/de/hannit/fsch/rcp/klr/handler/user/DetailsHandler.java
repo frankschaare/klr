@@ -14,7 +14,7 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.widgets.TreeItem;
 
 import de.hannit.fsch.common.AppConstants;
-import de.hannit.fsch.common.mitarbeiter.Mitarbeiter;
+import de.hannit.fsch.klr.model.mitarbeiter.Mitarbeiter;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 
 public class DetailsHandler 

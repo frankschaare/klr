@@ -1,11 +1,6 @@
-/**
- * 
- */
-package de.hannit.fsch.rcp.klr.azv;
+package de.hannit.fsch.rcp.klr.provider;
 
 import java.net.URL;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.TreeMap;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -17,37 +12,22 @@ import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
-import de.hannit.fsch.common.CSVConstants;
-import de.hannit.fsch.common.Datumsformate;
-import de.hannit.fsch.common.csv.azv.AZVDatensatz;
+import de.hannit.fsch.klr.model.azv.AZVDatensatz;
+import de.hannit.fsch.klr.model.Constants;
 
-/**
- * @author fsch
- *
- */
-public class AZVDaten implements ITableLabelProvider
+
+public class AZVWebservicePartLabelProvider implements ITableLabelProvider
 {
-private ArrayList<AZVDatensatz> azvMeldungen = null;
-private String webServiceIP = null;
-private String requestedMonth = null;
-private String requestedYear = null;
-private boolean requestComplete = false;
-private boolean checked = false;
-private boolean errors = false;
-private String columnText = null;
-private java.sql.Date berichtsMonatSQL;
-
 private URL url = null;
 private TreeMap<String, Image> imageCache = null;
+private String columnText = null;
+	
 
-	/**
-	 * 
-	 */
-	public AZVDaten()
+	public AZVWebservicePartLabelProvider()
 	{
 	Bundle bundle = FrameworkUtil.getBundle(this.getClass());	
 	imageCache = new TreeMap<String, Image>();	
-	
+		
 	url = FileLocator.find(bundle, new Path("icons/warn_tsk.gif"), null);
 	ImageDescriptor image = ImageDescriptor.createFromURL(url);
 	imageCache.put("pnrNachgetragen", image.createImage());
@@ -59,65 +39,6 @@ private TreeMap<String, Image> imageCache = null;
 	imageCache.put("pnrFehlt", image.createImage());
 	}
 
-	public ArrayList<AZVDatensatz> getAzvMeldungen()
-	{
-	return azvMeldungen;
-	}
-
-	public String getWebServiceIP() {return webServiceIP;}
-	public void setWebServiceIP(String webServiceIP){this.webServiceIP = webServiceIP;}
-
-	public void setAzvMeldungen(ArrayList<AZVDatensatz> azvMeldungen)
-	{
-	this.azvMeldungen = azvMeldungen;
-	}
-
-	public boolean isChecked(){return checked;}
-	public void setChecked(boolean checked){this.checked = checked;}
-	
-	public boolean hasErrors(){return errors;}
-	public void setErrors(boolean errors){this.errors = errors;}
-	
-	public boolean isRequestComplete() {return requestComplete;}
-	public void setRequestComplete(boolean requestComplete)	{this.requestComplete = requestComplete;}
-
-	public String getRequestedMonth(){return requestedMonth;}
-	public void setRequestedMonth(String requestedMonth){this.requestedMonth = requestedMonth;}
-
-	public String getRequestedYear(){return requestedYear;}
-	public void setRequestedYear(String requestedYear)
-	{
-	this.requestedYear = requestedYear;
-		if (this.requestedMonth != null)
-		{
-		setBerichtsMonatSQL();	
-		}
-	}
-
-	public String getName(){return "OS/ECM Webservice an IP: " + getWebServiceIP() + " " + requestedMonth + " " + requestedYear;}
-	
-	public java.sql.Date getBerichtsMonatSQL() {return (berichtsMonatSQL != null) ? berichtsMonatSQL : getAzvMeldungen().get(0).getBerichtsMonatSQL();}
-
-	//TODO: prüfen, ob alle Monate übereinstimmen
-	public void setBerichtsMonatSQL()
-	{
-		if (requestedMonth != null && requestedYear != null)
-		{
-			try
-			{
-			java.util.Date date = Datumsformate.MONATLANG_JAHR.parse(requestedMonth + " " + requestedYear);
-			this.berichtsMonatSQL = new java.sql.Date(date.getTime());
-			}
-			catch (ParseException e)
-			{
-			e.printStackTrace();
-			}	
-		}	
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.jface.viewers.ILabelProviderListener)
-	 */
 	@Override
 	public void addListener(ILabelProviderListener listener)
 	{
@@ -142,9 +63,6 @@ private TreeMap<String, Image> imageCache = null;
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang.Object, java.lang.String)
-	 */
 	@Override
 	public boolean isLabelProperty(Object element, String property)
 	{
@@ -152,9 +70,6 @@ private TreeMap<String, Image> imageCache = null;
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)
-	 */
 	@Override
 	public void removeListener(ILabelProviderListener listener)
 	{
@@ -173,7 +88,7 @@ private TreeMap<String, Image> imageCache = null;
 	
 		switch (columnIndex)
 		{
-		case CSVConstants.AZV.PERSONALNUMMER_INDEX_TABLE:
+		case Constants.AZV.PERSONALNUMMER_INDEX_TABLE:
 			
 			if (element instanceof AZVDatensatz) 
 			{
@@ -224,28 +139,28 @@ private TreeMap<String, Image> imageCache = null;
 			case 0:
 			columnText = String.valueOf(azv.getRowCount()).trim();
 			break;
-			case CSVConstants.AZV.PERSONALNUMMER_INDEX_TABLE:
+			case Constants.AZV.PERSONALNUMMER_INDEX_TABLE:
 			columnText = String.valueOf(azv.getPersonalNummer());
 			break;
-			case CSVConstants.AZV.USERNAME_INDEX_TABLE:
+			case Constants.AZV.USERNAME_INDEX_TABLE:
 			columnText = azv.getUserName();
 			break;
-			case CSVConstants.AZV.NACHNAME_INDEX_TABLE:
+			case Constants.AZV.NACHNAME_INDEX_TABLE:
 			columnText = azv.getNachname();
 			break;
-			case CSVConstants.AZV.TEAM_INDEX_TABLE:
+			case Constants.AZV.TEAM_INDEX_TABLE:
 			columnText = azv.getTeam();
 			break;
-			case CSVConstants.AZV.BERICHTSMONAT_INDEX_TABLE:
+			case Constants.AZV.BERICHTSMONAT_INDEX_TABLE:
 			columnText = azv.getBerichtsMonatAsString() + " " + azv.getBerichtsJahrAsString();
 			break;
-			case CSVConstants.AZV.KOSTENSTELLE_INDEX_TABLE:
+			case Constants.AZV.KOSTENSTELLE_INDEX_TABLE:
 			columnText = (azv.getKostenstelle() != null) ? azv.getKostenstelle() + ": " + azv.getKostenstellenBeschreibung() : "";
 			break;
-			case CSVConstants.AZV.KOSTENTRAEGER_INDEX_TABLE:
+			case Constants.AZV.KOSTENTRAEGER_INDEX_TABLE:
 			columnText = (azv.getKostentraeger() != null) ? azv.getKostentraeger() + ": " + azv.getKostenTraegerBeschreibung() : "";
 			break;
-			case CSVConstants.AZV.PROZENTANTEIL_INDEX_TABLE:
+			case Constants.AZV.PROZENTANTEIL_INDEX_TABLE:
 			columnText = String.valueOf(azv.getProzentanteil()) + " %";
 			break;
 			default:

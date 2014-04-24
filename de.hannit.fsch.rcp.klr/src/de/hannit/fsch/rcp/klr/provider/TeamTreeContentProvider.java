@@ -123,7 +123,12 @@ private TreeMap<String, Image> imageCache = null;
 		
 			switch (t.getTeamNummer())
 			{
-			case -1: break;
+			case Mitarbeiter.STATUS_ALTERSTEILZEIT_ANGESTELLTE: 
+			text = "Altersteilzeit";
+			break;
+			case Mitarbeiter.STATUS_ALTERSTEILZEIT_BEAMTE: 
+			text = "Altersteilzeit";
+			break;
 			default:
 			text = t.getTeamBezeichnung();	
 			break;

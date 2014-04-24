@@ -2,6 +2,7 @@
 package de.hannit.fsch.rcp.klr.handler.database;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,6 +18,9 @@ import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.klr.dataservice.DataService;
+import de.hannit.fsch.klr.model.Constants;
+import de.hannit.fsch.klr.model.azv.AZVDatensatz;
+import de.hannit.fsch.klr.model.azv.Arbeitszeitanteil;
 import de.hannit.fsch.klr.model.loga.LoGaDatensatz;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
@@ -48,6 +52,11 @@ private LoGaDatei logaDatei = null;
 	
 		for (LoGaDatensatz ds : logaDatei.getDaten().values())
 		{
+			if (ds.getTarifGruppe().equalsIgnoreCase(Constants.Loga.TARIFGRUPPE_AUZUBIS))
+			{
+			processAuszubildende(ds);	
+			}
+
 		e = dataService.setLoGaDaten(ds);	
 			if (e == null)
 			{
@@ -73,7 +82,52 @@ private LoGaDatei logaDatei = null;
 		}
 	}
 	
+	/*
+	 * Auszubildende werden gesondert behandelt:
+	 * - Sie werden Team 6 zugeordnet
+	 * - Es wird eine Standard AZV-Meldung mit 100% Ausbildung generiert, sofern nicht vorhanden
+	 */
+	private void processAuszubildende(LoGaDatensatz ds)
+	{
+	SQLException e = null;	
+	String plugin = this.getClass().getName() + "processAuszubildende(LoGaDatensatz ds)";
 	
+		// Wenn der Auszubildende noch nicht in den Teams erfasst wurde:
+		if (! dataService.existsTeammitgliedschaft(ds.getPersonalNummer()))
+		{
+		e =	dataService.setTeammitgliedschaft(ds.getPersonalNummer(), AppConstants.INTEGER_TEAM_AUSZUBILDENDE, ds.getAbrechnungsMonatSQL());	
+			if (e == null)
+			{
+			log.confirm("Auszubildender: " + ds.getPersonalNummer() + " wurde automatisch in der Tabelle Teammitgliedschaften gespeichert", plugin);	
+			}
+			else 
+			{
+			log.error("SQLException beim automatischem Speichern der Teammitgliedschaft für Datensatz: " + ds.getSource(),	plugin, e);	
+			}
+		}
+	// Zusätzlich wird eine Standard AZV-Meldung generiert, sofern noch keine gespeichert ist:
+	ArrayList<Arbeitszeitanteil> arbeitszeitAnteile = dataService.getArbeitszeitanteile(ds.getPersonalNummer(), ds.getAbrechnungsMonatSQL());
+		if (arbeitszeitAnteile.isEmpty())
+		{
+		AZVDatensatz azv = new AZVDatensatz();
+		azv.setPersonalNummer(ds.getPersonalNummer());
+		azv.setTeam(AppConstants.TEAM1);
+		azv.setBerichtsMonat(ds.getAbrechnungsMonat());
+		azv.setKostenstelle(AppConstants.KOSTENSTELLE_AUSBILDUNG);
+		azv.setProzentanteil(100);
+		
+		e =	dataService.setAZVDaten(azv);	
+			if (e == null)
+			{
+			log.confirm("Standard AZV-Meldung für Auszubildenden: " + ds.getPersonalNummer() + " wurde automatisch gespeichert", plugin);	
+			}
+			else 
+			{
+			log.error("SQLException beim automatischem Speichern der Standard AZV-Meldung für Datensatz: " + ds.getSource(),	plugin, e);	
+			}		
+		}
+	}
+
 	@CanExecute
 	public boolean canExecute() 
 	{

@@ -50,6 +50,13 @@ private TreeMap<String, Image> imageCache = null;
 	url = FileLocator.find(bundle, new Path("icons/UserDisabled16px.png"), null);
 	image = ImageDescriptor.createFromURL(url);
 	imageCache.put("userDisabled", image.createImage());
+	url = FileLocator.find(bundle, new Path("icons/UserATZ16x16.png"), null);
+	image = ImageDescriptor.createFromURL(url);
+	imageCache.put("userATZ", image.createImage());
+	url = FileLocator.find(bundle, new Path("icons/UserAZUBI16x16.png"), null);
+	image = ImageDescriptor.createFromURL(url);
+	imageCache.put("userAZUBI", image.createImage());
+
 	url = FileLocator.find(bundle, new Path("icons/clock16px.png"), null);
 	image = ImageDescriptor.createFromURL(url);
 	imageCache.put("azvClock", image.createImage());
@@ -63,27 +70,42 @@ private TreeMap<String, Image> imageCache = null;
 		if (element instanceof Mitarbeiter) 
 		{
 		Mitarbeiter m = (Mitarbeiter)element;	
-			if (m.getAzvMonat() != null && m.getAzvMonat().size() > 0)
+			switch (m.getStatus())
 			{
-				if (m.getAzvProzentSumme() == 100)
+			case Mitarbeiter.STATUS_AUSZUBILDENDER:
+			key = "userAZUBI";	
+			break;
+			case Mitarbeiter.STATUS_ALTERSTEILZEIT_ANGESTELLTE:
+			key = "userATZ";	
+			break;
+			case Mitarbeiter.STATUS_ALTERSTEILZEIT_BEAMTE:
+			key = "userATZ";	
+			break;
+
+			default:
+				if (m.getAzvMonat() != null && m.getAzvMonat().size() > 0)
 				{
-					if (m.isAzvAktuell())
+					if (m.getAzvProzentSumme() == 100)
 					{
-					key = "userDefault";		
+						if (m.isAzvAktuell())
+						{
+							key = "userDefault";		
+						}
+						else
+						{
+						key = "userYellow";
+						}
 					}
 					else
 					{
-					key = "userYellow";
+						key = "userRemove";
 					}
 				}
 				else
 				{
-				key = "userRemove";
+					key = "userDisabled";
 				}
-			}
-			else
-			{
-			key = "userDisabled";
+				break;
 			}
 		}
 		else if (element instanceof Arbeitszeitanteil) 

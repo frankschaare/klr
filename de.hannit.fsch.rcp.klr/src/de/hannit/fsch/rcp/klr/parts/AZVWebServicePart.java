@@ -37,6 +37,7 @@ import de.hannit.fsch.common.Datumsformate;
 import de.hannit.fsch.klr.model.azv.AZVDaten;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.provider.AZVWebservicePartLabelProvider;
+import org.eclipse.swt.widgets.DateTime;
 
 public class AZVWebServicePart 
 {
@@ -58,6 +59,7 @@ private TableViewer tableViewer;
 private int anzahlAZVMeldungen = 0;
 private String letzterBerichtsMonat = "";
 private Label lblBerichtsMonatInfo;
+private DateTime dateTime;
 
 
 	@Inject @Optional
@@ -95,19 +97,14 @@ private Label lblBerichtsMonatInfo;
 			cal.setTime(lastMonth);
 			letzterBerichtsMonat = Datumsformate.MONATLANG_JAHR.format(lastMonth);
 			cal.add(Calendar.MONTH, 1);
-			selectMonat.select(cal.get(Calendar.MONTH));
-			selectJahr.removeAll();
-			cal.add(Calendar.YEAR, -2);
-			selectJahr.add(Datumsformate.JAHR.format(cal.getTime()), 0);
-			cal.add(Calendar.YEAR, 1);
-			selectJahr.add(Datumsformate.JAHR.format(cal.getTime()), 1);
-			cal.add(Calendar.YEAR, 1);
-			selectJahr.add(Datumsformate.JAHR.format(cal.getTime()), 2);
-			cal.add(Calendar.YEAR, 1);
-			selectJahr.add(Datumsformate.JAHR.format(cal.getTime()), 3);
-			cal.add(Calendar.YEAR, 1);
-			selectJahr.add(Datumsformate.JAHR.format(cal.getTime()), 4);
-			selectJahr.select(2);
+
+			if (dateTime != null)
+				{
+				dateTime.setDay(1);
+				dateTime.setMonth(cal.get(Calendar.MONTH));
+				dateTime.setYear(cal.get(Calendar.YEAR));
+				}
+
 			}
 			catch (ParseException ex)
 			{
@@ -119,9 +116,9 @@ private Label lblBerichtsMonatInfo;
 			
 			if (azvDaten != null)
 			{
-			azvDaten.setRequestedMonth(selectMonat.getItem(selectMonat.getSelectionIndex()));
-			azvDaten.setRequestedYear(selectJahr.getItem(selectJahr.getSelectionIndex()));
+			azvDaten.setBerichtsMonatSQL(dateTime.getMonth(), dateTime.getYear());
 			azvDaten.setWebServiceIP(strIP);
+			log.info("EventBroker versendet AZV-Anfrage für den Berichtsmonat: " + azvDaten.getBerichtsMonatAsString(), plugin);
 			broker.send(Topics.AZV_WEBSERVICE, azvDaten);
 			}
 		}
@@ -132,7 +129,7 @@ private Label lblBerichtsMonatInfo;
 		parent.setLayout(new GridLayout(1, false));
 		
 		grpBerichtsmonat = new Group(parent, SWT.NONE);
-		grpBerichtsmonat.setLayout(new GridLayout(17, false));
+		grpBerichtsmonat.setLayout(new GridLayout(15, false));
 		grpBerichtsmonat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpBerichtsmonat.setText("Berichtsmonat ausw\u00E4hlen");
 		
@@ -140,63 +137,23 @@ private Label lblBerichtsMonatInfo;
 		lblMonat.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblMonat.setText("Monat: ");
 		
-		selectMonat = new Combo(grpBerichtsmonat, SWT.NONE);
-		selectMonat.setToolTipText("Berichtsmonat für die gewünschten AZV-Meldungen");
-		selectMonat.add("Januar", 0);
-		selectMonat.add("Februar", 1);
-		selectMonat.add("März", 2);
-		selectMonat.add("April", 3);
-		selectMonat.add("Mai", 4);
-		selectMonat.add("Juni", 5);
-		selectMonat.add("Juli", 6);
-		selectMonat.add("August", 7);
-		selectMonat.add("September", 8);
-		selectMonat.add("Oktober", 9);
-		selectMonat.add("November", 10);
-		selectMonat.add("Dezember", 11);
-		selectMonat.addSelectionListener(new SelectionAdapter()
+		dateTime = new DateTime(grpBerichtsmonat, SWT.DROP_DOWN);
+		dateTime.setTouchEnabled(true);
+		dateTime.addSelectionListener(new SelectionAdapter()
 		{
+
 			@Override
 			public void widgetSelected(SelectionEvent e)
-			{
-			azvDaten.setRequestedMonth(selectMonat.getItem(selectMonat.getSelectionIndex()));
-			}
-		});
-
-
-		Label lblJahr = new Label(grpBerichtsmonat, SWT.NONE);
-		lblJahr.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblJahr.setText("Jahr:");
-		
-		selectJahr = new Combo(grpBerichtsmonat, SWT.NONE);
-		selectJahr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		selectJahr.setToolTipText("Berichtsjahr für die gewünschten AZV-Meldungen");
-		selectJahr.add("2013");
-		selectJahr.add("2014");
-		selectJahr.addSelectionListener(new SelectionAdapter()
-		{
-			@Override
-			public void widgetSelected(SelectionEvent e)
-			{
-			azvDaten.setRequestedYear(selectJahr.getItem(selectJahr.getSelectionIndex()));
-			}
-		});
-		selectJahr.addFocusListener(new FocusListener()
-		{
-			
-			@Override
-			public void focusLost(FocusEvent e)
-			{
-			broker.send(Topics.AZV_WEBSERVICE, azvDaten);
+			{	
+				if (azvDaten != null)
+				{
+				azvDaten.setBerichtsMonatSQL(dateTime.getMonth(), dateTime.getYear());
+				log.info("EventBroker versendet AZV-Anfrage für den Berichtsmonat: " + azvDaten.getBerichtsMonatAsString(), plugin);
+				broker.send(Topics.AZV_WEBSERVICE, azvDaten);
+				}
 			}
 			
-			@Override
-			public void focusGained(FocusEvent e)
-			{
-							
-			}
 		});
-
 		new Label(grpBerichtsmonat, SWT.NONE);
 		
 		lblBerichtsMonatInfo = new Label(grpBerichtsmonat, SWT.NONE);

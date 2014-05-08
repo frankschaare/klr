@@ -7,16 +7,21 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.jface.viewers.ITableColorProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
+import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.klr.model.azv.AZVDatensatz;
 import de.hannit.fsch.klr.model.Constants;
 
 
-public class AZVWebservicePartLabelProvider implements ITableLabelProvider
+public class AZVWebservicePartLabelProvider implements ITableLabelProvider, ITableColorProvider
 {
 private URL url = null;
 private TreeMap<String, Image> imageCache = null;
@@ -169,6 +174,29 @@ private String columnText = null;
 		}
 		
 	return columnText;
+	}
+
+	@Override
+	public Color getForeground(Object element, int columnIndex)
+	{
+	Color cellColor = null;
+		
+		if (element != null && element instanceof AZVDatensatz)
+		{
+		AZVDatensatz azv = (AZVDatensatz) element;	
+			if (azv.isMitarbeiterChecked())
+			{
+			cellColor = (azv.existsAZVDatensatz()) ? Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED) : Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN);
+			}
+		}
+	return cellColor;	
+	}
+
+	@Override
+	public Color getBackground(Object element, int columnIndex)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

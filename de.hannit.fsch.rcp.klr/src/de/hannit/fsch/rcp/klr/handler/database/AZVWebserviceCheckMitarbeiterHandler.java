@@ -39,11 +39,18 @@ private AZVDaten azvDaten = null;
 	public void execute() 
 	{
 	boolean exists = false;
+	boolean existsAZVMeldung = false;
+	java.sql.Date berichtsMonat = azvDaten.getBerichtsMonatSQL();
+	
 	String plugin = this.getClass().getName() + ".execute()";
 	
 		for (AZVDatensatz datensatz : azvDaten.getAzvMeldungen())
 		{
 		int pnr = 0;	
+		// Ist bereits eine AZV-Meldung in der Datenbank vorhanden ?
+		existsAZVMeldung = dataService.existsAZVDatensatz(datensatz.getPersonalNummer(), berichtsMonat);
+		datensatz.setExistsAZVDatensatz(existsAZVMeldung);
+		
 		exists = dataService.existsMitarbeiter(datensatz.getPersonalNummer());
 		datensatz.setMitarbeiterChecked(true);
 		datensatz.setExistsMitarbeiter(exists);

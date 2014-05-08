@@ -298,11 +298,20 @@ private double vzaeTotal = 0;
 
 	private void updateCombos()
 	{
+	Date maxDate = null;	
 	hannit = dataService.getOrganisation();
 	ArrayList<String> availableMonth = new ArrayList<String>();
 	ArrayList<String> availableYears = new ArrayList<String>();
 		for (Date date : hannit.getMonatsBerichte().keySet())
 		{
+			if (maxDate == null)
+			{
+			maxDate = date;	
+			}
+			else
+			{
+			maxDate = date.after(maxDate) ? date : maxDate;	
+			}
 			if (! availableMonth.contains(Datumsformate.MONATLANG.format(date)))
 			{
 			availableMonth.add(Datumsformate.MONATLANG.format(date));
@@ -320,8 +329,8 @@ private double vzaeTotal = 0;
 		{
 		comboYear.add(strYear);	
 		}			
-	comboMonth.setText(availableMonth.get(availableMonth.size()-1));
-	comboYear.setText(availableYears.get(availableYears.size()-1));
+	comboMonth.setText(Datumsformate.MONATLANG.format(maxDate));
+	comboYear.setText(Datumsformate.JAHR.format(maxDate));
 	}
 	
 	private Date parseCombos(String strMonth, String strYear)

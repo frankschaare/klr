@@ -3,6 +3,7 @@ package de.hannit.fsch.rcp.klr.handler.azv;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,6 +43,7 @@ private AZVDaten azvDaten;
 private ArrayList<AZVDatensatz> azvMeldungen = null;
 private XPathFactory xpathfactory = XPathFactory.newInstance();
 private XPath xpath = xpathfactory.newXPath();
+private String plugin = this.getClass().getName() + ".execute()";
 
 	@Inject @Optional
 	public void handleEvent(@UIEventTopic(Topics.AZV_WEBSERVICE) AZVDaten incoming)
@@ -53,14 +55,19 @@ private XPath xpath = xpathfactory.newXPath();
 	public void execute() 
 	{
 	// AZV Request vorbereiten
+	Date start = new Date();	
+	log.info("Starte Anfrage an den OS/ECM Webservice für den Berichtsmonat " + azvDaten.getRequestedMonth() + " " + azvDaten.getRequestedYear(), plugin);
 	e = webService.setAZVRequest(azvDaten.getRequestedMonth(), azvDaten.getRequestedYear());
 		if (e != null)
 		{
-		log.error(e.getMessage(), this.getClass().getName() + ".execute()", e);	
+		log.error(e.getMessage(), plugin, e);	
 		}
 		else
 		{
 		doc = webService.getResultList();
+		Date end = new Date();
+		long anfrageDauer = end.getTime() - start.getTime();
+		log.confirm("Anfrage an den OS/ECM Webservice wurde in " + String.valueOf(anfrageDauer) + " Millisekunden abgeschlossen.", plugin);
 		parseDocument();
 
 		azvDaten.setAzvMeldungen(azvMeldungen);

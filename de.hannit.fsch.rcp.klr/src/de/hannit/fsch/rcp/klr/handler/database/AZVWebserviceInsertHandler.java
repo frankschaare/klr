@@ -152,7 +152,7 @@ private AZVDaten azvDaten = null;
 	{
 	boolean ready = false;
 	
-		if (azvDaten.isChecked() && ! azvDaten.hasErrors())
+		if (azvDaten.isChecked() && ! azvDaten.hasErrors() && ! azvDaten.azvMeldungenVorhanden())
 		{
 		ready = true;
 		}

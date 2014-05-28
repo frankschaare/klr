@@ -11,8 +11,8 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
-import de.hannit.fsch.klr.kostenrechnung.Kostenrechnungsobjekt;
 import de.hannit.fsch.klr.model.azv.Arbeitszeitanteil;
+import de.hannit.fsch.klr.model.kostenrechnung.Kostenrechnungsobjekt;
 import de.hannit.fsch.klr.model.mitarbeiter.Mitarbeiter;
 
 /**

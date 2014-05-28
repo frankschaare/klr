@@ -70,7 +70,7 @@ public class NavPart
 {
 @Inject IEventBroker broker;
 @Inject DataService dataService;
-@Inject @Optional Organisation hannit;
+@Inject @Named(AppConstants.ORGANISATION) Organisation hannit;
 @Inject private EPartService partService;
 @Inject private EMenuService menuService;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
@@ -299,7 +299,6 @@ private double vzaeTotal = 0;
 	private void updateCombos()
 	{
 	Date maxDate = null;	
-	hannit = dataService.getOrganisation();
 	ArrayList<String> availableMonth = new ArrayList<String>();
 	ArrayList<String> availableYears = new ArrayList<String>();
 		for (Date date : hannit.getMonatsBerichte().keySet())
@@ -471,7 +470,7 @@ private double vzaeTotal = 0;
 			  public void widgetSelected(SelectionEvent e) 
 			  {
 			  TreeItem item = (TreeItem) e.item;
-			      if (item.getItemCount() > 0) 
+			      if (item.getData() != null && item.getData() instanceof Mitarbeiter) 
 			      {
 			      broker.send(Topics.TREESELECTION_MITARBEITER, item);
 			      }

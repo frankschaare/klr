@@ -20,8 +20,8 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
 import de.hannit.fsch.common.AppConstants;
-import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.rcp.klr.csv.CSVDatei;
 
 public class OpenHandler 
 {

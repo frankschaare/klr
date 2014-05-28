@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.hannit.fsch.common;
+package de.hannit.fsch.rcp.klr.csv;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +15,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hannit.fsch.common.ContextLogger;
 
 /**
  * @author fsch

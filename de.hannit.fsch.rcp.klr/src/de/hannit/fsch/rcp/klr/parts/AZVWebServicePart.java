@@ -159,7 +159,7 @@ private DateTime dateTime;
 		lblBerichtsMonatInfo = new Label(grpBerichtsmonat, SWT.NONE);
 		lblBerichtsMonatInfo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 12, 1));
 		
-		setControlsToNextMonth();
+		//setControlsToNextMonth();
 		
 		grpAZVMeldungen = new Group(parent, SWT.NONE);
 		grpAZVMeldungen.setLayout(new GridLayout(1, true));

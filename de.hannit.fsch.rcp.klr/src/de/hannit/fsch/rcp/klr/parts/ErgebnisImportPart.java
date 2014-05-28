@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Table;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
-import de.hannit.fsch.klr.kostenrechnung.Ergebnis;
+import de.hannit.fsch.common.Ergebnis;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 
 public class ErgebnisImportPart 

@@ -9,13 +9,8 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.TreeMap;
 
 import javax.inject.Inject;
@@ -30,9 +25,9 @@ import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.MonatsSummen;
 import de.hannit.fsch.klr.dataservice.DataService;
-import de.hannit.fsch.klr.kostenrechnung.KostenStelle;
-import de.hannit.fsch.klr.kostenrechnung.KostenTraeger;
-import de.hannit.fsch.klr.kostenrechnung.Kostenrechnungsobjekt;
+import de.hannit.fsch.klr.model.kostenrechnung.KostenStelle;
+import de.hannit.fsch.klr.model.kostenrechnung.KostenTraeger;
+import de.hannit.fsch.klr.model.kostenrechnung.Kostenrechnungsobjekt;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 
 /**

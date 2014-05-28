@@ -11,6 +11,7 @@ import java.text.DecimalFormat;
  */
 public class AppConstants 
 {
+public static final String ORGANISATION = "HANNIT";
 public static final String LOGGER = "LOGGER";
 public static final String LOG_STACK = "LOGSTACK";
 public static final String CONTEXT_TARIFGRUPPEN = "cTARIFGRUPPEN";
@@ -27,6 +28,7 @@ public static final String ENDKOSTENSTELLE_TEAM2 = "2010";
 public static final String ENDKOSTENSTELLE_TEAM3 = "3010";
 public static final String ENDKOSTENSTELLE_TEAM4 = "4010";
 public static final String KOSTENSTELLE_AUSBILDUNG = "1060";
+public static final String AZV_ADDROW = "addRow";
 
 public static final String TEAM1 = "Team 1";
 public static final String TEAM2 = "Team 2";

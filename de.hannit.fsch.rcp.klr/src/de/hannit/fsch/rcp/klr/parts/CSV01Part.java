@@ -20,9 +20,9 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import de.hannit.fsch.common.AppConstants;
-import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.rcp.klr.csv.CSV01Datei;
+import de.hannit.fsch.rcp.klr.csv.CSVDatei;
 
 public class CSV01Part 
 {

@@ -19,15 +19,15 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 
 import de.hannit.fsch.common.AppConstants;
-import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.Dezimalformate;
 import de.hannit.fsch.common.MonatsSummen;
-import de.hannit.fsch.klr.kostenrechnung.KostenStelle;
-import de.hannit.fsch.klr.kostenrechnung.KostenTraeger;
-import de.hannit.fsch.klr.kostenrechnung.Kostenrechnungsobjekt;
+import de.hannit.fsch.klr.model.kostenrechnung.KostenStelle;
+import de.hannit.fsch.klr.model.kostenrechnung.KostenTraeger;
+import de.hannit.fsch.klr.model.kostenrechnung.Kostenrechnungsobjekt;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.csv.CSV01Datei;
+import de.hannit.fsch.rcp.klr.csv.CSVDatei;
 
 public class Create01Entlastung0400Handler extends CSVHandler
 {

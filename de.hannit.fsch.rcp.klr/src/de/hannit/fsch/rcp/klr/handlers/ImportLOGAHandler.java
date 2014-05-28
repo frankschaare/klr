@@ -22,9 +22,9 @@ import org.osgi.service.event.Event;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
-import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.rcp.klr.constants.Topics;
+import de.hannit.fsch.rcp.klr.csv.CSVDatei;
 import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
 
 public class ImportLOGAHandler 

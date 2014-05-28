@@ -75,6 +75,7 @@ private AZVDatei azvDatei = null;
 		if (errorCount == 0)
 		{
 		log.confirm(insertCount + " AZV-Datensätze erfolgreich in die Datenbank eingefügt.", plugin);	
+		/*
 		e =  dataService.setDatenimport(azvDatei.getName(), azvDatei.getPath(), insertCount, azvDatei.getBerichtsMonatSQL(), "AZV");
 			if (e == null)
 			{
@@ -84,6 +85,7 @@ private AZVDatei azvDatei = null;
 			{
 			log.error("SQLException beim Sichern von Datenimport: " + azvDatei.getPath(),	plugin, e);	
 			}
+		*/	
 		}
 		else
 		{

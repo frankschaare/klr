@@ -8,8 +8,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.UIEventTopic;
+import org.eclipse.e4.ui.model.application.ui.MDirtyable;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -19,7 +21,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -31,14 +32,18 @@ import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.common.Datumsformate;
 import de.hannit.fsch.klr.dataservice.DataService;
+import de.hannit.fsch.klr.model.azv.AZVDatensatz;
 import de.hannit.fsch.klr.model.azv.Arbeitszeitanteil;
 import de.hannit.fsch.klr.model.mitarbeiter.Mitarbeiter;
+import de.hannit.fsch.klr.model.organisation.Organisation;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 
 public class MitarbeiterDetailsPart implements ITableLabelProvider
 {
 @Inject DataService dataService;
+@Inject IEventBroker broker;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
+@Inject @Named(AppConstants.ORGANISATION) Organisation hannit;
 
 private Mitarbeiter m = null;
 private Arbeitszeitanteil azv = null;
@@ -52,7 +57,7 @@ private Text textPNr;
 private Text textUsername;
 private Text textNachname;
 private Text textVorname;
-private Button btnInsert = null;
+
 
 private String label = null;
 
@@ -73,6 +78,16 @@ private Table dbTable;
 		updateControls();
 		}
 	}
+	
+	@Inject @Optional
+	public void handleEvent(@UIEventTopic(Topics.AZV_ADDROW) Arbeitszeitanteil addRow)
+	{
+		if (dbContent != null)
+		{
+		dbContent.add(addRow);
+		updateControls();
+		}
+	}	
 	
 	private void updateControls()
 	{
@@ -106,6 +121,11 @@ private Table dbTable;
 	{
 	this.m = incoming;	
 	dbContent = dataService.getArbeitszeitanteile(m.getPersonalNR(), m.getAbrechnungsMonat());
+		// Liegen für den aktuellen Monat keine Ergebnisse vor, wird versucht, die zuletzt gespeicherten AZV-Meldungen zu laden:
+		if (dbContent.size() < 1)
+		{
+		dbContent = dataService.getArbeitszeitanteileMAXMonat(m.getPersonalNR());
+		}
 	}
 
 	@PostConstruct
@@ -197,23 +217,29 @@ private Table dbTable;
 		column.getColumn().setMoveable(true);
 		
 		column = new TableViewerColumn(tableViewer, SWT.LEFT, 2);
-		column.getColumn().setText("Kostenart");
+		column.getColumn().setText("KST");
+		column.getColumn().setWidth(60);
+		column.getColumn().setResizable(true);
+		column.getColumn().setMoveable(true);
+
+		column = new TableViewerColumn(tableViewer, SWT.LEFT, 3);
+		column.getColumn().setText("KTR");
 		column.getColumn().setWidth(60);
 		column.getColumn().setResizable(true);
 		column.getColumn().setMoveable(true);
 		
-		column = new TableViewerColumn(tableViewer, SWT.LEFT, 3);
+		column = new TableViewerColumn(tableViewer, SWT.LEFT, 4);
 		column.getColumn().setText("Bezeichnung");
 		column.getColumn().setWidth(400);
 		column.getColumn().setResizable(true);
 		column.getColumn().setMoveable(true);
 		
-		column = new TableViewerColumn(tableViewer, SWT.LEFT, 4);
+		column = new TableViewerColumn(tableViewer, SWT.LEFT, 5);
 		column.getColumn().setText("%");
 		column.getColumn().setWidth(100);
 		column.getColumn().setResizable(true);
 		column.getColumn().setMoveable(true);
-		
+				
 		Group grpDatenbanktabelle = new Group(composite, SWT.NONE);
 		grpDatenbanktabelle.setLayout(new GridLayout(1, false));
 		GridData gd_grpDatenbanktabelle = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
@@ -239,22 +265,38 @@ private Table dbTable;
 		column.getColumn().setMoveable(true);
 		
 		column = new TableViewerColumn(dbTableViewer, SWT.LEFT, 2);
-		column.getColumn().setText("Kostenart");
+		column.getColumn().setText("KST");
 		column.getColumn().setWidth(60);
 		column.getColumn().setResizable(true);
 		column.getColumn().setMoveable(true);
-		
+		column.setEditingSupport(new KSTEditingSupport(dbTableViewer, hannit.getKostenStellen(), broker));
+
 		column = new TableViewerColumn(dbTableViewer, SWT.LEFT, 3);
+		column.getColumn().setText("KTR");
+		column.getColumn().setWidth(60);
+		column.getColumn().setResizable(true);
+		column.getColumn().setMoveable(true);
+		column.setEditingSupport(new KTREditingSupport(dbTableViewer, hannit.getKostentraeger(), broker));
+		
+		column = new TableViewerColumn(dbTableViewer, SWT.LEFT, 4);
 		column.getColumn().setText("Bezeichnung");
 		column.getColumn().setWidth(400);
 		column.getColumn().setResizable(true);
 		column.getColumn().setMoveable(true);
 		
-		column = new TableViewerColumn(dbTableViewer, SWT.LEFT, 4);
+		column = new TableViewerColumn(dbTableViewer, SWT.LEFT, 5);
 		column.getColumn().setText("%");
 		column.getColumn().setWidth(100);
 		column.getColumn().setResizable(true);
 		column.getColumn().setMoveable(true);
+		column.setEditingSupport(new ProzentanteilEditingSupport(dbTableViewer, broker));
+		
+		column = new TableViewerColumn(dbTableViewer, SWT.LEFT, 6);
+		column.getColumn().setText("ID");
+		column.getColumn().setWidth(300);
+		column.getColumn().setResizable(true);
+		column.getColumn().setMoveable(true);
+		
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -302,11 +344,19 @@ private Table dbTable;
 		break;
 		
 		case 2:
-		label = azv.getKostenstelle() != null ? azv.getKostenstelle() : azv.getKostentraeger();
+		label = azv.getKostenstelle() != null ? azv.getKostenstelle() : "";
+		break;
+
+		case 3:
+		label = azv.getKostentraeger() != null ? azv.getKostentraeger() : "";
+		break;
+
+		case 4:
+		label = azv.getKostenstelle() != null ? azv.getKostenStelleBezeichnung() : azv.getKostenTraegerBezeichnung();
 		break;
 		
-		case 3:
-		label = azv.getKostenstelle() != null ? azv.getKostenStelleBezeichnung() : azv.getKostenTraegerBezeichnung();
+		case 6:
+		label = azv.getID();
 		break;
 		
 		default:

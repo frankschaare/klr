@@ -20,7 +20,7 @@
                 <toolbar xmi:id="_fxhWwOrDEeKT3PrNpk3Wzw" elementId="de.hannit.fsch.rcp.klr.toolbar.2"/>
               </children>
               <children xsi:type="basic:Part" xmi:id="_Xy1ugJ00EeOBosfFzvJhiQ" elementId="de.hannit.fsch.rcp.klr.part.MitarbeiterDetailsPart" visible="false" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.MitarbeiterDetailsPart" label="Details" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserDetails16px.png" tooltip="Details zum aktuellen Benutzer anzeigen" closeable="true">
-                <toolbar xmi:id="_pRfWsJ00EeOBosfFzvJhiQ" elementId="de.hannit.fsch.rcp.klr.toolbar.3"/>
+                <toolbar xmi:id="_pRfWsJ00EeOBosfFzvJhiQ" elementId="de.hannit.fsch.rcp.klr.part.MitarbeiterDetailsPart.toolbar"/>
               </children>
               <children xsi:type="basic:Part" xmi:id="_yCgCoKBQEeOxW7Z6DLWtTg" elementId="de.hannit.fsch.rcp.klr.part.ErgebnisImportPart" visible="false" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.ErgebnisImportPart" label="Ergebnis" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Ergebnis aus geladener CSV-Datei" closeable="true">
                 <toolbar xmi:id="_yCgCoaBQEeOxW7Z6DLWtTg" elementId="de.hannit.fsch.rcp.klr.toolbar.3"/>
@@ -114,6 +114,8 @@
   <handlers xmi:id="_lCrNcKnYEeO3fvfD6xDT7A" elementId="de.hannit.fsch.rcp.klr.handler.azv.webservice.check.personalnummer" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.AZVWebserviceCheckMitarbeiterHandler" command="_eN3RwKnYEeO3fvfD6xDT7A"/>
   <handlers xmi:id="_lQe88Kn5EeO3fvfD6xDT7A" elementId="de.hannit.fsch.rcp.klr.handler.database.azv.webservice.insert" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.AZVWebserviceInsertHandler" command="_d_sP4Kn5EeO3fvfD6xDT7A"/>
   <handlers xmi:id="_f546gNUhEeOGOOBDLjw8Uw" elementId="de.hannit.fsch.rcp.klr.handler.database.azv.webservice.update" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.AZVWebserviceUpdateHandler" command="_3MQDMNUgEeOGOOBDLjw8Uw"/>
+  <handlers xmi:id="_CRyVEOKGEeO1xLmB7m7E4Q" elementId="de.hannit.fsch.rcp.klr.handler.database.azv.insertRow" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.azv.AddAZVRowHandler" command="_zyxt0OKFEeO1xLmB7m7E4Q"/>
+  <handlers xmi:id="_mXmoQOWdEeO1xLmB7m7E4Q" elementId="de.hannit.fsch.rcp.klr.handler.database.azv.saveChanges" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.azv.SaveAZVChangesHandler" command="_an2ckOWdEeO1xLmB7m7E4Q"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -233,6 +235,10 @@
     <children xsi:type="menu:HandledToolItem" xmi:id="_m-tFEqt0EeOuKYmIWrkZkQ" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.edit" label="ändern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserEdit16px.png" tooltip="Änderungen am aktuellen Mitarbeiter vornehmen" command="_5HK0AOpNEeK7nN3EOf8xtA"/>
     <children xsi:type="menu:HandledToolItem" xmi:id="_m-tFE6t0EeOuKYmIWrkZkQ" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.user.remove" label="entfernen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserRemove16px.png" tooltip="Den aktuellen Mitarbeiter löschen" command="_wh0SUOpOEeK7nN3EOf8xtA"/>
   </toolBarContributions>
+  <toolBarContributions xmi:id="_ZDIbYOKFEeO1xLmB7m7E4Q" elementId="de.hannit.fsch.rcp.klr.MitarbeiterDetailsPart.toolbarcontribution" parentId="de.hannit.fsch.rcp.klr.part.MitarbeiterDetailsPart.toolbar">
+    <children xsi:type="menu:HandledToolItem" xmi:id="_ZDIbYeKFEeO1xLmB7m7E4Q" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.azv.addRow" label="AZV-Datensatz hinzufügen" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableEdit16px.png" tooltip="Fügt einen neuen AZV-Datensatz hinzu" command="_zyxt0OKFEeO1xLmB7m7E4Q"/>
+    <children xsi:type="menu:HandledToolItem" xmi:id="_IWaskOWdEeO1xLmB7m7E4Q" elementId="de.hannit.fsch.rcp.klr.handledtoolitem.azv.saveChanges" label="Änderungen speichern" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Speichert die aktuellen Änderungen in der Datenbank" command="_an2ckOWdEeO1xLmB7m7E4Q"/>
+  </toolBarContributions>
   <commands xmi:id="_Qd0LjOMVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>
   <commands xmi:id="_Qd0LkOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.open.azv" commandName="openAZVCommand"/>
   <commands xmi:id="_Qd0Lk-MVEeKJItlVKSINDA" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
@@ -276,6 +282,8 @@
   <commands xmi:id="_eN3RwKnYEeO3fvfD6xDT7A" elementId="de.hannit.fsch.rcp.klr.command.azv.webservice.check.personalnummer" commandName="azvWebserviceCheckPersonalNR"/>
   <commands xmi:id="_d_sP4Kn5EeO3fvfD6xDT7A" elementId="de.hannit.fsch.rcp.klr.command.database.azv.webservice.insert" commandName="dbAZVWebserviceInsert" description="Speichert die aktuellen Datensätze in der Datenbank"/>
   <commands xmi:id="_3MQDMNUgEeOGOOBDLjw8Uw" elementId="de.hannit.fsch.rcp.klr.command.database.azv.webservice.update" commandName="dbAZVWebserviceUpdate" description="Aktualisiert die vorhandenen Datensätze in der Datenbank"/>
+  <commands xmi:id="_zyxt0OKFEeO1xLmB7m7E4Q" elementId="de.hannit.fsch.rcp.klr.command.database.azv.insertRow" commandName="dbAZVInsertRow" description="Fügt im MitarbeiterDetailsPart einen neuen AZV-DAtensatz hinzu"/>
+  <commands xmi:id="_an2ckOWdEeO1xLmB7m7E4Q" elementId="de.hannit.fsch.rcp.klr.command.database.azv.saveChanges" commandName="dbAZVSaveChanges" description="Speichert die Änderungen in der Datenbank"/>
   <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

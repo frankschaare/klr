@@ -2,7 +2,6 @@
 package de.hannit.fsch.rcp.klr.handler.azv;
 
 import java.util.TreeMap;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,11 +22,9 @@ import org.osgi.service.event.Event;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
-import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.rcp.klr.azv.AZVDatei;
 import de.hannit.fsch.rcp.klr.constants.Topics;
-import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
 
 public class OpenAZVHandler 
 {

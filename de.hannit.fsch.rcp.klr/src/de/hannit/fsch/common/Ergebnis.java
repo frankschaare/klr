@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.hannit.fsch.klr.kostenrechnung;
+package de.hannit.fsch.common;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -11,6 +11,8 @@ import java.util.TreeMap;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
+
+import de.hannit.fsch.klr.model.kostenrechnung.Kostenrechnungsobjekt;
 
 /**
  * KLR Ergebnis für einen bestimmten Berichtszeitraum

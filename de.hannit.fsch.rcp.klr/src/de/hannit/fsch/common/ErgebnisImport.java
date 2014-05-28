@@ -1,12 +1,13 @@
 /**
  * 
  */
-package de.hannit.fsch.klr.kostenrechnung;
+package de.hannit.fsch.common;
 
 import java.io.File;
 import java.net.URI;
 
-import de.hannit.fsch.common.CSVDatei;
+import de.hannit.fsch.rcp.klr.csv.CSVDatei;
+
 
 /**
  * @author fsch

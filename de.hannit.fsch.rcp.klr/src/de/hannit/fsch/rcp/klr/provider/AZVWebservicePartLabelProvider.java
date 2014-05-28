@@ -15,8 +15,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
-
-import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.klr.model.azv.AZVDatensatz;
 import de.hannit.fsch.klr.model.Constants;
 

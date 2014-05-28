@@ -20,10 +20,10 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
-import de.hannit.fsch.common.CSVDatei;
 import de.hannit.fsch.common.LogMessage;
 import de.hannit.fsch.klr.dataservice.DataService;
 import de.hannit.fsch.rcp.klr.constants.Topics;
+import de.hannit.fsch.rcp.klr.csv.CSVDatei;
 
 public class InsertMitarbeiterHandler 
 {

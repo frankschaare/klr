@@ -28,6 +28,9 @@ public static final String ENDKOSTENSTELLE_TEAM2 = "2010";
 public static final String ENDKOSTENSTELLE_TEAM3 = "3010";
 public static final String ENDKOSTENSTELLE_TEAM4 = "4010";
 public static final String KOSTENSTELLE_AUSBILDUNG = "1060";
+public static final String KOSTENSTELLE_AUSBILDUNG_BESCHREIBUNG = "Ausbildung";
+public static final String KOSTENSTELLE_SERVICEDESK = "5015";
+public static final String KOSTENSTELLE_SERVICEDESK_BESCHREIBUNG = "ServiceDesk";
 public static final String AZV_ADDROW = "addRow";
 
 public static final String TEAM1 = "Team 1";

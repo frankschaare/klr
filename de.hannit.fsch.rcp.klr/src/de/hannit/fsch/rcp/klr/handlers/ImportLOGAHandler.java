@@ -23,12 +23,15 @@ import org.osgi.service.event.Event;
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.klr.dataservice.DataService;
+import de.hannit.fsch.klr.model.loga.LoGaDatensatz;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.csv.CSVDatei;
 import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
 
 public class ImportLOGAHandler 
 {
+@Inject DataService dataService;		
 @Inject EPartService partService;
 @Inject IEventBroker broker;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
@@ -50,6 +53,7 @@ private IEclipseContext partContext = null;
 		logaDatei.setDelimiter(";");
 		logaDatei.setLog(log);
 		logaDatei.read();
+		checkLogaData(logaDatei);			
 		
 		log.info("LoGa-Datei: " + path + " wurde mit " + logaDatei.getLineCount() + " Zeilen eingelesen.", this.getClass().getName());
 		
@@ -66,6 +70,29 @@ private IEclipseContext partContext = null;
 		}		
 		
 	}
+	
+	/*
+	 * Versuche eventuell fehlende Daten nachzutragen
+	 */
+	private void checkLogaData(LoGaDatei logaDatei)
+	{
+		for (LoGaDatensatz ds : logaDatei.getDaten().values())
+		{
+			// Sonderfall Schnese
+			if (ds.getPersonalNummer() == 120025)
+			{
+			ds.setTarifGruppe("A13");
+			ds.setStellenAnteil(1);
+			}
+			
+			// Stellenanteil unbekannt ?
+			if (ds.getStellenAnteil() == 999999)
+			{
+			ds.setStellenAnteil(dataService.getLetzterStellenanteil(ds.getPersonalNummer()));	
+			}
+		}
+		
+	}	
 	
 	private MPart createLOGAPart(String title, CSVDatei logaDatei)
 	{

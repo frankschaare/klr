@@ -34,7 +34,7 @@ private TableViewer	tableViewer = null;
 	@Inject @Optional
 	public void handleEvent(@UIEventTopic(Topics.LOGA_DATEN) LoGaDatei logaDatei)
 	{
-	logaDatei.resetLineCount();	
+	logaDatei.resetLineCount();
 	tableViewer.setInput(logaDatei.getDaten().values().toArray());	
 	}	
 

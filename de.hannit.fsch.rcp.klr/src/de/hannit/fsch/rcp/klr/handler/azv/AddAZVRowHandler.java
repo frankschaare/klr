@@ -1,5 +1,7 @@
 package de.hannit.fsch.rcp.klr.handler.azv;
 
+import java.lang.invoke.SwitchPoint;
+
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.di.annotations.CanExecute;
@@ -33,12 +35,46 @@ private Mitarbeiter selectedMitarbeiter = null;
 	{
 		if (selectedMitarbeiter != null)
 		{
-		Arbeitszeitanteil azv = selectedMitarbeiter.getAzvMonat().get(selectedMitarbeiter.getAzvMonat().firstKey());
 		Arbeitszeitanteil addRow = new Arbeitszeitanteil();
 		addRow.setID(AppConstants.AZV_ADDROW);
 		addRow.setPersonalNummer(selectedMitarbeiter.getPersonalNR());
 		addRow.setITeam(selectedMitarbeiter.getTeamNR());
-		addRow.setBerichtsMonat(azv.getBerichtsMonat());
+			switch (selectedMitarbeiter.getAzvMonat().size())
+			{
+			case 0: //Keine AZV Meldung vorhanden
+			java.util.Date berichtsMonat = selectedMitarbeiter.getAbrechnungsMonat(); 	
+			addRow.setBerichtsMonat(new java.sql.Date(berichtsMonat.getTime()));
+				
+				// Es wird versucht, eine sinnvolle Vorbelegung zu erreichern:
+				switch (selectedMitarbeiter.getStatus())
+				{
+				case Mitarbeiter.STATUS_AUSZUBILDENDER:
+				addRow.setKostenstelle(AppConstants.KOSTENSTELLE_AUSBILDUNG);
+				addRow.setKostenStelleBezeichnung(AppConstants.KOSTENSTELLE_AUSBILDUNG_BESCHREIBUNG);
+				addRow.setProzentanteil(100);
+				break;
+
+				// Für Mitarbeiter aus Team 5 wird der Service-Desk vorbelegt:
+				default:
+					switch (selectedMitarbeiter.getTeamNR())
+					{
+					case 5:
+					addRow.setKostenstelle(AppConstants.KOSTENSTELLE_SERVICEDESK);
+					addRow.setKostenStelleBezeichnung(AppConstants.KOSTENSTELLE_SERVICEDESK_BESCHREIBUNG);
+					addRow.setProzentanteil(100);						
+					break;
+					default:
+					break;
+					}
+				break;
+				}
+			break;
+
+			default: // Mindestens eine AZV vorhanden
+			Arbeitszeitanteil azv = selectedMitarbeiter.getAzvMonat().get(selectedMitarbeiter.getAzvMonat().firstKey());
+			addRow.setBerichtsMonat(azv.getBerichtsMonat());
+			break;
+			}
 		broker.send(Topics.AZV_ADDROW, addRow);
 		}
 		

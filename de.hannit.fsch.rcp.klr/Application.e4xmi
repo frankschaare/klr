@@ -38,6 +38,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0Lm-MVEeKJItlVKSINDA" label="Open" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/sample.gif" command="_Qd0LkOMVEeKJItlVKSINDA"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LnOMVEeKJItlVKSINDA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.open.azv" label="AZV Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Öffnet eine CSV Datei mit Arbeitszeitanteilen" command="_Qd0LkOMVEeKJItlVKSINDA"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_ZFIf4OoWEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.imPortLoga" label="Loga Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/MoneyAdd16px.png" tooltip="Öffnet eine Loga CSV-Datei und importiert die Daten in die Datenbank" command="_FE8Z8OoUEeK7nN3EOf8xtA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_peRmAAgSEeSNxdqePFhJLA" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.open.callcenter" label="Callcenter Daten" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Öffnet eine CSV Datei mit Callcenter Daten" command="_PItyEAgTEeSNxdqePFhJLA"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_xprJ4OV6EeKL1OhAl6ouKg" elementId="de.hannit.fsch.rcp.klr.handledmenuitem.0" label="Mitarbeiter laden" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/UserAdd16px.png" tooltip="Öffnet einen CSV Export und sichert die Mitarbeiterdaten in der Datenbank" command="_hS3TgOV6EeKL1OhAl6ouKg"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Qd0LneMVEeKJItlVKSINDA" label="Quit" command="_Qd0LjOMVEeKJItlVKSINDA"/>
       </children>
@@ -116,6 +117,7 @@
   <handlers xmi:id="_f546gNUhEeOGOOBDLjw8Uw" elementId="de.hannit.fsch.rcp.klr.handler.database.azv.webservice.update" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.database.AZVWebserviceUpdateHandler" command="_3MQDMNUgEeOGOOBDLjw8Uw"/>
   <handlers xmi:id="_CRyVEOKGEeO1xLmB7m7E4Q" elementId="de.hannit.fsch.rcp.klr.handler.database.azv.insertRow" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.azv.AddAZVRowHandler" command="_zyxt0OKFEeO1xLmB7m7E4Q"/>
   <handlers xmi:id="_mXmoQOWdEeO1xLmB7m7E4Q" elementId="de.hannit.fsch.rcp.klr.handler.database.azv.saveChanges" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.azv.SaveAZVChangesHandler" command="_an2ckOWdEeO1xLmB7m7E4Q"/>
+  <handlers xmi:id="_mPFQsAgTEeSNxdqePFhJLA" elementId="de.hannit.fsch.rcp.klr.handler.openCallcenterCommand" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.handler.csv.OpenCallcenterDateiHandler" command="_PItyEAgTEeSNxdqePFhJLA"/>
   <bindingTables xmi:id="_Qd0LjuMVEeKJItlVKSINDA" bindingContext="_Qd0LieMVEeKJItlVKSINDA">
     <bindings xmi:id="_Qd0Lj-MVEeKJItlVKSINDA" keySequence="M1+Q" command="_Qd0LjOMVEeKJItlVKSINDA"/>
     <bindings xmi:id="_Qd0LkuMVEeKJItlVKSINDA" keySequence="M1+O" command="_Qd0LkOMVEeKJItlVKSINDA"/>
@@ -284,6 +286,7 @@
   <commands xmi:id="_3MQDMNUgEeOGOOBDLjw8Uw" elementId="de.hannit.fsch.rcp.klr.command.database.azv.webservice.update" commandName="dbAZVWebserviceUpdate" description="Aktualisiert die vorhandenen Datensätze in der Datenbank"/>
   <commands xmi:id="_zyxt0OKFEeO1xLmB7m7E4Q" elementId="de.hannit.fsch.rcp.klr.command.database.azv.insertRow" commandName="dbAZVInsertRow" description="Fügt im MitarbeiterDetailsPart einen neuen AZV-DAtensatz hinzu"/>
   <commands xmi:id="_an2ckOWdEeO1xLmB7m7E4Q" elementId="de.hannit.fsch.rcp.klr.command.database.azv.saveChanges" commandName="dbAZVSaveChanges" description="Speichert die Änderungen in der Datenbank"/>
+  <commands xmi:id="_PItyEAgTEeSNxdqePFhJLA" elementId="de.hannit.fsch.rcp.klr.open.callcenter" commandName="openCallcenterCommand"/>
   <addons xmi:id="_Qd0LguMVEeKJItlVKSINDA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Qd0Lg-MVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Qd0LhOMVEeKJItlVKSINDA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

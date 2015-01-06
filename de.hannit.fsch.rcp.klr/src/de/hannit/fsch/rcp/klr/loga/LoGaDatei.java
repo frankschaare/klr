@@ -6,10 +6,16 @@ package de.hannit.fsch.rcp.klr.loga;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TreeMap;
+
+import javax.inject.Inject;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -21,6 +27,8 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
 import de.hannit.fsch.common.CSVConstants;
+import de.hannit.fsch.common.Dezimalformate;
+import de.hannit.fsch.klr.dataservice.DataService;
 import de.hannit.fsch.klr.model.loga.LoGaDatensatz;
 import de.hannit.fsch.rcp.klr.csv.CSVDatei;
 
@@ -33,11 +41,13 @@ public class LoGaDatei extends CSVDatei implements ITableLabelProvider
 private static final long serialVersionUID = -4808470669223797111L;
 
 private String label = null;	
+private String plugin = null;
 
 private TreeMap<Integer, LoGaDatensatz> daten;
 private LoGaDatensatz datenSatz = null;
 private SimpleDateFormat format = new SimpleDateFormat(CSVConstants.Loga.ABRECHNUNGSMONAT_DATUMSFORMAT_CSV);
 private URL url = null;
+
 
 	/**
 	 * @param arg0
@@ -115,6 +125,7 @@ private URL url = null;
 	 */
 	private LoGaDatensatz split(String line)
 	{
+	plugin = this.getClass().getName() + ".split()";	
 	datenSatz = new LoGaDatensatz();	
 	datenSatz.setSource(line);
 	
@@ -128,19 +139,19 @@ private URL url = null;
 		catch (NumberFormatException e)
 		{
 		e.printStackTrace();
-		getLog().error("NumberFormatException beim parsen der Zeile: " + datenSatz.getSource(), this.getClass().getName() + ".split()", e);
+		getLog().error("NumberFormatException beim parsen der Zeile: " + datenSatz.getSource(), plugin, e);
 		}
 
 		// Summe( Betrag )
 		try
 		{
-		double brutto = Double.parseDouble(parts[CSVConstants.Loga.BRUTTO_INDEX_CSV].replace(",", "."));	
+		double brutto = (double) Dezimalformate.DFBRUTTO.parse(parts[CSVConstants.Loga.BRUTTO_INDEX_CSV].trim()).doubleValue();		
 		datenSatz.setBrutto(brutto);
 		}
-		catch (NumberFormatException e)
+		catch (NumberFormatException | ParseException e)
 		{
 		e.printStackTrace();
-		getLog().error("NumberFormatException beim parsen der Zeile: " + datenSatz.getSource(), this.getClass().getName() + ".split()", e);
+		getLog().error("NumberFormatException beim parsen der Zeile: " + datenSatz.getSource(), plugin, e);
 		}
 		
 		// Abrechnungsmonat
@@ -152,7 +163,7 @@ private URL url = null;
 		catch (ParseException e)
 		{
 		e.printStackTrace();
-		getLog().error("ParseException beim parsen des Abrechnungsmonats in Zeile: " + datenSatz.getSource(), this.getClass().getName() + ".split()", e);
+		getLog().error("ParseException beim parsen des Abrechnungsmonats in Zeile: " + datenSatz.getSource(), plugin, e);
 		}		
 		
 		// Tarifgruppe
@@ -164,7 +175,7 @@ private URL url = null;
 		catch (Exception e)
 		{
 		e.printStackTrace();
-		getLog().error("Exception beim parsen der Zeile: " + datenSatz.getSource(), this.getClass().getName() + ".split()", e);
+		getLog().error("Exception beim parsen der Zeile: " + datenSatz.getSource(), plugin, e);
 		}
 		
 		// Tarifstufe
@@ -176,7 +187,8 @@ private URL url = null;
 		catch (NumberFormatException e)
 		{
 		e.printStackTrace();
-		getLog().error("NumberFormatException beim parsen der Zeile: " + datenSatz.getSource(), this.getClass().getName() + ".split()", e);
+		getLog().error("NumberFormatException beim parsen der Zeile: " + datenSatz.getSource(), plugin, e);
+		datenSatz.setTarifstufe(0);
 		}		
 		
 		// Stellenanteil
@@ -188,12 +200,12 @@ private URL url = null;
 		catch (NumberFormatException e)
 		{
 		e.printStackTrace();
-		getLog().error("NumberFormatException beim parsen der Zeile: " + datenSatz.getSource(), this.getClass().getName() + ".split()", e);
+		getLog().error("NumberFormatException beim parsen der Zeile: " + datenSatz.getSource(), plugin, e);
 		}
 		catch (ArrayIndexOutOfBoundsException e)
 		{
 		// e.printStackTrace();
-		getLog().error("ArrayIndexOutOfBoundsException beim parsen der Zeile: " + datenSatz.getSource(), this.getClass().getName() + ".split()", e);
+		getLog().error("ArrayIndexOutOfBoundsException beim parsen der Zeile: " + datenSatz.getSource(), plugin, e);
 		datenSatz.setStellenAnteil(999999);
 		}
 		

@@ -13,6 +13,7 @@ import de.hannit.fsch.rcp.klr.csv.CSVDatei;
  * @author fsch
  *
  */
+@SuppressWarnings("serial")
 public class ErgebnisImport extends CSVDatei
 {
 

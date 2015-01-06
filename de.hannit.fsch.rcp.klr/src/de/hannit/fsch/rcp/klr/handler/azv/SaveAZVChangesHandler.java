@@ -77,6 +77,7 @@ private String plugin  = this.getClass().getName() + ".handleEvent(Arbeitszeitan
 		{
 		log.confirm("Änderungen wurden erfolgreich in der Datenbank gespeichert.", plugin);	
 		}
+	changes = new TreeMap<>();		
 	}
 
 	@CanExecute

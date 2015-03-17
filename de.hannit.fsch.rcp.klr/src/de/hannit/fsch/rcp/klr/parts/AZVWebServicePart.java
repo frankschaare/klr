@@ -1,9 +1,6 @@
  
 package de.hannit.fsch.rcp.klr.parts;
 
-import java.text.ParseException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
@@ -18,14 +15,12 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
@@ -33,11 +28,9 @@ import org.eclipse.swt.widgets.Table;
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
-import de.hannit.fsch.common.Datumsformate;
 import de.hannit.fsch.klr.model.azv.AZVDaten;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.provider.AZVWebservicePartLabelProvider;
-import org.eclipse.swt.widgets.DateTime;
 
 public class AZVWebServicePart 
 {
@@ -50,14 +43,10 @@ private  AZVDaten azvDaten = new AZVDaten();
 private String plugin = this.getClass().getName();
 private Group grpBerichtsmonat = null;
 private Label lblMonat = null;
-private Combo selectMonat = null;
-private Combo selectJahr = null;
 private TableViewerColumn column = null;
 private Group grpAZVMeldungen;
 private Table table;
 private TableViewer tableViewer;
-private int anzahlAZVMeldungen = 0;
-private String letzterBerichtsMonat = "";
 private Label lblBerichtsMonatInfo;
 private DateTime dateTime;
 
@@ -85,44 +74,6 @@ private DateTime dateTime;
 	{
 	}
 
-	private void setControlsToNextMonth()
-	{
-		if (result != null)
-		{
-		Date lastMonth = null;
-		Calendar cal = Calendar.getInstance();
-			try
-			{
-			lastMonth = Datumsformate.STANDARDFORMAT_SQLSERVER.parse(result.get(result.firstKey()));
-			cal.setTime(lastMonth);
-			letzterBerichtsMonat = Datumsformate.MONATLANG_JAHR.format(lastMonth);
-			cal.add(Calendar.MONTH, 1);
-
-			if (dateTime != null)
-				{
-				dateTime.setDay(1);
-				dateTime.setMonth(cal.get(Calendar.MONTH));
-				dateTime.setYear(cal.get(Calendar.YEAR));
-				}
-
-			}
-			catch (ParseException ex)
-			{
-			ex.printStackTrace();
-			log.error("ParseException beim ermitteln des letzten Berichtsmonats !", plugin + ".createComposite(Composite parent)", ex);
-			}		
-		anzahlAZVMeldungen = result.firstKey();
-		lblBerichtsMonatInfo.setText("Letzer gespeicherter Berichtsmonat ist " +  letzterBerichtsMonat + " (" + anzahlAZVMeldungen + " AZV-Meldungen)" );
-			
-			if (azvDaten != null)
-			{
-			azvDaten.setBerichtsMonatSQL(dateTime.getMonth(), dateTime.getYear());
-			azvDaten.setWebServiceIP(strIP);
-			log.info("EventBroker versendet AZV-Anfrage für den Berichtsmonat: " + azvDaten.getBerichtsMonatAsString(), plugin);
-			broker.send(Topics.AZV_WEBSERVICE, azvDaten);
-			}
-		}
-	}
 	@PostConstruct
 	public void createComposite(Composite parent) 
 	{
@@ -159,8 +110,6 @@ private DateTime dateTime;
 		lblBerichtsMonatInfo = new Label(grpBerichtsmonat, SWT.NONE);
 		lblBerichtsMonatInfo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 12, 1));
 		
-		//setControlsToNextMonth();
-		
 		grpAZVMeldungen = new Group(parent, SWT.NONE);
 		grpAZVMeldungen.setLayout(new GridLayout(1, true));
 		grpAZVMeldungen.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -171,12 +120,6 @@ private DateTime dateTime;
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setHeaderVisible(true);
 		table.setLinesVisible(false);
-		
-		column = new TableViewerColumn(tableViewer, SWT.RIGHT, 0);
-		column.getColumn().setText("ID");
-		column.getColumn().setWidth(50);
-		column.getColumn().setResizable(true);
-		column.getColumn().setMoveable(true);
 		
 		column = new TableViewerColumn(tableViewer, SWT.RIGHT, CSVConstants.AZV.PERSONALNUMMER_INDEX_TABLE);
 		column.getColumn().setText("PNR");

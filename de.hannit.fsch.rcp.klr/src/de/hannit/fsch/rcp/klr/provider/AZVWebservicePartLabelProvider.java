@@ -139,9 +139,6 @@ private String columnText = null;
 		
 			switch (columnIndex)
 			{
-			case 0:
-			columnText = String.valueOf(azv.getRowCount()).trim();
-			break;
 			case Constants.AZV.PERSONALNUMMER_INDEX_TABLE:
 			columnText = String.valueOf(azv.getPersonalNummer());
 			break;

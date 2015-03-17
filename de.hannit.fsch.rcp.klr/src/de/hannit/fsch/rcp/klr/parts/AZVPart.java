@@ -39,7 +39,6 @@ public class AZVPart implements ITableLabelProvider
 private TableViewerColumn column = null;
 private TableViewer	tableViewer = null;
 private Label infoLabel = null;
-private String infoText = "Verbunden mit OS/ECM Webservice an IP: ";
 
 	@Inject @Optional
 	public void handleEvent(@UIEventTopic(Topics.AZV_DATEN) AZVDatei azvDatei)
@@ -161,15 +160,8 @@ private String infoText = "Verbunden mit OS/ECM Webservice an IP: ";
 	{
 	AZVDatensatz datenSatz =  (AZVDatensatz) element;
 	String label = "";
-	int lineCount = 0;
-
-		switch (columnIndex) 
+	switch (columnIndex) 
 		{
-		case 0:
-		label = String.valueOf(lineCount);
-		lineCount++;
-		break;
-		
 		case CSVConstants.AZV.PERSONALNUMMER_INDEX_TABLE:
 		label = String.valueOf(datenSatz.getPersonalNummer());
 		break;

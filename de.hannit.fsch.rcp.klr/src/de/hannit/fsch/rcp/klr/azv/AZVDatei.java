@@ -299,11 +299,6 @@ private java.sql.Date berichtsMonatSQL;
 
 		switch (columnIndex) 
 		{
-		case 0:
-		label = String.valueOf(lineCount);
-		lineCount++;
-		break;
-		
 		case CSVConstants.AZV.PERSONALNUMMER_INDEX_TABLE:
 		label = String.valueOf(datenSatz.getPersonalNummer());
 		break;

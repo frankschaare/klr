@@ -48,7 +48,7 @@ private TreeMap<Integer, String> result = null;
 	// Fenstertitel ermitteln
 	webServiceIP = webService.getServerInfo();		
 	
-	String title = "AZV-Daten OS/ECM (" + webServiceIP + ")";
+	String title = "AZV-Daten von ENAIO-Webservice (" + webServiceIP + ")";
 	MPartStack details = (MPartStack) modelService.find("de.hannit.fsch.rcp.klr.partstack.details", app);
 	azvWebservicePart = createAZVPart(title);
 	details.getChildren().add(azvWebservicePart);

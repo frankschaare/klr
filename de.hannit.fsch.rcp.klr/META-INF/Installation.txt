@@ -1,0 +1,8 @@
+Folgende PlugIns müssen von GitHub ausgecheckt werden:
+
+- https://github.com/frankschaare/klr.git
+- https://github.com/frankschaare/de.hannit.fsch.klr.dataservice.git
+- https://github.com/frankschaare/de.hannit.fsch.klr.dataservice.mssql.git
+- https://github.com/frankschaare/com.microsoft.sqlserver.jdbc.SQLServerDriver.git
+- https://github.com/frankschaare/de.hannit.fsch.klr.model.git
+- https://github.com/frankschaare/de.hannit.fsch.soa.osecm.git

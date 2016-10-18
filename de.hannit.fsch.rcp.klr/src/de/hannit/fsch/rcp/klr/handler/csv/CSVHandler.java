@@ -198,7 +198,7 @@ protected DecimalFormat summenFormat = new DecimalFormat("0.00");
 	{
 	cal.setTime(auswertungsMonat);	
 	DateFormat df  = new SimpleDateFormat("YYYY");
-	
+
 	return df.format(cal.getTime());	
 	}
 

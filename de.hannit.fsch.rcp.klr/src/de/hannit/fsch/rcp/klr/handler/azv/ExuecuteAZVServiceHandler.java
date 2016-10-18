@@ -204,8 +204,9 @@ private String plugin = this.getClass().getName() + ".execute()";
 				            azvMeldung.setNachname(strNachname);
 				            azvMeldung.setTeam(strTeam);
 				            azvMeldung.setUserName(strBenutzername);
+				            azvMeldung.setEMail(strEMail);
 				            
-				            int iPNR = dataService.getPersonalnummer(strNachname);
+				            int iPNR = dataService.getPersonalnummer(strNachname, strBenutzername);
 				            
 				            	if (iPNR == 0)
 								{
@@ -213,7 +214,6 @@ private String plugin = this.getClass().getName() + ".execute()";
 								}
 				            azvMeldung.setPersonalNummer(iPNR);
 				            
-				            azvMeldung.setEMail(strEMail);
 				            azvMeldung.setBerichtsMonatAsString(azvDaten.getRequestedMonth());
 				            azvMeldung.setBerichtsJahrAsString(azvDaten.getRequestedYear());
 					            try

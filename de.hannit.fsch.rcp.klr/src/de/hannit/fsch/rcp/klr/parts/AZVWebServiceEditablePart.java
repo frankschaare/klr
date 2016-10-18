@@ -1,6 +1,7 @@
  
 package de.hannit.fsch.rcp.klr.parts;
 
+import java.util.Date;
 import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
@@ -28,13 +29,15 @@ import org.eclipse.swt.widgets.Table;
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.klr.dataservice.DataService;
 import de.hannit.fsch.klr.model.azv.AZVDaten;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.provider.AZVWebservicePartLabelProvider;
 
-public class AZVWebServicePart 
+public class AZVWebServiceEditablePart 
 {
 @Inject IEventBroker broker;
+@Inject DataService dataService;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
 @Inject @Named(CSVConstants.AZV.CONTEXT_DATEN_LETZERBERICHTSMONAT) TreeMap<Integer, String> result;
 @Inject @Named(CSVConstants.AZV.CONTEXT_WEBSERVICEIP) String strIP;
@@ -49,6 +52,7 @@ private Table table;
 private TableViewer tableViewer;
 private Label lblBerichtsMonatInfo;
 private DateTime dateTime;
+private Date maxDate;
 
 
 	@Inject @Optional
@@ -56,6 +60,12 @@ private DateTime dateTime;
 	{
 	this.azvDaten = incoming;	
 	updateControls();
+	}	
+
+	@Inject @Optional
+	public void handleEvent(@UIEventTopic(Topics.MAXDATE) Date incoming)
+	{
+	this.maxDate = incoming;
 	}	
 	
 	private void updateControls()
@@ -70,7 +80,7 @@ private DateTime dateTime;
 	}
 
 	@Inject
-	public AZVWebServicePart() 
+	public AZVWebServiceEditablePart() 
 	{
 	}
 
@@ -126,6 +136,10 @@ private DateTime dateTime;
 		column.getColumn().setWidth(80);
 		column.getColumn().setResizable(true);
 		column.getColumn().setMoveable(true);
+		
+		AZVWebServiceEditingSupport editor = new AZVWebServiceEditingSupport(tableViewer);
+		editor.setPnrs(dataService.getPersonalnummern());
+		column.setEditingSupport(editor);
 
 		column = new TableViewerColumn(tableViewer, SWT.RIGHT, CSVConstants.AZV.USERNAME_INDEX_TABLE);
 		column.getColumn().setText("Benutzer");

@@ -149,7 +149,7 @@
   <descriptors xmi:id="_e2I_wKOjEeOISL_387MeQQ" elementId="de.hannit.fsch.rcp.klr.partdescriptor.csv.csv01" label="01 - Entlastung 0400 auf andere KST " iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" tooltip="Erstellt die Datei CSV 01 - Entlastung 0400 auf andere KST " allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.CSV01Part">
     <toolbar xmi:id="_e2I_wqOjEeOISL_387MeQQ" elementId="de.hannit.fsch.rcp.klr.partdescriptor.01entlastung0400.toolbar"/>
   </descriptors>
-  <descriptors xmi:id="_0DEEsKkuEeOAoOShNfe7Ew" elementId="de.hannit.fsch.rcp.klr.partdescriptor.azv.webservice" label="AZV Webservice" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.AZVWebServicePart">
+  <descriptors xmi:id="_0DEEsKkuEeOAoOShNfe7Ew" elementId="de.hannit.fsch.rcp.klr.partdescriptor.azv.webservice" label="AZV Webservice" iconURI="platform:/plugin/de.hannit.fsch.rcp.klr/icons/tableImport16px.png" allowMultiple="true" closeable="true" dirtyable="true" contributionURI="bundleclass://de.hannit.fsch.rcp.klr/de.hannit.fsch.rcp.klr.parts.AZVWebServiceEditablePart">
     <toolbar xmi:id="_0DEEsakuEeOAoOShNfe7Ew" elementId="de.hannit.fsch.rcp.klr.partdescriptor.azv.webservice.toolbar"/>
   </descriptors>
   <menuContributions xmi:id="_a7GTcOpMEeK7nN3EOf8xtA" elementId="de.hannit.fsch.rcp.klr.menucontribution.user" parentId="de.hannit.fsch.rcp.klr.menu.main.users">

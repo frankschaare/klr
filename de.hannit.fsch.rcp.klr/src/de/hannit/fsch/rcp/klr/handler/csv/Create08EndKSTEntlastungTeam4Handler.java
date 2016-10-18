@@ -25,6 +25,7 @@ import de.hannit.fsch.klr.dataservice.DataService;
 import de.hannit.fsch.klr.model.azv.Arbeitszeitanteil;
 import de.hannit.fsch.klr.model.mitarbeiter.GemeinKosten;
 import de.hannit.fsch.rcp.klr.constants.Topics;
+import de.hannit.fsch.rcp.klr.csv.CSVDatei;
 
 public class Create08EndKSTEntlastungTeam4Handler extends CSVHandler
 {
@@ -39,7 +40,7 @@ private static final String ZELLE3 = "1200190";
 private static final String ZELLE4_PRÄFIX = "KTRE ";
 private static final String ZELLE6_PRÄFIX = "AZV Team ";
 private static final String ZELLE8 = "L-01";
-private static final String PATH_PRÄFIX = "\\\\RegionHannover.de\\daten\\hannit\\Rechnungswesen AöR\\KLR\\KLR ab 01.01.2011\\Arbeitszeitverteilung\\Reports\\";
+private static final String PATH_PRÄFIX = CSVDatei.PATH_PRÄFIX;
 private static final String PATH_SUFFIX = "\\CSV\\";
 private static final String DATEINAME_PRÄFIX = "08_CSV_EndKST-Entlastung Team 4 ";
 private static final String DATEINAME_SUFFIX = ".csv";

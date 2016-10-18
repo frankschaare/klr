@@ -30,6 +30,7 @@ public class CSVDatei extends File
  */
 private static final long serialVersionUID = 7390814932872973058L;
 public static final String DEFAULT_DELIMITER = ";";
+public static final String PATH_PRÄFIX = "C:\\temp\\";
 
 private Charset charset = Charset.forName("ISO-8859-1");
 private List<String> lines;

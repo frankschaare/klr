@@ -6,3 +6,6 @@ Folgende PlugIns müssen von GitHub ausgecheckt werden:
 - https://github.com/frankschaare/com.microsoft.sqlserver.jdbc.SQLServerDriver.git
 - https://github.com/frankschaare/de.hannit.fsch.klr.model.git
 - https://github.com/frankschaare/de.hannit.fsch.soa.osecm.git
+- https://github.com/frankschaare/de.hannit.fsch.common.csv.azv.git
+- https://github.com/frankschaare/de.hannit.fsch.common.organisation.hannit.git
+- https://github.com/frankschaare/de.hannit.fsch.common.mitarbeiter.git

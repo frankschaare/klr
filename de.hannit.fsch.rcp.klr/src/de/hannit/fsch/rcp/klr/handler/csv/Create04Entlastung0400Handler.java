@@ -29,6 +29,7 @@ import de.hannit.fsch.klr.model.kostenrechnung.KostenStelle;
 import de.hannit.fsch.klr.model.kostenrechnung.KostenTraeger;
 import de.hannit.fsch.klr.model.kostenrechnung.Kostenrechnungsobjekt;
 import de.hannit.fsch.rcp.klr.constants.Topics;
+import de.hannit.fsch.rcp.klr.csv.CSVDatei;
 
 /**
  * Erstellt die CSV-Datei für die Entlastung der Kostenstelle 0400 auf andere Kostenträger
@@ -62,7 +63,7 @@ private static final String ZELLE4 = "AZV EUR";
 private static final String ZELLE6_PRÄFIX = "AZV ";
 // Zelle 7 Variabel = Kostenträger Summe
 private static final String ZELLE8 = "L-01";
-private static final String PATH_PRÄFIX = "\\\\RegionHannover.de\\daten\\hannit\\Rechnungswesen AöR\\KLR\\KLR ab 01.01.2011\\Arbeitszeitverteilung\\Reports\\";
+private static final String PATH_PRÄFIX = CSVDatei.PATH_PRÄFIX;
 private static final String PATH_SUFFIX = "\\CSV\\";
 /**
  * Dateiname wird nach dem Muster:

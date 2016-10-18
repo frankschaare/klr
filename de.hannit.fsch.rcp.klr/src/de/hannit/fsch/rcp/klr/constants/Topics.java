@@ -17,4 +17,5 @@ public static final String MONATSSUMMEN = "Monatssummen";
 public static final String PERSONALDURCHSCHNITTSKOSTEN = "pdk";
 public static final String GEMEINKOSTERKOSTEN = "gk";
 public static final String CSV01 = "csv01";
+public static final String MAXDATE = "maxdate";
 }

@@ -296,6 +296,12 @@ private double vzaeTotal = 0;
 	tvNachname.setInput(hannit.getMitarbeiterNachName());
 	}		
 
+	/*
+	 * Hier werden die beiden Datumscombos auf den letzten verfügbaren Monat eingestellt
+	 * Der Wert (maxDate) wird auch vom Broker versendet, um:
+	 * - im AZVWebSerivice Part den Kalender einzustellen
+	 * 
+	 */
 	private void updateCombos()
 	{
 	Date maxDate = null;	
@@ -330,6 +336,8 @@ private double vzaeTotal = 0;
 		}			
 	comboMonth.setText(Datumsformate.MONATLANG.format(maxDate));
 	comboYear.setText(Datumsformate.JAHR.format(maxDate));
+	
+	broker.send(Topics.MAXDATE, maxDate);
 	}
 	
 	private Date parseCombos(String strMonth, String strYear)

@@ -125,8 +125,9 @@ private CSV01Datei csvDatei = null;
 	 * Dazu wird ein Pfad nach dem Muster:
 	 * PATH_PRÄFIX + YYYY Quartal # + PATH_SUFFIX + DATEINAME_PRÄFIX + YYYYMM + DATEINAME_SUFFIX benötigt: 	
 	 */
-	String strPath = CSV01Datei.PATH_PRÄFIX + getJahr(mSummen.getBerichtsMonatAsDate()) + " Quartal " + getQuartalsnummer(mSummen.getBerichtsMonatAsDate()) + CSV01Datei.PATH_SUFFIX;
+	String strPath = CSVDatei.PATH_PRÄFIX + getJahr(mSummen.getBerichtsMonatAsDate()) + " Quartal " + getQuartalsnummer(mSummen.getBerichtsMonatAsDate()) + CSV01Datei.PATH_SUFFIX;
 
+	
 	csvDatei = new CSV01Datei(strPath);
 	csvDatei.setLog(log);
 	csvDatei.hasHeader(false);

@@ -47,6 +47,23 @@ private LoGaDatei logaDatei = null;
 			logaDatei.setErrors(true);	
 			log.warn("Personalnummer " + datensatz.getPersonalNummer() + " wurde nicht in Tabelle Mitarbeiter gefunden !", this.getClass().getName() + ".execute()");	
 			}
+			
+			
+			// Ist keine Tarifgruppe angegeben, handelt es sich möglicherweise um eine Aushilfe, Praktikant oder studentische Hilfskraft
+			if (datensatz.getTarifGruppe().trim().length() == 0)
+			{
+			log.warn("Die Importdatei einhält keine Tarifgruppe für Mitarbeiter " + datensatz.getPersonalNummer() + " !", this.getClass().getName());
+			
+				try
+				{
+				String tarifGruppe = dataService.getTarifgruppeAushilfen(datensatz.getPersonalNummer());
+				datensatz.setTarifGruppe(tarifGruppe);
+				}
+				catch (NullPointerException e)
+				{
+				log.error("Für Mitarbeiter " + datensatz.getPersonalNummer() + " konnte keine Tarifgruppe ermittelt werden", this.getClass().getName(), e);
+				}
+			}			
 		}
 	logaDatei.setChecked(true);	
 	broker.send(Topics.LOGA_DATEN, logaDatei);

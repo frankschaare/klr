@@ -25,6 +25,7 @@ import de.hannit.fsch.common.CSVConstants;
 import de.hannit.fsch.common.ContextLogger;
 import de.hannit.fsch.klr.dataservice.DataService;
 import de.hannit.fsch.klr.model.loga.LoGaDatensatz;
+import de.hannit.fsch.klr.model.organisation.Organisation;
 import de.hannit.fsch.rcp.klr.constants.Topics;
 import de.hannit.fsch.rcp.klr.csv.CSVDatei;
 import de.hannit.fsch.rcp.klr.loga.LoGaDatei;
@@ -35,6 +36,8 @@ public class ImportLOGAHandler
 @Inject EPartService partService;
 @Inject IEventBroker broker;
 @Inject @Named(AppConstants.LOGGER) private ContextLogger log;
+@Inject @Named(AppConstants.ORGANISATION) Organisation hannit;
+
 
 private MPart logaPart = null;
 private IEclipseContext partContext = null;
@@ -76,8 +79,15 @@ private IEclipseContext partContext = null;
 	 */
 	private void checkLogaData(LoGaDatei logaDatei)
 	{
+	int pnrVorstand = hannit.getVorstand().getPersonalNR(); 
+			
 		for (LoGaDatensatz ds : logaDatei.getDaten().values())
 		{
+			if (ds.getPersonalNummer() == pnrVorstand)
+			{
+			ds.setTarifGruppe(hannit.getVorstand().getTarifGruppe());
+			ds.setStellenAnteil(1);
+			}
 			// Sonderfall Schnese
 			if (ds.getPersonalNummer() == 120025)
 			{

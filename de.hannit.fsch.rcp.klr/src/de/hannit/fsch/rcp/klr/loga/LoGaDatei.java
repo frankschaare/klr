@@ -6,13 +6,9 @@ package de.hannit.fsch.rcp.klr.loga;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.TreeMap;
 
 import javax.inject.Inject;
@@ -38,6 +34,8 @@ import de.hannit.fsch.rcp.klr.csv.CSVDatei;
  */
 public class LoGaDatei extends CSVDatei implements ITableLabelProvider
 {
+@Inject DataService dataService;
+
 private static final long serialVersionUID = -4808470669223797111L;
 
 private String label = null;	
@@ -170,12 +168,15 @@ private URL url = null;
 		try
 		{
 		String tarifGruppe = parts[CSVConstants.Loga.TARIFGRUPPE_INDEX_CSV];	
-		datenSatz.setTarifGruppe(tarifGruppe);;
+		datenSatz.setTarifGruppe(tarifGruppe);
 		}
 		catch (Exception e)
 		{
 		e.printStackTrace();
 		getLog().error("Exception beim parsen der Zeile: " + datenSatz.getSource(), plugin, e);
+		
+		// TODO HIER MUSS WAS MIT DEN AUSHILFEN PASSIEREN !!!
+		
 		}
 		
 		// Tarifstufe
@@ -186,7 +187,6 @@ private URL url = null;
 		}
 		catch (NumberFormatException e)
 		{
-		e.printStackTrace();
 		getLog().error("NumberFormatException beim parsen der Zeile: " + datenSatz.getSource(), plugin, e);
 		datenSatz.setTarifstufe(0);
 		}		

@@ -3,6 +3,8 @@ package de.hannit.fsch.rcp.klr.parts;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -23,7 +25,10 @@ import org.eclipse.swt.widgets.Table;
 
 import de.hannit.fsch.common.AppConstants;
 import de.hannit.fsch.common.ContextLogger;
+import de.hannit.fsch.common.Datumsformate;
 import de.hannit.fsch.klr.model.mitarbeiter.PersonalDurchschnittsKosten;
+import de.hannit.fsch.klr.model.mitarbeiter.SummenZeile;
+import de.hannit.fsch.klr.model.team.Team;
 import de.hannit.fsch.rcp.klr.provider.PersonalDurchschnittsKostenLabelProvider;
 
 public class PersonaldurchschnittskostenPart 
@@ -51,6 +56,8 @@ private Group grpPersonaldurchschnittsKosten;
 	@PostConstruct
 	public void createComposite(Composite parent) 
 	{
+	String plugin = this.getClass().getName() + ".createComposite(Composite parent)";
+	
 		parent.setLayout(new GridLayout(1, false));
 		
 		grpBerichtsmonat = new Group(parent, SWT.NONE);
@@ -139,7 +146,21 @@ private Group grpPersonaldurchschnittsKosten;
 			if (pdk != null)
 			{
 			pdkViever.setLabelProvider(new PersonalDurchschnittsKostenLabelProvider());		
-			pdkViever.setInput(pdk.getSummentabelle().values().toArray());	
+			log.info("Generiere Input für pdkViewer aus pdk.getSummentabelle()", plugin);	
+			log.info("Input für pdkViewer Schritt1: Prüfe gefundene Teams.", plugin);
+				for (Team t : pdk.getTeams().values())
+				{
+				log.info(t.getTeamBezeichnung() + " enthält " + t.getTeamMitglieder().size() + " Mitarbeiter, davon " + t.getAngestellte().size() + " Angestellte und " + t.getBeamte().size() + " Beamte.", plugin);
+				}
+			log.info("Input für pdkViewer Schritt2: erstelle Summentabelle aus den vorhandenen Teams.", plugin);
+			TreeMap<Integer, SummenZeile> st = pdk.getSummentabelle();
+			log.info("Summentabelle enthält " + st.size() + " Zeilen.", plugin);
+
+				for (SummenZeile sz : st.values())
+				{
+				log.info("Summentabelle enthält Summenzeile: " + sz.getColumn0() + ", " + sz.getColumn1(), plugin);	
+				}
+			pdkViever.setInput(st.values().toArray());	
 			grpBerichtsmonat.setText(fMonatJahr.format(pdk.getBerichtsMonat()));
 			lblSummeBrutto.setText("Summe Brutto: " + NumberFormat.getCurrencyInstance().format(pdk.getSummeBruttoGesamt()));
 			lblSummeStellen.setText("Summe Stellen: " + String.valueOf(pdk.getSummeVZAEGesamt()));

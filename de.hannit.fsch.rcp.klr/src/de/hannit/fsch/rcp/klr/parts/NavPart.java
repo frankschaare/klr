@@ -245,7 +245,7 @@ private double vzaeTotal = 0;
 		mSumme.setBerichtsMonat(selectedMonth);
 		
 		PersonalDurchschnittsKosten pdk = new PersonalDurchschnittsKosten(selectedMonth);
-		pdk.setMitarbeiter(hannit.getMitarbeiterNachPNR());
+		pdk.setMitarbeiter(hannit.getMitarbeiterNachPNR(), hannit.getVorstand().getPersonalNR());
 		
 		GemeinKosten gk = new GemeinKosten(selectedMonth);
 		gk.setMitarbeiter(hannit.getMitarbeiterNachPNR());

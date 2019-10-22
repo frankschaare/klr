@@ -42,9 +42,15 @@ private AZVDaten azvDaten = null;
 	int errorCount = 0;
 	String plugin = this.getClass().getName() + ".execute()";
 	
-	// Zuerst werden die Teammitgliedschaften aktualisiert:
-	setTeammitgliedschaften();
-	
+	/*
+	 * Update zum 01.01.2018:
+	 * Da die Teammitgliedschaft nicht mehr vom AZV-Webservice ausgelesen wird,
+	 * wird diese Funktion nicht mehr aufgerufen
+	 * 
+	 * setTeammitgliedschaften();
+	 */
+
+		
 		for (AZVDatensatz ds : azvDaten.getAzvMeldungen())
 		{
 			// Schritt 1: Kostenstelle / Kostenträger prüfen

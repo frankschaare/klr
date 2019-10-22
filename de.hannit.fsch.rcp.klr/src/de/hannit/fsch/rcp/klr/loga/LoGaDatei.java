@@ -189,7 +189,11 @@ private URL url = null;
 		{
 		getLog().error("NumberFormatException beim parsen der Zeile: " + datenSatz.getSource(), plugin, e);
 		datenSatz.setTarifstufe(0);
-		}		
+		}
+		catch (ArrayIndexOutOfBoundsException ae)
+		{
+		getLog().error("ArrayIndexOutOfBoundsException beim parsen der Zeile: " + datenSatz.getSource(), plugin, ae);
+		}			
 		
 		// Stellenanteil
 		try

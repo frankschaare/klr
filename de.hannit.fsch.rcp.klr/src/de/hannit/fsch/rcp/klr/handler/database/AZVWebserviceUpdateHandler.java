@@ -61,8 +61,13 @@ private String plugin = this.getClass().getName() + ".execute()";
 	int insertCount = 0;
 	int errorCount = 0;
 	
-	// Zuerst werden die Teammitgliedschaften aktualisiert:
-	setTeammitgliedschaften();
+	/*
+	 * Update zum 01.01.2018:
+	 * Da die Teammitgliedschaft nicht mehr vom AZV-Webservice ausgelesen wird,
+	 * wird diese Funktion nicht mehr aufgerufen
+	 * 
+	 * setTeammitgliedschaften();
+	 */
 	
 	// Dann werden die vorhandenen Daten gelöscht
 	e = dataService.deleteAZVDaten(azvDaten.getBerichtsMonatSQL());	

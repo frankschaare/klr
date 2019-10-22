@@ -202,7 +202,15 @@ private String plugin = this.getClass().getName() + ".execute()";
 					    	
 				            azvMeldung = new AZVDatensatz();
 				            azvMeldung.setNachname(strNachname);
-				            azvMeldung.setTeam(strTeam);
+				            /*
+				             * Update zum 01.01.2018:
+				             * Wegen der OE Umstellung wird die Teaminformation nicht mehr aus dem AZV-Webservice ausgelesen,
+				             * sondern direkt aus der Tabelle Teammitgliedschaften
+				             * 
+				             * azvMeldung.setTeam(strTeam);
+				             * 
+				             */
+				            
 				            azvMeldung.setUserName(strBenutzername);
 				            azvMeldung.setEMail(strEMail);
 				            
@@ -213,6 +221,7 @@ private String plugin = this.getClass().getName() + ".execute()";
 								iPNR = dataService.getPersonalnummerbyUserName(strBenutzername);
 								}
 				            azvMeldung.setPersonalNummer(iPNR);
+				            azvMeldung.setiTeam(dataService.getAktuellesTeam(iPNR));
 				            
 				            azvMeldung.setBerichtsMonatAsString(azvDaten.getRequestedMonth());
 				            azvMeldung.setBerichtsJahrAsString(azvDaten.getRequestedYear());
